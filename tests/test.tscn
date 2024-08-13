@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmf7wj116o5ua"]
+[gd_scene load_steps=6 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
+[ext_resource type="Texture2D" uid="uid://kwhk50865yt6" path="res://assets/png/custom/tile_1_star.png" id="1_i20sn"]
+[ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
 size = Vector3(1000, 50, 1)
@@ -19,13 +21,26 @@ collision_mask = 55
 mesh = SubResource("BoxMesh_7g8ru")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+visible = false
 shape = SubResource("RectangleShape2D_qfx3o")
+
+[node name="TextureRect" type="TextureRect" parent="ground"]
+offset_left = -501.0
+offset_top = -25.0
+offset_right = 500.0
+offset_bottom = 25.0
+texture = ExtResource("1_i20sn")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="player" type="Node" parent="."]
 
-[node name="bob" parent="player" instance=ExtResource("1_gvyhj")]
-position = Vector2(423, 496)
+[node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
+position = Vector2(510, 525)
 
 [node name="enemy" type="Node" parent="."]
+
+[node name="bob" parent="enemy" instance=ExtResource("1_gvyhj")]
+position = Vector2(423, 496)
 
 [node name="interactables" type="Node" parent="."]
