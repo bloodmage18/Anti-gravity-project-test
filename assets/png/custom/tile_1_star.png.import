@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kwhk50865yt6"
-path.s3tc="res://.godot/imported/tile_1_star.png-5caa7ab4ff4c74aac0b68c472419f316.s3tc.ctex"
+uid="uid://d3klw7x2iw4wn"
+path="res://.godot/imported/tile_1_star.png-5caa7ab4ff4c74aac0b68c472419f316.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/png/custom/tile_1_star.png"
-dest_files=["res://.godot/imported/tile_1_star.png-5caa7ab4ff4c74aac0b68c472419f316.s3tc.ctex"]
+dest_files=["res://.godot/imported/tile_1_star.png-5caa7ab4ff4c74aac0b68c472419f316.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

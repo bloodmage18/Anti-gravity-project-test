@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
-[ext_resource type="Texture2D" uid="uid://kwhk50865yt6" path="res://assets/png/custom/tile_1_star.png" id="1_i20sn"]
+[ext_resource type="Texture2D" uid="uid://d3klw7x2iw4wn" path="res://assets/png/custom/tile_1_star.png" id="1_i20sn"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
-[ext_resource type="Texture2D" uid="uid://cgmi3o6ytwvwe" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
+[ext_resource type="Texture2D" uid="uid://d1ff2jmw3gtrl" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
 size = Vector3(1000, 50, 1)
