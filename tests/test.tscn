@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmf7wj116o5ua"]
+
+[ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
+size = Vector3(1000, 50, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfx3o"]
+size = Vector2(1000, 50)
+
+[node name="test" type="Node2D"]
+
+[node name="ground" type="StaticBody2D" parent="."]
+position = Vector2(582, 569)
+collision_layer = 16
+collision_mask = 55
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ground"]
+mesh = SubResource("BoxMesh_7g8ru")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+shape = SubResource("RectangleShape2D_qfx3o")
+
+[node name="player" type="Node" parent="."]
+
+[node name="bob" parent="player" instance=ExtResource("1_gvyhj")]
+position = Vector2(423, 496)
+
+[node name="enemy" type="Node" parent="."]
+
+[node name="interactables" type="Node" parent="."]
