@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmf7wj116o5ua"]
+[gd_scene load_steps=7 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
 [ext_resource type="Texture2D" uid="uid://kwhk50865yt6" path="res://assets/png/custom/tile_1_star.png" id="1_i20sn"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
+[ext_resource type="Texture2D" uid="uid://cgmi3o6ytwvwe" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
 size = Vector3(1000, 50, 1)
@@ -12,25 +13,43 @@ size = Vector2(1000, 50)
 
 [node name="test" type="Node2D"]
 
-[node name="ground" type="StaticBody2D" parent="."]
+[node name="world" type="Node" parent="."]
+
+[node name="bg" type="TextureRect" parent="world"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -155.0
+offset_top = 2.0
+offset_right = 7416.0
+offset_bottom = 4105.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("1_s86ka")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="ground" type="StaticBody2D" parent="world"]
 position = Vector2(582, 569)
 collision_layer = 16
 collision_mask = 55
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="ground"]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="world/ground"]
+position = Vector2(0, -0.5)
+scale = Vector2(1, 0.98)
 mesh = SubResource("BoxMesh_7g8ru")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/ground"]
 shape = SubResource("RectangleShape2D_qfx3o")
 
-[node name="TextureRect" type="TextureRect" parent="ground"]
+[node name="TextureRect" type="TextureRect" parent="world/ground"]
 offset_left = -501.0
 offset_top = -25.0
-offset_right = 500.0
-offset_bottom = 25.0
+offset_right = 1999.0
+offset_bottom = 104.0
+scale = Vector2(0.4, 0.38)
 texture = ExtResource("1_i20sn")
-expand_mode = 1
 stretch_mode = 1
 
 [node name="player" type="Node" parent="."]
