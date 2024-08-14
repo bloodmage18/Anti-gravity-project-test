@@ -1,8 +1,6 @@
 extends CharacterBody2D
 class_name Bob
 
-
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -13,6 +11,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var GroundL = $Raycasts/GroundL
 @onready var GroundR = $Raycasts/GroundR
+@onready var Ledge_Grab_F = $Raycasts/Ledge_Grab_F
+@onready var Ledge_Grab_B = $Raycasts/Ledge_Grab_R
 
 
 #Ground Variables
@@ -58,102 +58,26 @@ func _physics_process(delta):
 	frame_counter.text = str(frame)
 	pass
 
+func direction():
+	if Ledge_Grab_F.get_target_position().x > 0:
+		return 1
+	else:
+		return -1
 	
 func play_animation(animation_name):
 	anim.play(str(animation_name))
 
 func turn(direction):
-	Sprite.flip_h = direction
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-#func turn_deprecated(direction):
-##	var dir = 0
-##	if direction:
-##		dir = -1	
-##	else:
-##		dir = 1
-##		Sprite.flip_h = false
-	#pass
+	var dir = 0
+	if direction:
+		dir = -1
+	else:
+		dir = 1
+	Sprite.set_flip_h(direction)
+	#Sprite.flip_h = direction
+	
+	Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
+	Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
+	Ledge_Grab_B.position.x = dir * abs(Ledge_Grab_B.position.x)
+	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
 	

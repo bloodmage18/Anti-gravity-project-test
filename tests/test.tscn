@@ -1,21 +1,22 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
-[ext_resource type="Texture2D" uid="uid://d3klw7x2iw4wn" path="res://assets/png/custom/tile_1_star.png" id="1_i20sn"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
 [ext_resource type="Texture2D" uid="uid://d1ff2jmw3gtrl" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
+[ext_resource type="Texture2D" uid="uid://ctq6rml6mf024" path="res://assets/png/Purple/texture_08.png" id="2_8eaou"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
 size = Vector3(1000, 50, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qfx3o"]
-size = Vector2(1000, 50)
+size = Vector2(1356, 50)
 
 [node name="test" type="Node2D"]
 
 [node name="world" type="Node" parent="."]
 
 [node name="bg" type="TextureRect" parent="world"]
+modulate = Color(0.34902, 0.34902, 0.34902, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,18 +32,9 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="ground" type="StaticBody2D" parent="world"]
-position = Vector2(582, 569)
+position = Vector2(576, 662)
 collision_layer = 49
 collision_mask = 55
-
-[node name="TextureRect" type="TextureRect" parent="world/ground"]
-offset_left = -501.0
-offset_top = -25.0
-offset_right = 1999.0
-offset_bottom = 104.0
-scale = Vector2(0.4, 0.38)
-texture = ExtResource("1_i20sn")
-stretch_mode = 1
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="world/ground"]
 position = Vector2(0, -0.5)
@@ -50,12 +42,24 @@ scale = Vector2(1, 0.98)
 mesh = SubResource("BoxMesh_7g8ru")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world/ground"]
+position = Vector2(-57, 0)
 shape = SubResource("RectangleShape2D_qfx3o")
+
+[node name="TextureRect" type="TextureRect" parent="world/ground"]
+modulate = Color(0.223529, 0.180392, 0.580392, 1)
+offset_left = -734.0
+offset_top = -25.0
+offset_right = 6041.0
+offset_bottom = 225.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_8eaou")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
-position = Vector2(551, 544)
+position = Vector2(497, 68)
 
 [node name="enemy" type="Node" parent="."]
 
