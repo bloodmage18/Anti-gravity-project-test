@@ -1,4 +1,5 @@
 extends StateMachine
+@onready var parent = get_parent()
 @onready var id = parent.id
 
 func _ready():

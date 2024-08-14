@@ -1,8 +1,30 @@
 extends CharacterBody2D
+class_name Bob
 
+@onready var states = $StateMachineBob
+@onready var anim : AnimationPlayer = $Node2D/Sprite/AnimationPlayer
+@onready var Sprite = $'Node2D/Sprite'
+
+var RUNSPEED = 340
+var DASHSPEED = 390
+var WALKSPEED = 200
+var GRAVITY = 1800
+var JUMPFORCE = 500
+var MAX_JUMPFORCE = 800
+var DOUBLEJUMPFORCE = 1000
+var MAXAIRSPEED = 300
+var AIR_ACCEL = 25
+var FALLSPEED = 60
+var FALLINGSPEED = 900
+var MAXFALLSPEED = 900
+var TRACTION = 40
+var ROLL_DISTANCE = 350
+var air_dodge_speed = 500
+var UP_B_LAUNCHSPEED = 700
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+var id = 1
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -12,7 +34,7 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -24,5 +46,25 @@ func _physics_process(delta):
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+	# handle flip.
+	turn(direction)
 
-	move_and_slide()
+#	move_and_slide()
+	
+func play_animation(animation_name):
+	anim.play(str(animation_name))
+
+func turn(direction):
+#	var dir = 0
+#	if direction:
+#		dir = -1	
+#	else:
+#		dir = 1
+#		Sprite.flip_h = false
+		
+	if direction <= -1:
+		Sprite.flip_h = true
+	elif direction >= 1:
+		Sprite.flip_h = false
+	else:pass
+	
