@@ -41,7 +41,7 @@ stretch_mode = 1
 
 [node name="ground" type="StaticBody2D" parent="world"]
 position = Vector2(576, 662)
-collision_layer = 49
+collision_layer = 16
 collision_mask = 55
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="world/ground"]
@@ -65,9 +65,9 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="platform" type="StaticBody2D" parent="world"]
-position = Vector2(49, 371)
+position = Vector2(47, 416)
 collision_layer = 32
-collision_mask = 55
+collision_mask = 48
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world/platform"]
 shape = SubResource("CircleShape2D_fim1h")

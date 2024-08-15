@@ -14,6 +14,10 @@ func _ready():
 	add_state('LANDING')
 	add_state('TURN')
 	add_state('CROUCH')
+	# platform states
+	
+	add_state('ROLL')
+	add_state('PLATFORM_STAND')
 	call_deferred("set_state" , states.STAND)
 
 func state_logic(delta):
@@ -30,6 +34,11 @@ func get_transition(delta):
 	if FALLING() == true:
 		return states.AIR
 	
+	if PLATFORM_COLLIDED() == true :
+		parent._frame()
+		return states.ROLL
+	else:
+		pass
 	
 	match state:
 		states.STAND:
@@ -277,7 +286,10 @@ func get_transition(delta):
 					parent._frame()
 					return states.RUN
 			
-			
+		states.ROLL:
+			parent._attach_to_platform(delta)
+			pass
+
 
 func enter_state(new_state, old_state):
 	match state:
@@ -317,6 +329,12 @@ func enter_state(new_state, old_state):
 		states.AIR:
 			parent.play_animation('air')
 			parent.states.text = str('AIR')
+		states.ROLL:
+			parent.play_animation('roll')
+			parent.states.text = str('ROLL')
+		states.PLATFORM_STAND:
+			parent.play_animation('idle')
+			parent.states.text = str('PLATFORM_STAND')
 		
 func exit_state(old_state, new_state):
 	pass
@@ -370,7 +388,6 @@ func AIRMOVEMENT():
 		elif parent.velocity.x > 0:
 			parent.velocity.x += -parent.AIR_ACCEL/5
 
-
 func LANDING():
 #	added the sprite y offset variable since the character the above body .y
 	var sprite_y_offset = $"../Node2D/Sprite".global_transform.origin
@@ -390,10 +407,16 @@ func LANDING():
 			parent.fastfall = false
 			return true
 
-	
 func FALLING():
-	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK ]):
-		if parent.GroundL.is_colliding():# or parent.GroundR.is_colliding():
+	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK,]):
+		if parent.GroundL.is_colliding() and parent.GroundR.is_colliding():
 			return false
 		else:
 			return true
+			
+func PLATFORM_COLLIDED():
+	if parent.Platform_Cast_U.is_colliding():
+		return true
+	else:
+		return false
+	
