@@ -14,19 +14,25 @@ func _ready():
 	add_state('LANDING')
 	add_state('TURN')
 	add_state('CROUCH')
+	add_state('SLIDE')
 	# platform states
 	
 	add_state('ROLL')
 	add_state('PLATFORM_STAND')
+	add_state('PLATFORM_WALK')
+	add_state('PLATFORM_RUN')
+	add_state('PLATFORM_JUMP')
 	call_deferred("set_state" , states.STAND)
 
 func state_logic(delta):
 	parent.updateframes(delta)
 	parent._physics_process(delta)
+	parent.adjust_movement_for_surface()
 
 func get_transition(delta):
 	parent.move_and_slide()
-	
+	parent._attach_to_platform(delta)
+	parent.attach_to_platform(parent.Platform_Cast_D.get_collision_normal())
 	if LANDING() == true:
 		parent._frame()
 		return states.LANDING
@@ -36,7 +42,7 @@ func get_transition(delta):
 	
 	if PLATFORM_COLLIDED() == true :
 		parent._frame()
-		return states.ROLL
+		return states.PLATFORM_STAND
 	else:
 		pass
 	
@@ -233,6 +239,7 @@ func get_transition(delta):
 			return states.AIR
 			
 		states.AIR:
+			
 			AIRMOVEMENT()
 			
 		states.LANDING:
@@ -268,12 +275,12 @@ func get_transition(delta):
 			if Input.is_action_just_pressed("jump"):
 				parent._frame()
 				return states.JUMP_SQUAT
-			if parent.velocity.x > 0:
+			if parent.velocity.x > 0 :#and not parent.Platform_Cast_D.is_colliding():
 				parent.turn(true)
 				#parent.turn(false)
 				parent.velocity.x += -parent.TRACTION*2
 				parent.velocity.x =  clamp(parent.velocity.x , 0 , parent.velocity.x)
-			elif parent.velocity.x < 0:
+			elif parent.velocity.x < 0 :#and not  parent.Platform_Cast_D.is_colliding():
 				#parent.turn(true)
 				parent.turn(false)
 				parent.velocity.x += parent.TRACTION*2
@@ -287,9 +294,47 @@ func get_transition(delta):
 					return states.RUN
 			
 		states.ROLL:
-			parent._attach_to_platform(delta)
+			#if parent.Platform_Cast_U.is_colliding() :
+				#var angle = parent.Platform_Cast_D.get_collision_normal().angle()
+				#parent.rotation = angle + deg_to_rad(90)
 			pass
-
+				
+			
+		states.PLATFORM_STAND:
+			parent._attach_to_platform(delta)
+			#parent.attach_to_platform(parent.Platform_Cast_D.get_collision_normal())
+			if Input.get_action_strength("jump"):
+				parent._frame()
+				return states.JUMP_SQUAT
+			if Input.get_action_strength("down"):
+				parent._frame()
+				return states.CROUCH
+			if Input.get_action_strength("left"):
+				parent.velocity.x = parent.RUNSPEED
+				parent._frame()
+				parent.turn(true)
+				return states.DASH
+			if Input.get_action_strength("right"):
+				parent.velocity.x = -parent.RUNSPEED
+				parent._frame()
+				parent.turn(false)
+				return states.DASH
+			if parent.velocity.x > 0 and state == states.STAND:
+				parent.velocity.x += -parent.TRACTION*1
+				parent.velocity.x = clamp(parent.velocity.x,0,parent.velocity.x)
+			elif parent.velocity.x < 0 and state == states.STAND:
+				parent.velocity.x += parent.TRACTION*1
+				parent.velocity.x = clamp(parent.velocity.x,parent.velocity.x,0)
+			
+		states.PLATFORM_WALK:
+			pass
+		states.PLATFORM_RUN:
+			pass
+		states.PLATFORM_JUMP:
+			pass
+		states.PLATFORM_DASH:
+			pass
+		
 
 func enter_state(new_state, old_state):
 	match state:
