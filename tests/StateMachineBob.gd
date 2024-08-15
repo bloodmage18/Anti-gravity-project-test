@@ -326,7 +326,13 @@ func state_includes(state_array):
 		if state == each_state:
 			return true
 	return false
-	
+
+
+
+
+
+
+
 
 func AIRMOVEMENT():
 #	print_debug("i believe i can fly")
