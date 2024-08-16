@@ -34,11 +34,12 @@ func state_logic(delta):
 func get_transition(delta):
 	parent._rotate()
 	parent.move_and_slide()
-	#
-	#
-	
-	if state_includes([states.PLATFORM_STAND , states.PLATFORM_RUN , states.PLATFORM_DASH , states.CROUCH , states.MOONWALK]):
-		parent._attach_to_platform(delta)
+
+	if state_includes([ states.PLATFORM_RUN , states.PLATFORM_DASH , states.CROUCH , states.MOONWALK]):
+		if parent.Platform_Cast_D.is_colliding() and not LANDING():
+			#parent.velocity.y += parent.FALLINGSPEED
+			parent._attach_to_platform(delta)
+		#parent.calculate_jump_velocity()
 		pass
 	
 		
@@ -267,8 +268,6 @@ func get_transition(delta):
 				parent._frame()
 				return states.PLATFORM_STAND
 			
-			
-			
 		states.LANDING:
 			if parent.frame <= parent.landing_frames + parent.lag_frames:
 				if parent.frame == 1:
@@ -325,8 +324,7 @@ func get_transition(delta):
 					return states.RUN
 			
 		states.PLATFORM_STAND:
-			parent._attach_to_platform(delta)
-			#parent.attach_to_platform(parent.Platform_Cast_D.get_collision_normal())
+			parent.velocity =Vector2.ZERO
 			if Input.get_action_strength("jump"):
 				parent._frame()
 				return states.PLATFORM_JUMP
@@ -343,18 +341,23 @@ func get_transition(delta):
 				parent._frame()
 				parent.turn(false)
 				return states.PLATFORM_DASH
-			if parent.velocity.x > 0 and state == states.STAND:
+			if parent.velocity.x > 0 and state == states.PLATFORM_STAND:
 				parent.velocity.x += -parent.TRACTION*1
 				parent.velocity.x = clamp(parent.velocity.x,0,parent.velocity.x)
-			elif parent.velocity.x < 0 and state == states.STAND:
+			elif parent.velocity.x < 0 and state == states.PLATFORM_STAND:
 				parent.velocity.x += parent.TRACTION*1
 				parent.velocity.x = clamp(parent.velocity.x,parent.velocity.x,0)
+				
+			if parent.velocity.y > 0 and state == states.PLATFORM_STAND:
+				parent.velocity.y += -parent.TRACTION*1
+				parent.velocity.y = clamp(parent.velocity.y,0,parent.velocity.y)
+			elif parent.velocity.y < 0 and state == states.PLATFORM_STAND:
+				parent.velocity.y += parent.TRACTION*1
+				parent.velocity.y = clamp(parent.velocity.y,parent.velocity.y,0)
 			
 		states.PLATFORM_WALK:
 			pass
 		states.PLATFORM_RUN:
-			parent._attach_to_platform(delta)
-			
 			if Input.is_action_just_pressed("jump"):
 				parent._frame()
 				return states.PLATFORM_JUMP
@@ -381,8 +384,8 @@ func get_transition(delta):
 			
 		states.PLATFORM_JUMP:
 			parent.calculate_jump_velocity()
+			return states.JUMP_SQUAT
 			
-			pass
 		states.PLATFORM_DASH:
 			if Input.is_action_pressed("jump"):
 				parent._frame()
@@ -541,7 +544,7 @@ func LANDING():
 			return true
 
 func FALLING():
-	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK, ]):#states.PLATFORM_STAND ,states.PLATFORM_RUN, states.PLATFORM_DASH ]):# states.ROLL ]):
+	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK,states.PLATFORM_STAND ,states.PLATFORM_RUN, states.PLATFORM_DASH ]):# states.ROLL ]):
 		if parent.GroundL.is_colliding() and parent.GroundR.is_colliding() :
 			return false
 		else:

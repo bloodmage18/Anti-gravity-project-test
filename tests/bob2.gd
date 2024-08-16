@@ -91,22 +91,22 @@ func turn(direction):
 	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
 
 
-func attach_to_platform(platform_normal: Vector2):
+## PLatform functions
+func rotate_to_platform(platform_normal: Vector2):
 	# Align player with platform normal
 	var angle = platform_normal.angle()  # Get angle from normal
 	rotation = angle  + deg_to_rad(90)# Rotate player to match platform
-
+	
 func adjust_movement_for_surface():
 	# Rotate velocity to match platform orientation
 	var rotation_matrix = Transform2D(rotation, Vector2.ZERO)
 	velocity = rotation_matrix.basis_xform(velocity)
-
+	
 func calculate_jump_velocity():
 	# Adjust jump velocity based on current orientation
 	var jump_direction = -Vector2.UP.rotated(rotation)
 	velocity = jump_direction * JUMPFORCE
-
-
+	
 func _rotate():
 	if Platform_Cast_U.is_colliding():
 		rotation = Platform_Cast_U.get_collision_normal().angle() + deg_to_rad(180)
@@ -118,20 +118,14 @@ func _rotate():
 		var normal = Platform_Cast_D.get_collision_normal()
 		rotation = normal.angle() + deg_to_rad(90)
 	
-## PLatform functions
 func _attach_to_platform(delta):
-	var GRAVITY = 900
 	var  move_direction = Vector2()
-	# Attaching tank to platform
-	if Platform_Cast_D.is_colliding():
-		var normal = Platform_Cast_D.get_collision_normal()
-		var impulse = -normal * GRAVITY
-		move_direction = normal.rotated(Input.get_axis("left" , "right") * deg_to_rad(90))
-		velocity = move_direction 
-		velocity += impulse * delta
-
+	var normal = Platform_Cast_D.get_collision_normal()
+	#var impulse = -normal * FALLINGSPEED
+	#velocity.y += impulse.y * delta
+	velocity.y += gravity
 	# Adjust the gravity to ensure it applies smoothly even on steep surfaces
-	velocity.x = move_toward(velocity.x  , 0.0 , gravity * delta)
-	velocity.y = move_toward(velocity.y  , 0.0 , gravity * delta)
+	#velocity.x = move_toward(velocity.x  , 0.0 , gravity * delta)
+	#velocity.y = move_toward(velocity.y  , -gravity , gravity * delta)
 	#velocity.move_toward(Vector2.ZERO , GRAVITY * delta)
-#
+	#print(velocity)

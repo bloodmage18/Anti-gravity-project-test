@@ -127,7 +127,7 @@ texture = ExtResource("3_4xave")
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
-position = Vector2(806, 244)
+position = Vector2(195, 232)
 
 [node name="enemy" type="Node" parent="."]
 
