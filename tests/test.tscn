@@ -32,7 +32,7 @@ radius = 24.0001
 height = 1388.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_l2uau"]
-radius = 50.0
+radius = 25.0
 height = 1500.0
 
 [node name="test" type="Node2D"]
@@ -104,12 +104,14 @@ shape = SubResource("CapsuleShape2D_1nfbd")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="world/platform2"]
 modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-1.58746, -5.74658e-06)
 rotation = 1.5708
+scale = Vector2(1, 1.02857)
 mesh = SubResource("CapsuleMesh_qs42a")
 texture = ExtResource("3_4xave")
 
 [node name="platform3" type="StaticBody2D" parent="world"]
-position = Vector2(477, 86)
+position = Vector2(476, 149)
 collision_layer = 32
 collision_mask = 48
 
@@ -120,7 +122,9 @@ shape = SubResource("CapsuleShape2D_gqirc")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="world/platform3"]
 modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-8.67652, 31.3688)
 rotation = 1.5708
+scale = Vector2(0.946608, 0.926139)
 mesh = SubResource("CapsuleMesh_l2uau")
 texture = ExtResource("3_4xave")
 
