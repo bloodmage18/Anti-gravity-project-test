@@ -956,10 +956,10 @@ floor_max_angle = 1.5708
 script = ExtResource("1_o5iul")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22.25)
 shape = SubResource("RectangleShape2D_3y5iq")
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(0, 22.25)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Node2D"]
 position = Vector2(0, -26)
@@ -974,7 +974,7 @@ libraries = {
 }
 
 [node name="Raycasts" type="Node2D" parent="."]
-position = Vector2(0, 17.25)
+position = Vector2(0, -5)
 
 [node name="GroundL" type="RayCast2D" parent="Raycasts"]
 position = Vector2(13, 3)
@@ -998,7 +998,7 @@ target_position = Vector2(-11, 0)
 hit_from_inside = true
 
 [node name="Platform_Cast_UP" type="RayCast2D" parent="Raycasts"]
-position = Vector2(0, -29)
+position = Vector2(0, -24)
 target_position = Vector2(0, -20)
 collision_mask = 32
 

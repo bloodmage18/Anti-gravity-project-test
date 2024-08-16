@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dmf7wj116o5ua"]
+[gd_scene load_steps=14 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
@@ -25,7 +25,15 @@ height = 517.64
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qs42a"]
 radius = 100.0
-height = 521.96
+height = 500.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqirc"]
+radius = 24.0001
+height = 1388.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l2uau"]
+radius = 50.0
+height = 1500.0
 
 [node name="test" type="Node2D"]
 
@@ -73,7 +81,7 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="platform" type="StaticBody2D" parent="world"]
-position = Vector2(401, 422)
+position = Vector2(211, 414)
 collision_layer = 32
 collision_mask = 48
 
@@ -100,10 +108,26 @@ rotation = 1.5708
 mesh = SubResource("CapsuleMesh_qs42a")
 texture = ExtResource("3_4xave")
 
+[node name="platform3" type="StaticBody2D" parent="world"]
+position = Vector2(477, 86)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/platform3"]
+position = Vector2(-7, 29)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gqirc")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="world/platform3"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+rotation = 1.5708
+mesh = SubResource("CapsuleMesh_l2uau")
+texture = ExtResource("3_4xave")
+
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
-position = Vector2(838, 213)
+position = Vector2(806, 244)
 
 [node name="enemy" type="Node" parent="."]
 

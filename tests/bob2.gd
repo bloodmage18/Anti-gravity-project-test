@@ -8,6 +8,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var frame_counter = $Frame_Counter
 @onready var anim : AnimationPlayer = $Node2D/Sprite/AnimationPlayer
 @onready var Sprite = $'Node2D/Sprite'
+@onready var body : Node2D = $Node2D
 
 @onready var GroundL : RayCast2D  = $Raycasts/GroundL
 @onready var GroundR : RayCast2D = $Raycasts/GroundR
@@ -25,6 +26,7 @@ var landing_frames = 0
 var lag_frames = 0
 var jump_squat = 3
 var fastfall = false
+var roll_duration = 10
 
 var RUNSPEED = 340
 var DASHSPEED = 390
@@ -107,6 +109,7 @@ func calculate_jump_velocity():
 
 func _rotate():
 	if Platform_Cast_U.is_colliding():
+		rotation = Platform_Cast_U.get_collision_normal().angle() + deg_to_rad(180)
 		rotation = deg_to_rad(180)
 	else:
 		rotation = deg_to_rad(0)
@@ -118,21 +121,14 @@ func _rotate():
 ## PLatform functions
 func _attach_to_platform(delta):
 	var GRAVITY = 900
+	var  move_direction = Vector2()
 	# Attaching tank to platform
 	if Platform_Cast_D.is_colliding():
 		var normal = Platform_Cast_D.get_collision_normal()
 		var impulse = -normal * GRAVITY
-		if velocity.y > -0 :
-			velocity.y -= (impulse.y) * delta
-			print("up")
-		elif velocity.y < -0:
-			velocity.y += (impulse.y) * delta
-			print("down")
-		else:
-			velocity += impulse * delta
-	else:
-		var normal_gravity = Vector2.DOWN * GRAVITY
-		velocity += normal_gravity * delta
+		move_direction = normal.rotated(Input.get_axis("left" , "right") * deg_to_rad(90))
+		velocity = move_direction 
+		velocity += impulse * delta
 
 	# Adjust the gravity to ensure it applies smoothly even on steep surfaces
 	velocity.x = move_toward(velocity.x  , 0.0 , gravity * delta)
