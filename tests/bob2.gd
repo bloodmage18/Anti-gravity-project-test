@@ -119,13 +119,9 @@ func _rotate():
 		rotation = normal.angle() + deg_to_rad(90)
 	
 func _attach_to_platform(delta):
-	var  move_direction = Vector2()
-	var normal = Platform_Cast_D.get_collision_normal()
+	#var  move_direction = Vector2()
+	#var normal = Platform_Cast_D.get_collision_normal()
 	#var impulse = -normal * FALLINGSPEED
 	#velocity.y += impulse.y * delta
-	velocity.y += gravity
-	# Adjust the gravity to ensure it applies smoothly even on steep surfaces
-	#velocity.x = move_toward(velocity.x  , 0.0 , gravity * delta)
-	#velocity.y = move_toward(velocity.y  , -gravity , gravity * delta)
-	#velocity.move_toward(Vector2.ZERO , GRAVITY * delta)
+	velocity.y += gravity * .5
 	#print(velocity)

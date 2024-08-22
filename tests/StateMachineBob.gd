@@ -35,27 +35,23 @@ func get_transition(delta):
 	parent._rotate()
 	parent.move_and_slide()
 
-	if state_includes([ states.PLATFORM_RUN , states.PLATFORM_DASH , states.CROUCH , states.MOONWALK]):
+	if state_includes([ states.PLATFORM_RUN , states.PLATFORM_DASH , states.CROUCH , states.MOONWALK , states.PLATFORM_STAND]):
 		if parent.Platform_Cast_D.is_colliding() and not LANDING():
-			#parent.velocity.y += parent.FALLINGSPEED
 			parent._attach_to_platform(delta)
-		#parent.calculate_jump_velocity()
-		pass
-	
 		
 	if LANDING() == true:
 		parent._frame()
 		return states.LANDING
-	
+		
 	if FALLING() == true:
 		return states.AIR
-	
+		
 	if PLATFORM_COLLIDED() == true :
 		parent._frame()
 		return states.ROLL
 	else:
 		pass
-	
+		
 	match state:
 		states.STAND:
 #			print("idle")
@@ -368,6 +364,7 @@ func get_transition(delta):
 				#if parent.velocity.x <= 0:
 				parent.velocity.x = -parent.RUNSPEED
 				parent.turn(true)
+				print(parent.velocity)
 				#else:
 					#parent._frame()
 					#return states.TURN
@@ -375,6 +372,7 @@ func get_transition(delta):
 				#if parent.velocity.x >= 0:
 				parent.velocity.x = parent.RUNSPEED
 				parent.turn(false)
+				print(parent.velocity)
 				#else:
 					#parent._frame()
 					#return states.TURN
@@ -387,6 +385,7 @@ func get_transition(delta):
 			return states.JUMP_SQUAT
 			
 		states.PLATFORM_DASH:
+			parent.velocity = Vector2.ZERO
 			if Input.is_action_pressed("jump"):
 				parent._frame()
 				return states.PLATFORM_JUMP
@@ -397,6 +396,10 @@ func get_transition(delta):
 				parent.velocity.x = -parent.DASHSPEED
 				if parent.frame <= parent.dash_duration + 1:
 					parent.turn(true)
+					#parent._frame()
+					return states.PLATFORM_DASH
+				else:
+					parent.turn(false)
 					parent._frame()
 					return states.PLATFORM_RUN
 				
@@ -406,6 +409,10 @@ func get_transition(delta):
 					parent.turn(false)
 				parent.velocity.x = parent.DASHSPEED
 				if parent.frame <= parent.dash_duration + 1:
+					parent.turn(false)
+					#parent._frame()
+					return states.PLATFORM_DASH
+				else:
 					parent.turn(false)
 					parent._frame()
 					return states.PLATFORM_RUN

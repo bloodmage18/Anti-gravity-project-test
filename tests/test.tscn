@@ -13,11 +13,11 @@ size = Vector3(1000, 50, 1)
 size = Vector2(1356, 50)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fim1h"]
-radius = 100.0
+radius = 150.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_lcn1r"]
-radius = 100.0
-height = 200.0
+radius = 150.0
+height = 300.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1nfbd"]
 radius = 100.0
@@ -111,7 +111,7 @@ mesh = SubResource("CapsuleMesh_qs42a")
 texture = ExtResource("3_4xave")
 
 [node name="platform3" type="StaticBody2D" parent="world"]
-position = Vector2(476, 149)
+position = Vector2(477, 119)
 collision_layer = 32
 collision_mask = 48
 
@@ -131,7 +131,7 @@ texture = ExtResource("3_4xave")
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
-position = Vector2(195, 232)
+position = Vector2(213, 224)
 
 [node name="enemy" type="Node" parent="."]
 

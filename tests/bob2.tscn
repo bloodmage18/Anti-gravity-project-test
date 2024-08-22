@@ -977,12 +977,12 @@ libraries = {
 position = Vector2(0, 17.25)
 
 [node name="GroundL" type="RayCast2D" parent="Raycasts"]
-position = Vector2(13, 3)
+position = Vector2(12, 2.75)
 target_position = Vector2(0, 15)
 collision_mask = 49
 
 [node name="GroundR" type="RayCast2D" parent="Raycasts"]
-position = Vector2(-14, 3)
+position = Vector2(-13, 2.75)
 target_position = Vector2(0, 15)
 collision_mask = 49
 collide_with_areas = true
@@ -1003,6 +1003,7 @@ target_position = Vector2(0, -20)
 collision_mask = 32
 
 [node name="Platform_Cast_Down" type="RayCast2D" parent="Raycasts"]
+position = Vector2(-1, -7.25)
 target_position = Vector2(1, 30)
 collision_mask = 32
 
