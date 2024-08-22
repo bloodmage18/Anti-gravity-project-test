@@ -320,7 +320,7 @@ func get_transition(delta):
 					return states.RUN
 			
 		states.PLATFORM_STAND:
-			parent.velocity =Vector2.ZERO
+			
 			if Input.get_action_strength("jump"):
 				parent._frame()
 				return states.PLATFORM_JUMP
@@ -350,6 +350,8 @@ func get_transition(delta):
 			elif parent.velocity.y < 0 and state == states.PLATFORM_STAND:
 				parent.velocity.y += parent.TRACTION*1
 				parent.velocity.y = clamp(parent.velocity.y,parent.velocity.y,0)
+				
+			parent.velocity.x = 0 #Vector2.ZERO
 			
 		states.PLATFORM_WALK:
 			pass
