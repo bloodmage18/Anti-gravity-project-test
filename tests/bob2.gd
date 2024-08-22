@@ -4,6 +4,10 @@ class_name Bob
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var projectile = preload("res://tests/projectile.tscn")
+@onready var gun_pos : Marker2D = $Node2D/Marker2D
+
+
 @onready var states = $State_Label
 @onready var frame_counter = $Frame_Counter
 @onready var anim : AnimationPlayer = $Node2D/Sprite/AnimationPlayer
@@ -49,15 +53,40 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 var id = 1
-
-
 var frame = 0
+
+
+
+
+
+func create_Projectile(dir_x , dir_y , point):
+	#instance projectile
+	var projectile_instance = projectile.instantiate()
+	projectile_instance.player_list.append(self)
+	get_parent().add_child(projectile_instance)
+	#set_position
+	gun_pos.set_position(point)
+	#flips the direction
+	if direction() == 1:
+		projectile_instance.dir(dir_x,dir_y)
+		projectile_instance.set_global_position(gun_pos.get_global_position)
+	else:
+		gun_pos.position.x = -gun_pos.position.x
+		projectile_instance.dir(-(dir_x),dir_y)
+		projectile_instance.set_global_position(gun_pos.get_global_position())
+	return projectile_instance
+
+
+
+
+
+
+
 func updateframes(delta):
 	frame += 1
-	
+
 func _frame():
 	frame = 0
-
 
 func _ready():
 	pass

@@ -15,14 +15,18 @@ func _ready():
 	add_state('TURN')
 	add_state('CROUCH')
 	add_state('SLIDE')
-	# platform states
 	
+	# platform states
 	add_state('ROLL')
 	add_state('PLATFORM_STAND')
 	add_state('PLATFORM_DASH')
 	add_state('PLATFORM_WALK')
 	add_state('PLATFORM_RUN')
 	add_state('PLATFORM_JUMP')
+	
+	# bow attacks
+	add_state('BOW_GROUND')
+	
 	call_deferred("set_state" , states.STAND)
 
 func state_logic(delta):
@@ -51,6 +55,10 @@ func get_transition(delta):
 		return states.ROLL
 	else:
 		pass
+		
+	if Input.is_action_just_pressed("light") && SPECIAL() == true:
+		parent._frame()
+		return states.BOW_GROUND
 		
 	match state:
 		states.STAND:
@@ -254,7 +262,7 @@ func get_transition(delta):
 		states.ROLL:
 			parent.velocity.y -= parent.JUMPFORCE * delta
 			#parent.body.rotation = parent.Platform_Cast_U.get_collision_normal().angle() - PI/2
-			#_attach_to_platform_2(delta)
+			
 			if parent.frame >= parent.roll_duration:
 				parent._frame()
 				return states.AIR
@@ -355,6 +363,7 @@ func get_transition(delta):
 			
 		states.PLATFORM_WALK:
 			pass
+			
 		states.PLATFORM_RUN:
 			if Input.is_action_just_pressed("jump"):
 				parent._frame()
@@ -427,6 +436,28 @@ func get_transition(delta):
 							return states.PLATFORM_STAND
 			pass
 		
+		# Bow Attacks
+		
+		states.BOW_GROUND:
+			if parent.frame <= 1:
+				if parent.projectile_cooldown == 1:
+					parent.projectile_cooldown =- 1
+				if parent.projectile_cooldown == 0:
+					parent.projectile_cooldown += 1
+					parent._frame()
+					parent.BOW_GROUND()
+			if parent.frame < 8:
+				if Input.is_action_just_pressed("light"):
+					parent._frame()
+					return states.BOW_GROUND
+			if parent.BOW_GROUND() == true:
+				if AIREAL() == true:
+					return states.AIR
+				else:
+					if parent.frame == 8:
+						parent._frame()
+						return states.STAND
+		
 
 func enter_state(new_state, old_state):
 	match state:
@@ -481,6 +512,9 @@ func enter_state(new_state, old_state):
 		states.PLATFORM_JUMP:
 			parent.play_animation('short_hop')
 			parent.states.text = str('PLATFORM_JUMP')
+		states.BOW_GROUND:
+			parent.play_animation('bow_g')
+			parent.states.text = str('GROUND_BOW')
 			
 		
 func exit_state(old_state, new_state):
@@ -491,12 +525,11 @@ func state_includes(state_array):
 		if state == each_state:
 			return true
 	return false
-
-
+	
 func RESET_ROTAION():
 	if state_includes([states.AIR]):
 		parent._rotate()
-
+	
 func AIRMOVEMENT():
 #	print_debug("i believe i can fly")
 	if parent.velocity.y < parent.FALLINGSPEED:
@@ -576,18 +609,17 @@ func _on_platform():
 	else:
 		return false
 
-func _attach_to_platform_2(delta):
-	
-	#if state_includes([states.PLATFORM_RUN, states.PLATFORM_DASH , states.PLATFORM_STAND]):
-	
-	if parent.Platform_Cast_U.is_colliding():
-		var collision_normal = parent.Platform_Cast_U.get_collision_normal()
-		var target_rotation = collision_normal.angle() - PI/2  # Adjust to make player's up align with surface normal
-		parent.rotation = lerp_angle(parent.rotation, target_rotation, 0.1)  # Smooth rotation to the surface normal     
-		# Check for abrupt changes in rotation
-		if abs(parent.rotation - target_rotation) > PI/2:
-			parent.rotation = target_rotation  # Snap to avoid flipping
-		# Move the player based on the new rotation
-		var local_direction = Vector2(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"), 0)
-		parent.velocity = local_direction.rotated(parent.rotation) * parent.RUNSPEED
-		#parent.move_and_slide(parent.velocity)
+func SPECIAL():
+	if state_includes([states.WALK ,states.STAND ,states.DASH , states.MOONWALK , states.CROUCH]):
+		return true
+		
+func TILT():
+	if state_includes([states.WALK ,states.STAND ,states.DASH , states.MOONWALK , states.CROUCH]):
+		return true
+		
+func AIREAL():
+	if state_includes([states.AIR , states.BOW_GROUND]):
+		if !(parent.GroundL.is_colliding() and parent.GroundR.is_colliding()):
+			return true
+		else:
+			return false
