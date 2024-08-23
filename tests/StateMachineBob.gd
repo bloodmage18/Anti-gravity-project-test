@@ -446,9 +446,6 @@ func get_transition(delta):
 		
 		states.BOW_GROUND:
 			
-			if AIREAL() == true:
-				AIRMOVEMENT()
-			
 			if parent.frame <= 1:
 				if parent.attack.projectile_cooldown == 1:
 					parent.attack.projectile_cooldown =- 1
@@ -472,6 +469,18 @@ func get_transition(delta):
 							return states.PLATFORM_STAND
 						else:
 							return states.STAND
+			else:
+				if parent.velocity.x > 0:
+					if parent.velocity.x >  parent.DAsSHSPEED:
+						parent.velocity.x = parent.DASHSPEED
+					parent.velocity.x = parent.velocity.x - parent.TRACTION * 2
+					parent.velocity.x = clampi(parent.velocity.x , 0 , parent.velocity.x)
+				elif parent.velocity.x < 0:
+					if parent.velocity.x < -parent.DASHSPEED:
+						parent.velocity.x = -parent.DASHSPEED
+					parent.velocity.x = parent.velocity.x + parent.TRACTION * 2
+					parent.velocity.x = clampi(parent.velocity.x , parent.velocity.x , 0)
+			
 		
 		states.BOW_AIR:
 			if AIREAL() == true:
@@ -499,8 +508,6 @@ func get_transition(delta):
 							return states.PLATFORM_STAND
 						else:
 							return states.STAND
-		
-		
 
 func enter_state(new_state, old_state):
 	match state:

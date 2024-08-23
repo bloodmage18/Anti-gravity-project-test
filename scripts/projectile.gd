@@ -7,8 +7,7 @@ extends Area2D
 @export var damage = 3
 
 var frame = 0
-var dir_x = 1
-var dir_y = 0
+var direction = Vector2(1, 0)
 var player_list = []
 
 func _ready():
@@ -21,14 +20,16 @@ func _process(delta):
 	frame += floor(delta * 60)
 	if frame >= duration:
 		queue_free()
-	var motion = (Vector2(dir_x,dir_y)).normalized() * PROJECTILE_SPEED
-	set_position(get_position() + motion * delta)
-	
-	set_rotation_degrees(rad_to_deg(Vector2(dir_x,dir_y).angle()))
+		
+	var motion = direction.normalized() * PROJECTILE_SPEED
+	position += motion * delta
+	rotation_degrees = direction.angle() * 180.0 / PI
 
-func dir(directionx , directiony):
-	dir_x = directionx
-	dir_y = directiony
+func set_direction(new_direction: Vector2):
+	direction = new_direction
+	
+func dir(x,y):
+	direction = Vector2(x , y)
 
 func _on_arrow_body_entered(body):
 	if not(body in player_list):

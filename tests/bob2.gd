@@ -55,29 +55,20 @@ var id = 1
 var frame = 0
 
 
-
-
-
-func create_Projectile(dir_x , dir_y , point):
-	#instance projectile
+func create_Projectile2(dir_x, dir_y, point):
+	# Instance projectile
 	var projectile_instance = projectile.instantiate() as Area2D
 	projectile_instance.player_list.append(self)
 	get_parent().add_child(projectile_instance)
-	#set_position
-	gun_pos.set_position(point)
-	#flips the direction
-	if direction() == 1:
-		projectile_instance.dir(dir_x,dir_y)
-		projectile_instance.set_global_position(gun_pos.get_global_position())
-	else:
-		gun_pos.position.x = -gun_pos.position.x
-		projectile_instance.dir(-(dir_x),dir_y)
-		projectile_instance.set_global_position(gun_pos.get_global_position())
+	# Apply the player's rotation to the direction vector
+	var direction_vector = Vector2(direction(), dir_y).rotated(self.rotation)
+	point = point * direction()
+	# Set projectile direction and position
+	projectile_instance.dir(direction_vector.x, direction_vector.y)
+	var global_point = gun_pos.get_global_position() + point.rotated(self.rotation)
+	projectile_instance.set_global_position(global_point)
+	
 	return projectile_instance
-
-
-
-
 
 
 
