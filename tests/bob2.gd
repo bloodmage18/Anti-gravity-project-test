@@ -6,8 +6,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var projectile = preload("res://tests/projectile.tscn")
 @onready var gun_pos : Marker2D = $Node2D/Marker2D
-
-
+@onready var attack : Node = $AttacksFunctions
 @onready var states = $State_Label
 @onready var frame_counter = $Frame_Counter
 @onready var anim : AnimationPlayer = $Node2D/Sprite/AnimationPlayer
@@ -61,7 +60,7 @@ var frame = 0
 
 func create_Projectile(dir_x , dir_y , point):
 	#instance projectile
-	var projectile_instance = projectile.instantiate()
+	var projectile_instance = projectile.instantiate() as Area2D
 	projectile_instance.player_list.append(self)
 	get_parent().add_child(projectile_instance)
 	#set_position
@@ -69,7 +68,7 @@ func create_Projectile(dir_x , dir_y , point):
 	#flips the direction
 	if direction() == 1:
 		projectile_instance.dir(dir_x,dir_y)
-		projectile_instance.set_global_position(gun_pos.get_global_position)
+		projectile_instance.set_global_position(gun_pos.get_global_position())
 	else:
 		gun_pos.position.x = -gun_pos.position.x
 		projectile_instance.dir(-(dir_x),dir_y)

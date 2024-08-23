@@ -440,21 +440,21 @@ func get_transition(delta):
 		
 		states.BOW_GROUND:
 			if parent.frame <= 1:
-				if parent.projectile_cooldown == 1:
-					parent.projectile_cooldown =- 1
-				if parent.projectile_cooldown == 0:
-					parent.projectile_cooldown += 1
+				if parent.attack.projectile_cooldown == 1:
+					parent.attack.projectile_cooldown =- 1
+				if parent.attack.projectile_cooldown == 0:
+					parent.attack.projectile_cooldown += 1
 					parent._frame()
-					parent.BOW_GROUND()
-			if parent.frame < 8:
+					parent.attack.BOW_GROUND()
+			if parent.frame < 14:
 				if Input.is_action_just_pressed("light"):
 					parent._frame()
 					return states.BOW_GROUND
-			if parent.BOW_GROUND() == true:
+			if parent.attack.BOW_GROUND() == true:
 				if AIREAL() == true:
 					return states.AIR
 				else:
-					if parent.frame == 8:
+					if parent.frame == 14:
 						parent._frame()
 						return states.STAND
 		
