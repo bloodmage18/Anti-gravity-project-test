@@ -26,6 +26,7 @@ func _ready():
 	
 	# bow attacks
 	add_state('BOW_GROUND')
+	add_state('BOW_AIR')
 	
 	call_deferred("set_state" , states.STAND)
 
@@ -260,6 +261,10 @@ func get_transition(delta):
 		states.AIR:
 			AIRMOVEMENT()
 			
+			if Input.is_action_just_pressed("right_click"):
+				parent._frame()
+				return states.BOW_AIR
+			
 		states.ROLL:
 			parent.velocity.y -= parent.JUMPFORCE * delta
 			#parent.body.rotation = parent.Platform_Cast_U.get_collision_normal().angle() - PI/2
@@ -441,7 +446,6 @@ func get_transition(delta):
 		
 		states.BOW_GROUND:
 			
-			
 			if AIREAL() == true:
 				AIRMOVEMENT()
 			
@@ -457,6 +461,7 @@ func get_transition(delta):
 				if Input.is_action_just_pressed("right_click"):
 					parent._frame()
 					return states.BOW_GROUND
+					
 			if parent.attack.BOW_GROUND() == true:
 				if AIREAL() == true:
 					return states.AIR
@@ -467,6 +472,34 @@ func get_transition(delta):
 							return states.PLATFORM_STAND
 						else:
 							return states.STAND
+		
+		states.BOW_AIR:
+			if AIREAL() == true:
+				AIRMOVEMENT()
+				
+			if parent.frame <= 1:
+				if parent.attack.projectile_cooldown == 1:
+					parent.attack.projectile_cooldown =- 1
+				if parent.attack.projectile_cooldown == 0:
+					parent.attack.projectile_cooldown += 1
+					parent._frame()
+					parent.attack.BOW_AIR()
+			if parent.frame < 14:
+				#if Input.is_action_just_pressed("light"):
+				if Input.is_action_just_pressed("right_click"):
+					parent._frame()
+					return states.BOW_AIR
+			if parent.attack.BOW_AIR() == true:
+				if AIREAL() == true:
+					return states.AIR
+				else:
+					if parent.frame == 14:
+						parent._frame()
+						if _on_platform():
+							return states.PLATFORM_STAND
+						else:
+							return states.STAND
+		
 		
 
 func enter_state(new_state, old_state):
@@ -522,9 +555,14 @@ func enter_state(new_state, old_state):
 		states.PLATFORM_JUMP:
 			parent.play_animation('short_hop')
 			parent.states.text = str('PLATFORM_JUMP')
+			
+		# weapon : BOW and ARROW
 		states.BOW_GROUND:
 			parent.play_animation('bow_g')
 			parent.states.text = str('GROUND_BOW')
+		states.BOW_AIR:
+			parent.play_animation('bow_a')
+			parent.states.text = str('AIR_BOW')
 			
 		
 func exit_state(old_state, new_state):
@@ -579,7 +617,7 @@ func AIRMOVEMENT():
 func LANDING():
 #	added the sprite y offset variable since the character the above body .y
 	var sprite_y_offset = $"../Node2D/Sprite".global_transform.origin
-	if state_includes([states.AIR]):
+	if state_includes([states.AIR , states.BOW_AIR]):
 		if (parent.GroundL.is_colliding()) and parent.velocity.y > 0 - sprite_y_offset.y:
 			var collider = parent.GroundL.get_collider()
 			parent.frame = 0
@@ -628,7 +666,7 @@ func TILT():
 		return true
 		
 func AIREAL():
-	if state_includes([states.AIR , states.BOW_GROUND]):
+	if state_includes([states.AIR , states.BOW_AIR]):
 		if !(parent.GroundL.is_colliding() and parent.GroundR.is_colliding()):
 			return true
 		else:

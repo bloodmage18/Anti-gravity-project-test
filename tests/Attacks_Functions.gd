@@ -9,6 +9,11 @@ var projectile_cooldown = 0
 # HAND ATTACKS
 
 # SWORD ATTACKS
+func swordsattacks():
+	
+	pass
+
+
 
 # Bow Attacks [AIR & GROUND]
 func BOW_GROUND():
