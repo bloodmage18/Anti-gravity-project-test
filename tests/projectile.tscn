@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ck0aifmn8ar4o"]
 
-[ext_resource type="Texture2D" uid="uid://cnwnh6kmhh8lt" path="res://assets/sprites/weapons -bowarrow/bow.png" id="1_bjlie"]
+[ext_resource type="Texture2D" uid="uid://dlyqc3633yd8x" path="res://assets/sprites/weapons -bowarrow/bow.png" id="1_bjlie"]
 [ext_resource type="Script" path="res://scripts/projectile.gd" id="1_tya1g"]
-[ext_resource type="Texture2D" uid="uid://cab3osd580p10" path="res://assets/sprites/weapons -bowarrow/arrow.png" id="2_4yp7f"]
+[ext_resource type="Texture2D" uid="uid://c44jfyau7g4nm" path="res://assets/sprites/weapons -bowarrow/arrow.png" id="2_4yp7f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_un164"]
 size = Vector2(26, 4)

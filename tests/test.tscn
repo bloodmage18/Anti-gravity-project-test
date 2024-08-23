@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
-[ext_resource type="Texture2D" uid="uid://d1ff2jmw3gtrl" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
-[ext_resource type="Texture2D" uid="uid://ctq6rml6mf024" path="res://assets/png/Purple/texture_08.png" id="2_8eaou"]
-[ext_resource type="Texture2D" uid="uid://dwhsxhxo8cxol" path="res://assets/png/Purple/texture_13.png" id="3_4xave"]
+[ext_resource type="Texture2D" uid="uid://bbqaarefx1apb" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
+[ext_resource type="Texture2D" uid="uid://btw7abcgtqqtm" path="res://assets/png/Purple/texture_08.png" id="2_8eaou"]
+[ext_resource type="Texture2D" uid="uid://bthnipleqvjn3" path="res://assets/png/Purple/texture_13.png" id="3_4xave"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
 size = Vector3(1000, 50, 1)

@@ -376,7 +376,7 @@ func get_transition(delta):
 				#if parent.velocity.x <= 0:
 				parent.velocity.x = -parent.RUNSPEED
 				parent.turn(true)
-				print(parent.velocity)
+				#print(parent.velocity)
 				#else:
 					#parent._frame()
 					#return states.TURN
@@ -384,7 +384,7 @@ func get_transition(delta):
 				#if parent.velocity.x >= 0:
 				parent.velocity.x = parent.RUNSPEED
 				parent.turn(false)
-				print(parent.velocity)
+				#print(parent.velocity)
 				#else:
 					#parent._frame()
 					#return states.TURN
