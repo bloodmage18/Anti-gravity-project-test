@@ -1080,6 +1080,10 @@ collision_mask = 32
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -50)
 zoom = Vector2(1.7, 1.7)
+limit_left = -300
+limit_top = 50
+limit_right = 1250
+limit_bottom = 780
 
 [node name="StateMachineBob" type="Node" parent="."]
 script = ExtResource("96_v7dk0")

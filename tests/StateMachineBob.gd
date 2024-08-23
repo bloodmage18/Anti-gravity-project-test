@@ -56,7 +56,8 @@ func get_transition(delta):
 	else:
 		pass
 		
-	if Input.is_action_just_pressed("light") && SPECIAL() == true:
+	#if Input.is_action_just_pressed("light") && SPECIAL() == true:
+	if Input.is_action_just_pressed("right_click") && SPECIAL() == true:
 		parent._frame()
 		return states.BOW_GROUND
 		
@@ -439,6 +440,11 @@ func get_transition(delta):
 		# Bow Attacks
 		
 		states.BOW_GROUND:
+			
+			
+			if AIREAL() == true:
+				AIRMOVEMENT()
+			
 			if parent.frame <= 1:
 				if parent.attack.projectile_cooldown == 1:
 					parent.attack.projectile_cooldown =- 1
@@ -447,7 +453,8 @@ func get_transition(delta):
 					parent._frame()
 					parent.attack.BOW_GROUND()
 			if parent.frame < 14:
-				if Input.is_action_just_pressed("light"):
+				#if Input.is_action_just_pressed("light"):
+				if Input.is_action_just_pressed("right_click"):
 					parent._frame()
 					return states.BOW_GROUND
 			if parent.attack.BOW_GROUND() == true:
@@ -456,7 +463,10 @@ func get_transition(delta):
 				else:
 					if parent.frame == 14:
 						parent._frame()
-						return states.STAND
+						if _on_platform():
+							return states.PLATFORM_STAND
+						else:
+							return states.STAND
 		
 
 func enter_state(new_state, old_state):
@@ -610,7 +620,7 @@ func _on_platform():
 		return false
 
 func SPECIAL():
-	if state_includes([states.WALK ,states.STAND ,states.DASH , states.MOONWALK , states.CROUCH]):
+	if state_includes([states.WALK ,states.STAND ,states.DASH , states.MOONWALK , states.CROUCH , states.PLATFORM_STAND , states.PLATFORM_DASH , states.PLATFORM_RUN]):
 		return true
 		
 func TILT():

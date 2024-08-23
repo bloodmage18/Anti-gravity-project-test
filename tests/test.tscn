@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dmf7wj116o5ua"]
+[gd_scene load_steps=16 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
@@ -35,6 +35,12 @@ height = 1388.0
 radius = 25.0
 height = 1500.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31wy5"]
+size = Vector2(43.5, 776)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68ab7"]
+size = Vector2(1570, 125)
+
 [node name="test" type="Node2D"]
 
 [node name="world" type="Node" parent="."]
@@ -44,9 +50,9 @@ modulate = Color(0.34902, 0.34902, 0.34902, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -155.0
+offset_left = -333.0
 offset_top = 2.0
-offset_right = 7416.0
+offset_right = 9063.0
 offset_bottom = 4105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -127,6 +133,22 @@ rotation = 1.5708
 scale = Vector2(0.946608, 0.926139)
 mesh = SubResource("CapsuleMesh_l2uau")
 texture = ExtResource("3_4xave")
+
+[node name="boundary" type="StaticBody2D" parent="world"]
+collision_layer = 48
+collision_mask = 55
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/boundary"]
+position = Vector2(-312.25, 380)
+shape = SubResource("RectangleShape2D_31wy5")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="world/boundary"]
+position = Vector2(1280, 380)
+shape = SubResource("RectangleShape2D_31wy5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="world/boundary"]
+position = Vector2(485, 731.5)
+shape = SubResource("RectangleShape2D_68ab7")
 
 [node name="player" type="Node" parent="."]
 
