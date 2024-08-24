@@ -28,12 +28,19 @@ func _ready():
 	add_state('BOW_GROUND')
 	add_state('BOW_AIR')
 	
+	# Hand Attacks
+	add_state('GROUND_ATTACK')
+	add_state('PUNCH_1')
+	add_state('PUNCH_2')
+	add_state('PUNCH_3')
+	add_state('KICK_1')
+	add_state('KICK_2')
+	
 	call_deferred("set_state" , states.STAND)
 
 func state_logic(delta):
 	parent.updateframes(delta)
 	parent._physics_process(delta)
-	#parent._attach_to_platform(delta)
 	parent.adjust_movement_for_surface()
 
 func get_transition(delta):
@@ -57,7 +64,10 @@ func get_transition(delta):
 	else:
 		pass
 		
-	#if Input.is_action_just_pressed("light") && SPECIAL() == true:
+	if Input.is_action_just_pressed("heavy") && SPECIAL() == true:
+		parent._frame()
+		return states.GROUND_ATTACK
+		
 	if Input.is_action_just_pressed("right_click") && SPECIAL() == true:
 		parent._frame()
 		return states.BOW_GROUND
@@ -87,6 +97,8 @@ func get_transition(delta):
 			elif parent.velocity.x < 0 and state == states.STAND:
 				parent.velocity.x += parent.TRACTION*1
 				parent.velocity.x = clamp(parent.velocity.x,parent.velocity.x,0)
+			if _on_platform():
+				return states.PLATFORM_STAND
 			
 		states.WALK:
 			if Input.is_action_just_pressed("jump"):
@@ -443,7 +455,6 @@ func get_transition(delta):
 			pass
 		
 		# Bow Attacks
-		
 		states.BOW_GROUND:
 			
 			if parent.frame <= 1:
@@ -481,7 +492,6 @@ func get_transition(delta):
 					parent.velocity.x = parent.velocity.x + parent.TRACTION * 2
 					parent.velocity.x = clampi(parent.velocity.x , parent.velocity.x , 0)
 			
-		
 		states.BOW_AIR:
 			if AIREAL() == true:
 				AIRMOVEMENT()
@@ -508,6 +518,66 @@ func get_transition(delta):
 							return states.PLATFORM_STAND
 						else:
 							return states.STAND
+		
+		# Hand Attacks
+		states.GROUND_ATTACK:
+			if Input.is_action_pressed("left") && Input.is_action_pressed("light"):
+				parent._frame()
+				return states.KICK_1
+			if Input.is_action_pressed("heavy"):
+				parent._frame()
+				return states.PUNCH_1
+		
+		states.PUNCH_1:
+			if parent.frame == 0:
+				parent.attack.Punch_1()
+			if parent.frame < 23:
+				if Input.is_action_just_pressed("heavy"):
+					parent._frame()
+					return states.PUNCH_2
+			if parent.attack.Punch_1() == true:
+				parent._frame()
+				return states.STAND
+		
+		states.PUNCH_2:
+			if parent.frame == 0:
+				parent.attack.Punch_2()
+			if parent.frame < 25:
+				if Input.is_action_just_pressed("heavy"):
+					parent._frame()
+					return states.PUNCH_3
+			if parent.attack.Punch_2() == true:
+				parent._frame()
+				return states.STAND
+		
+		states.PUNCH_3:
+			if parent.frame == 0:
+				parent.attack.Punch_3()
+			if parent.anim.is_playing() == false:
+				parent._frame()
+				return states.STAND
+			if parent.attack.Punch_3() == true:
+				# chain attacks
+				parent._frame()
+				return states.GROUND_ATTACK
+				
+		
+		states.KICK_1:
+			if parent.frame == 0:
+				parent.attack.KICK_A()
+				
+			if parent.anim.is_playing() == false:
+				parent._frame()
+				return states.STAND
+		
+		states.KICK_2:
+			
+			pass
+		
+		
+	if parent.frame >= 100:
+		parent._frame()
+
 
 func enter_state(new_state, old_state):
 	match state:
@@ -570,6 +640,26 @@ func enter_state(new_state, old_state):
 		states.BOW_AIR:
 			parent.play_animation('bow_a')
 			parent.states.text = str('AIR_BOW')
+			
+		# weapon : UNARMED
+		states.GROUND_ATTACK:
+			parent.states.text = str('GROUND_ATTACK')
+		states.PUNCH_1:
+			parent.play_animation('Punch_01')
+			parent.states.text = str('PUNCH_1')
+		states.PUNCH_2:
+			parent.anim.queue('Punch_02')
+			parent.states.text = str('PUNCH_2')
+		states.PUNCH_3:
+			parent.anim.queue("Punch_03")
+			parent.states.text = str('PUNCH_3')
+			
+		states.KICK_1:
+			parent.play_animation('kick_01')
+			parent.states.text = str('KICK_1')
+		states.KICK_2:
+			parent.anim.queue('kick_02')
+			parent.states.text = str('KICK_2')
 			
 		
 func exit_state(old_state, new_state):

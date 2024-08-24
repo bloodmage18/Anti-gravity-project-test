@@ -3,23 +3,24 @@ class_name Bob
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
 var projectile = preload("res://tests/projectile.tscn")
+
+# Onready Variales
 @onready var gun_pos : Marker2D = $Node2D/Marker2D
-@onready var attack : Node = $AttacksFunctions
+@onready var attack : Attacks = $AttacksFunctions
 @onready var states = $State_Label
 @onready var frame_counter = $Frame_Counter
 @onready var anim : AnimationPlayer = $Node2D/Sprite/AnimationPlayer
 @onready var Sprite = $'Node2D/Sprite'
 @onready var body : Node2D = $Node2D
 
+# Onready Raycast Nodes
 @onready var GroundL : RayCast2D  = $Raycasts/GroundL
 @onready var GroundR : RayCast2D = $Raycasts/GroundR
 @onready var Ledge_Grab_F : RayCast2D = $Raycasts/Ledge_Grab_F
 @onready var Ledge_Grab_B : RayCast2D = $Raycasts/Ledge_Grab_R
 @onready var Platform_Cast_D : RayCast2D = $Raycasts/Platform_Cast_Down
 @onready var Platform_Cast_U : RayCast2D = $Raycasts/Platform_Cast_UP
-
 
 #Ground Variables
 var dash_duration = 10
@@ -31,6 +32,11 @@ var jump_squat = 3
 var fastfall = false
 var roll_duration = 10
 
+#Hitboxes
+@export var hitbox : PackedScene
+var selfState
+
+#Variables
 var RUNSPEED = 340
 var DASHSPEED = 390
 var WALKSPEED = 200
@@ -84,6 +90,7 @@ func _ready():
 func _physics_process(delta):
 	_rotate()
 	frame_counter.text = str(frame)
+	selfState = states.text
 	pass
 
 func direction():
