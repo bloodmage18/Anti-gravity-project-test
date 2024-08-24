@@ -68,11 +68,16 @@ func get_transition(delta):
 		parent._frame()
 		return states.GROUND_ATTACK
 		
+	if Input.is_action_just_pressed("light") && SPECIAL() == true:
+		parent._frame()
+		return states.GROUND_ATTACK
+		
 	if Input.is_action_just_pressed("right_click") && SPECIAL() == true:
 		parent._frame()
 		return states.BOW_GROUND
 		
 	match state:
+		
 		states.STAND:
 #			print("idle")
 			if Input.get_action_strength("jump"):
@@ -291,6 +296,7 @@ func get_transition(delta):
 				return states.PLATFORM_STAND
 			
 		states.LANDING:
+			
 			if parent.frame <= parent.landing_frames + parent.lag_frames:
 				if parent.frame == 1:
 					pass
@@ -344,7 +350,9 @@ func get_transition(delta):
 				else:
 					parent._frame()
 					return states.RUN
-			
+		
+		
+		#PLatform States 
 		states.PLATFORM_STAND:
 			
 			if Input.get_action_strength("jump"):
@@ -454,6 +462,7 @@ func get_transition(delta):
 							return states.PLATFORM_STAND
 			pass
 		
+		
 		# Bow Attacks
 		states.BOW_GROUND:
 			
@@ -482,7 +491,7 @@ func get_transition(delta):
 							return states.STAND
 			else:
 				if parent.velocity.x > 0:
-					if parent.velocity.x >  parent.DAsSHSPEED:
+					if parent.velocity.x >  parent.DASHSPEED:
 						parent.velocity.x = parent.DASHSPEED
 					parent.velocity.x = parent.velocity.x - parent.TRACTION * 2
 					parent.velocity.x = clampi(parent.velocity.x , 0 , parent.velocity.x)
@@ -519,9 +528,10 @@ func get_transition(delta):
 						else:
 							return states.STAND
 		
+		
 		# Hand Attacks
 		states.GROUND_ATTACK:
-			if Input.is_action_pressed("left") && Input.is_action_pressed("light"):
+			if Input.is_action_pressed("light"):
 				parent._frame()
 				return states.KICK_1
 			if Input.is_action_pressed("heavy"):
@@ -560,19 +570,27 @@ func get_transition(delta):
 				# chain attacks
 				parent._frame()
 				return states.GROUND_ATTACK
-				
 		
 		states.KICK_1:
 			if parent.frame == 0:
 				parent.attack.KICK_A()
+			if parent.anim.is_playing() == false:
+				parent._frame()
+				return states.STAND
+			else:
+				if parent.frame < 14:
+					if Input.is_action_just_pressed("light"):
+						parent._frame()
+						return states.KICK_2
+		
+		states.KICK_2:
+			if parent.frame == 0:
+				parent.attack.KICK_B()
 				
 			if parent.anim.is_playing() == false:
 				parent._frame()
 				return states.STAND
 		
-		states.KICK_2:
-			
-			pass
 		
 		
 	if parent.frame >= 100:
