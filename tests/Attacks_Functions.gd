@@ -13,31 +13,36 @@ func HAND_COMBO():
 
 func Punch_1():
 	if parent.frame == 7:
-		print("punch _ 01")
+		#print("punch _ 01") --debug
+		pass
 	if parent.frame == 25:
 		return true
 	
 func Punch_2():
 	if parent.frame == 8:
-		print("punch _ 02")
+		#print("punch _ 02") -- debug
+		pass
 	if parent.frame == 25:
 		return true
 		
 func Punch_3():
 	if parent.frame == 8:
-		print("punch _ 03")
+		#print("punch _ 03") --debug
+		pass
 	if parent.frame == 40:
 		return true
 
 func KICK_A():
 	if parent.frame == 8:
-		print("kick _ 01")
+		#print("kick _ 01")  -- debug
+		pass
 	if parent.frame == 15:
 		return true
 		
 func KICK_B():
 	if parent.frame == 4:
-		print("kick _ 02")
+		#print("kick _ 02") --debug
+		pass
 	if parent.frame == 12:
 		return true
 
