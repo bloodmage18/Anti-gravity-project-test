@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dmf7wj116o5ua"]
+[gd_scene load_steps=19 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
@@ -40,6 +40,15 @@ size = Vector2(43.5, 776)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68ab7"]
 size = Vector2(1570, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rm3mh"]
+size = Vector2(43.29, 498.901)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jqy0c"]
+size = Vector3(45, 500, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x1ah0"]
+load_path = "res://.godot/imported/texture_13.png-02bba406909195b3e3685437b8535925.ctex"
 
 [node name="test" type="Node2D"]
 
@@ -150,10 +159,37 @@ shape = SubResource("RectangleShape2D_31wy5")
 position = Vector2(485, 731.5)
 shape = SubResource("RectangleShape2D_68ab7")
 
+[node name="Wall" type="StaticBody2D" parent="world"]
+position = Vector2(-7, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/Wall"]
+position = Vector2(-100, -180)
+scale = Vector2(0.993299, 0.91)
+skew = -1.94311e-05
+shape = SubResource("RectangleShape2D_rm3mh")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="world/Wall/CollisionShape2D"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-0.145252, -1.64836)
+mesh = SubResource("BoxMesh_jqy0c")
+texture = SubResource("CompressedTexture2D_x1ah0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="world/Wall"]
+position = Vector2(100, -180)
+scale = Vector2(0.993299, 0.91)
+skew = -1.94311e-05
+shape = SubResource("RectangleShape2D_rm3mh")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="world/Wall/CollisionShape2D2"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-0.145252, -1.64836)
+mesh = SubResource("BoxMesh_jqy0c")
+texture = SubResource("CompressedTexture2D_x1ah0")
+
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
-position = Vector2(473, 516)
+position = Vector2(-34, 92)
 
 [node name="enemy" type="Node" parent="."]
 
