@@ -24,6 +24,7 @@ var projectile = preload("res://tests/projectile.tscn")
 
 #Ground Variables
 var dash_duration = 10
+var slide_duration = 25
 
 #Air Variables
 var landing_frames = 0
@@ -60,12 +61,23 @@ const JUMP_VELOCITY = -400.0
 var id = 1
 var frame = 0
 
+func create_hitbox(width, height, damage, angle, base_kb, kb_scaling, duration, type, points, angle_flipper, hitlag=1):
+	var hitbox_instance = hitbox.instantiate()
+	self.add_child(hitbox_instance)
+	#Rotates The Points
+	if direction() == 1:
+		hitbox_instance.set_parameters(width, height, damage, angle, base_kb, kb_scaling, duration, type, points,angle_flipper, hitlag)
+	else:
+		var flip_x_points = Vector2(-points.x, points.y)
+		hitbox_instance.set_parameters(width, height, damage,-angle+180, base_kb, kb_scaling, duration, type, flip_x_points, angle_flipper, hitlag)
+	return hitbox_instance
 
 func create_Projectile2(dir_x, dir_y, point):
 	# Instance projectile
 	var projectile_instance = projectile.instantiate() as Area2D
 	projectile_instance.player_list.append(self)
 	get_parent().add_child(projectile_instance)
+	projectile_instance.set_level()
 	# Apply the player's rotation to the direction vector
 	var direction_vector = Vector2(direction(), dir_y).rotated(self.rotation)
 	point = point * direction()

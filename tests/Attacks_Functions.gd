@@ -1,6 +1,6 @@
 extends Node
 class_name Attacks
-@export var parent : CharacterBody2D
+@export var parent : Bob
 var projectile_cooldown = 0
 
 
@@ -8,27 +8,30 @@ var projectile_cooldown = 0
 
 # HAND ATTACKS
 func HAND_COMBO():
-	
+
 	pass
 
 func Punch_1():
 	if parent.frame == 7:
 		#print("punch _ 01") --debug
-		pass
+		parent.create_hitbox(40,20,10,90,3,120,12,'normal',Vector2(25,0),0,1)
+		#pass
 	if parent.frame == 25:
 		return true
 	
 func Punch_2():
 	if parent.frame == 8:
 		#print("punch _ 02") -- debug
-		pass
+		parent.create_hitbox(40,10,10,90,3,120,16,'normal',Vector2(30,0),0,1)
+		#pass
 	if parent.frame == 25:
 		return true
 		
 func Punch_3():
 	if parent.frame == 8:
 		#print("punch _ 03") --debug
-		pass
+		parent.create_hitbox(30,27,10,90,3,120,31,'normal',Vector2(14,0),0,1)
+		#pass
 	if parent.frame == 40:
 		return true
 
@@ -55,9 +58,15 @@ func SWRD_G1():pass
 func SWRD_G2():pass
 func SWRD_G3():pass
 
-func SWRD_A1():pass
-func SWRD_A2():pass
-func SWRD_A3():pass
+func SWRD_A1():
+	
+	pass
+func SWRD_A2():
+	
+	pass
+func SWRD_A3():
+	
+	pass
 
 # Bow Attacks [AIR & GROUND]
 func BOW_GROUND():
@@ -67,9 +76,9 @@ func BOW_GROUND():
 		return true
 	
 func BOW_AIR():
-	if parent.frame == 5:
+	if parent.frame == 2:
 		parent.create_Projectile2(1,0,Vector2(35,0))
-	if parent.frame == 8:
+	if parent.frame == 14:
 		return true
 	
 	

@@ -72,10 +72,19 @@ func get_transition(delta):
 		parent._frame()
 		return states.GROUND_ATTACK
 		
-	if Input.is_action_just_pressed("right_click") && SPECIAL() == true:
+	if Input.is_action_just_pressed("mid") && SPECIAL() == true:
 		parent._frame()
 		return states.BOW_GROUND
-		
+	
+	if Input.is_action_just_pressed("E"):
+		if state_includes([states.RUN ]):
+			parent._frame()
+			return states.SLIDE
+			
+	#if Input.is_action_just_pressed("Q"):
+		#parent._frame()
+			#return states.ROLL
+	
 	match state:
 		
 		states.STAND:
@@ -278,9 +287,16 @@ func get_transition(delta):
 		states.AIR:
 			AIRMOVEMENT()
 			
-			if Input.is_action_just_pressed("right_click"):
+			if Input.is_action_just_pressed("mid"):
 				parent._frame()
 				return states.BOW_AIR
+			
+		states.SLIDE:
+			if parent.frame >= parent.slide_duration+1:
+					for state in states:
+						if state != "JUMP_SQUAT":
+							parent._frame()
+							return states.STAND
 			
 		states.ROLL:
 			parent.velocity.y -= parent.JUMPFORCE * delta
@@ -504,7 +520,7 @@ func get_transition(delta):
 		states.BOW_AIR:
 			if AIREAL() == true:
 				AIRMOVEMENT()
-				
+			
 			if parent.frame <= 1:
 				if parent.attack.projectile_cooldown == 1:
 					parent.attack.projectile_cooldown =- 1
@@ -513,8 +529,8 @@ func get_transition(delta):
 					parent._frame()
 					parent.attack.BOW_AIR()
 			if parent.frame < 14:
-				#if Input.is_action_just_pressed("light"):
-				if Input.is_action_just_pressed("right_click"):
+				if Input.is_action_just_pressed("mid"):
+					parent.velocity = Vector2.ZERO
 					parent._frame()
 					return states.BOW_AIR
 			if parent.attack.BOW_AIR() == true:
@@ -593,7 +609,7 @@ func get_transition(delta):
 		
 		
 		
-	if parent.frame >= 100:
+	if parent.frame == 100:
 		parent._frame()
 
 
@@ -635,6 +651,9 @@ func enter_state(new_state, old_state):
 		states.AIR:
 			parent.play_animation('air')
 			parent.states.text = str('AIR')
+		states.SLIDE:
+			parent.play_animation('slide')
+			parent.states.text = str('SLIDE')
 		states.ROLL:
 			parent.play_animation('roll')
 			parent.states.text = str('ROLL')

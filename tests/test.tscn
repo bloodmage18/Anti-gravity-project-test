@@ -189,7 +189,7 @@ texture = SubResource("CompressedTexture2D_x1ah0")
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
-position = Vector2(-34, 92)
+position = Vector2(159, 615)
 
 [node name="enemy" type="Node" parent="."]
 

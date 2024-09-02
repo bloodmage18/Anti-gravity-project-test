@@ -35,3 +35,7 @@ func _on_arrow_body_entered(body):
 	if not(body in player_list):
 		body.percentage += damage
 		queue_free()
+
+func set_level():
+	top_level = true
+	
