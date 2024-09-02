@@ -116,6 +116,9 @@ down={
 2d_physics/layer_3="enemy"
 2d_physics/layer_5="ground"
 2d_physics/layer_6="platform"
+2d_physics/layer_7="wall"
+2d_physics/layer_8="ledge"
+2d_physics/layer_9="ray"
 
 [rendering]
 

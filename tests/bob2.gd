@@ -22,16 +22,29 @@ var projectile = preload("res://tests/projectile.tscn")
 @onready var Platform_Cast_D : RayCast2D = $Raycasts/Platform_Cast_Down
 @onready var Platform_Cast_U : RayCast2D = $Raycasts/Platform_Cast_UP
 
+
+var id = 1
+var frame = 0
+
 #Ground Variables
 var dash_duration = 10
 var slide_duration = 25
 
-#Air Variables
+#Landing Variables
 var landing_frames = 0
 var lag_frames = 0
+
+#Air Variables
 var jump_squat = 3
 var fastfall = false
+var airJump = 0
+@export var airJumpMax = 1
 var roll_duration = 10
+
+#ledges
+var last_ledge = false
+var regrab = 30
+var catch = false
 
 #Hitboxes
 @export var hitbox : PackedScene
@@ -58,8 +71,6 @@ var UP_B_LAUNCHSPEED = 700
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-var id = 1
-var frame = 0
 
 func create_hitbox(width, height, damage, angle, base_kb, kb_scaling, duration, type, points, angle_flipper, hitlag=1):
 	var hitbox_instance = hitbox.instantiate()
@@ -87,8 +98,6 @@ func create_Projectile2(dir_x, dir_y, point):
 	projectile_instance.set_global_position(global_point)
 	
 	return projectile_instance
-
-
 
 func updateframes(delta):
 	frame += 1
@@ -125,9 +134,9 @@ func turn(direction):
 	
 	Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
 	Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
-	Ledge_Grab_B.position.x = dir * abs(Ledge_Grab_B.position.x)
-	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
-
+	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
+	Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
+	
 
 ## PLatform functions
 func rotate_to_platform(platform_normal: Vector2):
@@ -163,3 +172,10 @@ func _attach_to_platform(delta):
 	#velocity.y += impulse.y * delta
 	velocity.y += gravity * .5
 	#print(velocity)
+
+## Lege function
+func reset_legde():
+	last_ledge = false
+	
+func reset_Jumps():
+	airJump = airJumpMax
