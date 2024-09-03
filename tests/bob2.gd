@@ -29,6 +29,7 @@ var frame = 0
 #Ground Variables
 var dash_duration = 10
 var slide_duration = 25
+var roll_duration = 10
 
 #Landing Variables
 var landing_frames = 0
@@ -39,7 +40,6 @@ var jump_squat = 3
 var fastfall = false
 var airJump = 0
 @export var airJumpMax = 1
-var roll_duration = 10
 
 #ledges
 var last_ledge = false

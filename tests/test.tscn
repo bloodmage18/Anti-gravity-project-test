@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dmf7wj116o5ua"]
+[gd_scene load_steps=21 format=3 uid="uid://dmf7wj116o5ua"]
 
 [ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
@@ -42,14 +42,17 @@ size = Vector2(43.5, 776)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68ab7"]
 size = Vector2(1570, 125)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rm3mh"]
-size = Vector2(43.29, 498.901)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s68hy"]
+size = Vector2(137.421, 498.901)
 
-[sub_resource type="BoxMesh" id="BoxMesh_jqy0c"]
+[sub_resource type="BoxMesh" id="BoxMesh_oxumu"]
 size = Vector3(45, 500, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x1ah0"]
 load_path = "res://.godot/imported/texture_13.png-02bba406909195b3e3685437b8535925.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7g5id"]
+size = Vector2(121.5, 551)
 
 [node name="test" type="Node2D"]
 
@@ -162,52 +165,67 @@ shape = SubResource("RectangleShape2D_68ab7")
 
 [node name="Wall" type="StaticBody2D" parent="world"]
 position = Vector2(-7, 0)
-collision_layer = 96
+collision_layer = 80
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world/Wall"]
-position = Vector2(-100, -180)
+position = Vector2(-146.75, -180)
 scale = Vector2(0.993299, 0.91)
 skew = -1.94311e-05
-shape = SubResource("RectangleShape2D_rm3mh")
+shape = SubResource("RectangleShape2D_s68hy")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="world/Wall/CollisionShape2D"]
 modulate = Color(0.352941, 0.313726, 0.827451, 1)
-position = Vector2(-0.145252, -1.64836)
-mesh = SubResource("BoxMesh_jqy0c")
-texture = SubResource("CompressedTexture2D_x1ah0")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="world/Wall"]
-position = Vector2(100, -180)
-scale = Vector2(0.993299, 0.91)
-skew = -1.94311e-05
-shape = SubResource("RectangleShape2D_rm3mh")
-
-[node name="MeshInstance2D2" type="MeshInstance2D" parent="world/Wall/CollisionShape2D2"]
-modulate = Color(0.352941, 0.313726, 0.827451, 1)
-position = Vector2(-0.145252, -1.64836)
-mesh = SubResource("BoxMesh_jqy0c")
+position = Vector2(-0.251654, -1.64836)
+scale = Vector2(2.99767, 1)
+mesh = SubResource("BoxMesh_oxumu")
 texture = SubResource("CompressedTexture2D_x1ah0")
 
 [node name="Ledge" parent="world/Wall" instance=ExtResource("4_gmcvf")]
-position = Vector2(-81, 32)
+position = Vector2(-79, -44)
 ledge_side = "Right"
 
 [node name="Ledge2" parent="world/Wall" instance=ExtResource("4_gmcvf")]
-position = Vector2(75, 32)
+position = Vector2(75, 26)
 
 [node name="Ledge3" parent="world/Wall" instance=ExtResource("4_gmcvf")]
-position = Vector2(-79, -119)
+position = Vector2(-77, -195)
 ledge_side = "Right"
 
 [node name="Ledge4" parent="world/Wall" instance=ExtResource("4_gmcvf")]
-position = Vector2(77, -119)
+position = Vector2(77, -125)
 
 [node name="Ledge5" parent="world/Wall" instance=ExtResource("4_gmcvf")]
 position = Vector2(-91, -398)
 ledge_side = "Right"
 
 [node name="Ledge6" parent="world/Wall" instance=ExtResource("4_gmcvf")]
-position = Vector2(90, -397)
+position = Vector2(69, -351)
+
+[node name="Ledge7" parent="world/Wall" instance=ExtResource("4_gmcvf")]
+position = Vector2(376, 31)
+
+[node name="Ledge8" parent="world/Wall" instance=ExtResource("4_gmcvf")]
+position = Vector2(378, -120)
+
+[node name="Ledge9" parent="world/Wall" instance=ExtResource("4_gmcvf")]
+position = Vector2(391, -392)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="world"]
+position = Vector2(772, -243)
+collision_layer = 64
+collision_mask = 23
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/StaticBody2D"]
+shape = SubResource("RectangleShape2D_7g5id")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="world"]
+position = Vector2(1075, -241)
+collision_layer = 64
+collision_mask = 23
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/StaticBody2D2"]
+shape = SubResource("RectangleShape2D_7g5id")
 
 [node name="player" type="Node" parent="."]
 

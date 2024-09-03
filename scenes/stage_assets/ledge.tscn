@@ -1,17 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfcj7pwd4kc8g"]
+[gd_scene load_steps=4 format=3 uid="uid://bfcj7pwd4kc8g"]
 
 [ext_resource type="Script" path="res://scripts/Ledge.gd" id="1_d71de"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqn77"]
-size = Vector2(37.5, 20.6)
+size = Vector2(30, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mrrgm"]
 
 [node name="Ledge" type="Area2D"]
 collision_layer = 128
-collision_mask = 258
+collision_mask = 2
 script = ExtResource("1_d71de")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gqn77")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-3.57628e-07, 0)
+scale = Vector2(30, 20)
+mesh = SubResource("BoxMesh_mrrgm")
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
@@ -20,4 +29,5 @@ text = "ledge"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

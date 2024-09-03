@@ -313,7 +313,7 @@ func get_transition(delta):
 				if Input.is_action_pressed("left"):
 					parent.velocity.x = -parent.MAXAIRSPEED
 				elif Input.is_action_pressed("right"):
-					parent.velocity.x = parent.MAXAIRSPEED
+					parent.velocity.x += parent.MAXAIRSPEED
 					
 			# air attack
 			if Input.is_action_just_pressed("mid"):
@@ -442,7 +442,6 @@ func get_transition(delta):
 			#Facing Right
 			elif parent.Ledge_Grab_F.get_target_position().x < 0:
 				#parent.turn(true)
-				#print("on left wall")
 				if Input.is_action_just_pressed("right"):
 					parent.velocity.x = (parent.AIR_ACCEL/2)
 					parent.regrab  = 30
@@ -924,9 +923,12 @@ func RESET_ROTAION():
 		parent._rotate()
 	
 func AIRMOVEMENT():
+	#print(parent.velocity)
 #	print_debug("i believe i can fly")
 	if parent.velocity.y < parent.FALLINGSPEED:
 		parent.velocity.y += parent.FALLSPEED
+	#if parent.velocity.y == 0:
+		#parent.velocity.y == parent.FALLINGSPEED
 #	if Input.is_action_pressed("down_%s" & id) and parent.down_buffer == 1 and parent.velocity.y > -150 and not parent.fastfall :
 	if Input.is_action_pressed("down") and parent.velocity.y > -150 and not parent.fastfall :
 		parent.velocity.y = parent.MAXFALLSPEED
@@ -962,21 +964,25 @@ func AIRMOVEMENT():
 func LANDING():
 #	added the sprite y offset variable since the character the above body .y
 	var sprite_y_offset = $"../Node2D/Sprite".global_transform.origin
-	if state_includes([states.AIR , states.BOW_AIR , states.LEDGE_CLIMB]):
-		if (parent.GroundL.is_colliding()) and parent.velocity.y > 0 - sprite_y_offset.y:
+	if state_includes([states.AIR , states.BOW_AIR ]):
+		if (parent.GroundL.is_colliding()) and parent.velocity.y > 0 :#- sprite_y_offset.y:
 			var collider = parent.GroundL.get_collider()
 			parent.frame = 0
 			if parent.velocity.y > 0:
 				parent.velocity.y = 0
 			parent.fastfall = false
 			return true
-		elif (parent.GroundR.is_colliding()) and parent.velocity.y > 0 -  sprite_y_offset.y:
+		elif (parent.GroundR.is_colliding()) and parent.velocity.y > 0 :# -  sprite_y_offset.y:
 			var collider = parent.GroundL.get_collider()
 			parent.frame = 0
 			if parent.velocity.y > 0:
 				parent.velocity.y = 0
 			parent.fastfall = false
 			return true
+		else:
+			if (parent.GroundL.is_colliding() and parent.GroundR.is_colliding()) and parent.velocity.y == 0:
+				return true
+			
 
 func FALLING():
 	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK,states.PLATFORM_STAND ,states.PLATFORM_RUN, states.PLATFORM_DASH ]):# states.ROLL ]):

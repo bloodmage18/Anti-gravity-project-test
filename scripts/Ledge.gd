@@ -14,3 +14,9 @@ func _ready():
 
 func _on_body_exited(body):
 	is_grabbed = false
+	pass
+
+
+func _on_area_exited(area):
+	#is_grabbed = false
+	pass # Replace with function body.
