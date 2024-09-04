@@ -16,7 +16,6 @@ script = ExtResource("1_d71de")
 shape = SubResource("RectangleShape2D_gqn77")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-visible = false
 modulate = Color(0, 0, 0, 1)
 position = Vector2(-3.57628e-07, 0)
 scale = Vector2(30, 20)

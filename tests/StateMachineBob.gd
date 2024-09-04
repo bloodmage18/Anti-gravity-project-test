@@ -23,6 +23,11 @@ func _ready():
 	add_state('LEDGE_JUMP')
 	add_state('LEDGE_ROLL')
 	
+	add_state('WALL')
+	add_state('WALL_JUMP')
+	add_state('WALL_SLIDE')
+	add_state('WALL_RUN')
+	
 	# platform states
 	add_state('ROLL')
 	add_state('PLATFORM_STAND')
@@ -211,7 +216,7 @@ func get_transition(delta):
 					return states.RUN
 					
 			else:
-				if parent.frame >= parent.dash_duration+1:
+				if parent.frame >= parent.dash_duration-1:
 					for state in states:
 						if state != "JUMP_SQUAT":
 							parent._frame()
@@ -319,6 +324,10 @@ func get_transition(delta):
 			if Input.is_action_just_pressed("mid"):
 				parent._frame()
 				return states.BOW_AIR
+				
+			if parent._is_on_wall():
+				parent._frame()
+				return states.WALL
 			
 		states.SLIDE:
 			if parent.frame >= parent.slide_duration+1:
@@ -559,6 +568,105 @@ func get_transition(delta):
 				return states.STAND
 		
 		
+		#Wall Movements
+		states.WALL:
+			AIRMOVEMENT()
+			# flip sprite
+			if parent.Wall_Cast_B.is_colliding():
+				parent.turn(true)
+			elif parent.Wall_Cast_F.is_colliding():
+				parent.turn(false)
+				
+			# Handle Wall Jump
+			if Input.is_action_pressed("jump"):
+				parent._frame()
+				return states.WALL_JUMP
+				
+			# Handle Wall Slide
+			if Input.is_action_just_pressed("down"):
+				parent._frame()
+				return states.WALL_SLIDE
+				
+			# Handle Wall Run
+			if Input.is_action_just_pressed("up"):
+				parent._frame()
+				return states.WALL_RUN
+				
+			# Handle Fast Fall from Wall
+			if parent.frame >= 120:
+				parent._frame()
+				parent.velocity.y -= 20
+				parent.fastfall = true
+				return states.AIR
+				
+		states.WALL_JUMP:
+			#print("wall jumping")
+			
+			if Input.is_action_pressed("jump") and Input.is_action_pressed("left"):
+				parent.fastfall = false
+				parent.velocity.x = 0
+				parent.velocity.y = -parent.JUMPFORCE
+				parent.velocity.x = -parent.MAXAIRSPEED
+				
+			elif Input.is_action_pressed("jump") and Input.is_action_pressed("right"):
+				parent.fastfall = false
+				parent.velocity.x = 0
+				parent.velocity.y = -parent.JUMPFORCE
+				parent.velocity.x += parent.MAXAIRSPEED
+				
+			else:
+				# double jump
+				if Input.is_action_just_pressed("jump") and parent.airJump > 0:
+					parent.fastfall = false
+					parent.velocity.x = 0
+					parent.velocity.y = -parent.JUMPFORCE
+					parent.airJump -= 1
+					if Input.is_action_pressed("left"):
+						parent.velocity.x = -parent.MAXAIRSPEED
+					elif Input.is_action_pressed("right"):
+						parent.velocity.x += parent.MAXAIRSPEED
+						
+				if parent.frame >= 20:
+					parent._frame()
+					return states.AIR
+				
+			AIRMOVEMENT()
+			
+				
+		states.WALL_SLIDE:
+			if Input.is_action_just_pressed("jump"):
+				parent._frame()
+				parent.velocity = Vector2.ZERO
+				return states.WALL_JUMP
+			else:
+				if parent.Wall_Cast_B.is_colliding():
+					parent.velocity.x -= parent.AIR_ACCEL
+					parent.turn(true)
+				elif parent.Wall_Cast_F.is_colliding():
+					parent.velocity.x += parent.AIR_ACCEL
+					parent.turn(false)
+					
+			AIRMOVEMENT()
+			parent.fastfall = true
+			
+		states.WALL_RUN:
+			if Input.is_action_pressed("up"):
+				# add to the parent y velocity
+				parent.velocity.y = -parent.RUNSPEED
+				#flip the sprite based on ehich side is colliding with the wall
+				if parent.Wall_Cast_B.is_colliding():
+					#parent.velocity.x -= parent.AIR_ACCEL
+					parent.turn(true)
+				elif parent.Wall_Cast_F.is_colliding():
+					#parent.velocity.x += parent.AIR_ACCEL
+					parent.turn(false)
+					
+			else :
+				parent.velocity.y = 0
+				#parent.velocity.y
+				parent._frame()
+				return states.AIR
+			
 		#PLatform States 
 		states.PLATFORM_STAND:
 			
@@ -849,7 +957,7 @@ func enter_state(new_state, old_state):
 			parent.play_animation('roll')
 			parent.states.text = str('ROLL')
 			
-		## ledge and wall animations
+		## ledge animations
 		states.LEDGE_CATCH:
 			parent.play_animation('ledge_catch')
 			parent.states.text = str('LEDGE_CATCH')
@@ -865,6 +973,20 @@ func enter_state(new_state, old_state):
 		states.LEDGE_ROLL:
 			parent.play_animation('ledge_roll')
 			parent.states.text = str('LEDGE_ROLL')
+			
+		##  wall animations
+		states.WALL:
+			parent.play_animation('wall_idle')
+			parent.states.text = str('WALL')
+		states.WALL_JUMP:
+			parent.play_animation('ledge_roll')
+			parent.states.text = str('WALL_JUMP')
+		states.WALL_SLIDE:
+			parent.play_animation('wall_slide')
+			parent.states.text = str('WALL_SLIDE')
+		states.WALL_RUN:
+			parent.play_animation('wall_run')
+			parent.states.text = str('WALL_RUN')
 			
 		## platform animations
 		states.PLATFORM_STAND:
@@ -907,7 +1029,6 @@ func enter_state(new_state, old_state):
 		states.KICK_2:
 			parent.anim.queue('kick_02')
 			parent.states.text = str('KICK_2')
-			
 		
 func exit_state(old_state, new_state):
 	pass
@@ -923,12 +1044,9 @@ func RESET_ROTAION():
 		parent._rotate()
 	
 func AIRMOVEMENT():
-	#print(parent.velocity)
 #	print_debug("i believe i can fly")
 	if parent.velocity.y < parent.FALLINGSPEED:
 		parent.velocity.y += parent.FALLSPEED
-	#if parent.velocity.y == 0:
-		#parent.velocity.y == parent.FALLINGSPEED
 #	if Input.is_action_pressed("down_%s" & id) and parent.down_buffer == 1 and parent.velocity.y > -150 and not parent.fastfall :
 	if Input.is_action_pressed("down") and parent.velocity.y > -150 and not parent.fastfall :
 		parent.velocity.y = parent.MAXFALLSPEED
@@ -964,15 +1082,15 @@ func AIRMOVEMENT():
 func LANDING():
 #	added the sprite y offset variable since the character the above body .y
 	var sprite_y_offset = $"../Node2D/Sprite".global_transform.origin
-	if state_includes([states.AIR , states.BOW_AIR ]):
-		if (parent.GroundL.is_colliding()) and parent.velocity.y > 0 :#- sprite_y_offset.y:
+	if state_includes([states.AIR , states.BOW_AIR , states.WALL , states.WALL_SLIDE]):
+		if (parent.GroundL.is_colliding()) and parent.velocity.y > 0 - sprite_y_offset.y:
 			var collider = parent.GroundL.get_collider()
 			parent.frame = 0
 			if parent.velocity.y > 0:
 				parent.velocity.y = 0
 			parent.fastfall = false
 			return true
-		elif (parent.GroundR.is_colliding()) and parent.velocity.y > 0 :# -  sprite_y_offset.y:
+		elif (parent.GroundR.is_colliding()) and parent.velocity.y > 0 -  sprite_y_offset.y:
 			var collider = parent.GroundL.get_collider()
 			parent.frame = 0
 			if parent.velocity.y > 0:
@@ -983,18 +1101,12 @@ func LANDING():
 			if (parent.GroundL.is_colliding() and parent.GroundR.is_colliding()) and parent.velocity.y == 0:
 				return true
 			
-
 func FALLING():
-	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK,states.PLATFORM_STAND ,states.PLATFORM_RUN, states.PLATFORM_DASH ]):# states.ROLL ]):
+	if state_includes([states.STAND ,states.DASH,states.MOONWALK,states.RUN,states.CROUCH,states.WALK,states.PLATFORM_STAND ,states.PLATFORM_RUN, states.PLATFORM_DASH ]):
 		if parent.GroundL.is_colliding() and parent.GroundR.is_colliding() :
 			return false
 		else:
 			return true
-	#if state_includes([states.ROLL]):
-		#if parent.Platform_Cast_U.is_colliding():
-			#return false
-		#else:
-			#return true
 			
 func PLATFORM_COLLIDED():
 	if parent.Platform_Cast_U.is_colliding():
@@ -1017,13 +1129,12 @@ func TILT():
 		return true
 		
 func AIREAL():
-	if state_includes([states.AIR , states.BOW_AIR]):
+	if state_includes([states.AIR , states.BOW_AIR ]):
 		if !(parent.GroundL.is_colliding() and parent.GroundR.is_colliding()):
 			return true
 		else:
 			return false
-
-
+	
 func LEDGE():
 	if state_includes([states.AIR]):
 		if (parent.Ledge_Grab_F.is_colliding()):
@@ -1094,3 +1205,5 @@ func LEDGE():
 				parent.last_ledge = collider
 				return true
 	pass
+
+

@@ -19,6 +19,8 @@ var projectile = preload("res://tests/projectile.tscn")
 @onready var GroundR : RayCast2D = $Raycasts/GroundR
 @onready var Ledge_Grab_F : RayCast2D = $Raycasts/Ledge_Grab_F
 @onready var Ledge_Grab_B : RayCast2D = $Raycasts/Ledge_Grab_R
+@onready var Wall_Cast_B : RayCast2D = $Raycasts/Wall_Cast_B
+@onready var Wall_Cast_F : RayCast2D = $Raycasts/Wall_Cast_F
 @onready var Platform_Cast_D : RayCast2D = $Raycasts/Platform_Cast_Down
 @onready var Platform_Cast_U : RayCast2D = $Raycasts/Platform_Cast_UP
 
@@ -45,6 +47,10 @@ var airJump = 0
 var last_ledge = false
 var regrab = 30
 var catch = false
+
+#wall variables
+var wall_jump_pushback = 400
+var wall_slide_speed = 100
 
 #Hitboxes
 @export var hitbox : PackedScene
@@ -112,6 +118,7 @@ func _physics_process(delta):
 	_rotate()
 	frame_counter.text = str(frame)
 	selfState = states.text
+	#_wall_jump()
 	pass
 
 func direction():
@@ -179,3 +186,14 @@ func reset_legde():
 	
 func reset_Jumps():
 	airJump = airJumpMax
+
+
+## Wall functions
+# Function to check if the player is on a wall
+func _is_on_wall() -> bool:
+	if Wall_Cast_B.is_colliding():
+		return true
+	elif Wall_Cast_F.is_colliding():
+		return true
+	else:
+		return false
