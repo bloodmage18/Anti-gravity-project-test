@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwiniifqqqgqy"]
+
+[ext_resource type="Script" path="res://scripts/Hitbox.gd" id="1_5i3sp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b77fq"]
+size = Vector2(1, 1)
+
+[node name="Hitbox" type="Area2D"]
+script = ExtResource("1_5i3sp")
+
+[node name="Hitbox_Shape" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_b77fq")

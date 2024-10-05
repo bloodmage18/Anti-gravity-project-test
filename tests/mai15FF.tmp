@@ -1,0 +1,599 @@
+[gd_scene load_steps=34 format=3 uid="uid://dvwgi13qvots"]
+
+[ext_resource type="Texture2D" uid="uid://bjod2m0o2ryno" path="res://assets/oak_woods_v1.0/background/background_layer_1.png" id="1_lem4i"]
+[ext_resource type="Script" path="res://tests/menu/main.gd" id="1_s5xdk"]
+[ext_resource type="Script" path="res://tests/menu/Main_Bg.gd" id="1_w578q"]
+[ext_resource type="Texture2D" uid="uid://blv608klltojo" path="res://assets/oak_woods_v1.0/background/background_layer_2.png" id="2_aossl"]
+[ext_resource type="Texture2D" uid="uid://bctq70151igqs" path="res://assets/oak_woods_v1.0/background/background_layer_3.png" id="3_kmbon"]
+[ext_resource type="Texture2D" uid="uid://dg20vmmu2a70q" path="res://ui/main_menu/button-new-game.png" id="5_claxx"]
+[ext_resource type="Texture2D" uid="uid://dghubxutcqxg5" path="res://ui/main_menu/button_pressed.png" id="6_pwles"]
+[ext_resource type="Texture2D" uid="uid://bx1cp5h5nmeu2" path="res://ui/main_menu/button-new-game-hover.png" id="7_ldcxj"]
+[ext_resource type="Texture2D" uid="uid://drm7fph8va5h2" path="res://ui/main_menu/button-quit.png" id="8_b0y2t"]
+[ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="8_llt78"]
+[ext_resource type="Texture2D" uid="uid://brtku3v3bierv" path="res://ui/main_menu/button-quit-hover.png" id="9_o4j10"]
+[ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="14_efrpm"]
+[ext_resource type="Texture2D" uid="uid://be8f02vcuksoy" path="res://icon.svg" id="15_b4hei"]
+
+[sub_resource type="Shader" id="Shader_5iked"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude ;
+uniform float wave_period ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(0.0, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="Gradient" id="Gradient_8vm7n"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pwd7v"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_42g2l"]
+seamless = true
+seamless_blend_skirt = 0.26
+color_ramp = SubResource("Gradient_8vm7n")
+noise = SubResource("FastNoiseLite_pwd7v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rd3k5"]
+shader = SubResource("Shader_5iked")
+shader_parameter/scale = Vector2(13, 4)
+shader_parameter/y_zoom = 0.707107
+shader_parameter/water_color = Color(0.623529, 0.678431, 0.909804, 0.34902)
+shader_parameter/distortion_scale = Vector2(0.005, 0.033)
+shader_parameter/intensity = 0.07
+shader_parameter/dist_speed = 0.13
+shader_parameter/wave_amplitude = 0.053
+shader_parameter/wave_period = 0.523
+shader_parameter/wave_speed = 0.42
+shader_parameter/shorelineColor = Color(0.729412, 0.760784, 0.933333, 1)
+shader_parameter/shorelineSize = 0.0025
+shader_parameter/foamsize = 0.1
+shader_parameter/foamstrength = 0.3
+shader_parameter/noise = SubResource("NoiseTexture2D_42g2l")
+
+[sub_resource type="Shader" id="Shader_bgcmv"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude ;
+uniform float wave_period ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(0.0, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="Gradient" id="Gradient_nysyp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5nb2h"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7s7rl"]
+invert = true
+seamless = true
+seamless_blend_skirt = 0.433
+color_ramp = SubResource("Gradient_nysyp")
+noise = SubResource("FastNoiseLite_5nb2h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhgem"]
+shader = SubResource("Shader_bgcmv")
+shader_parameter/scale = Vector2(16.205, 2.77)
+shader_parameter/y_zoom = 0.707107
+shader_parameter/water_color = Color(0.564706, 0.368627, 0.576471, 0.6)
+shader_parameter/distortion_scale = Vector2(0.005, 0.033)
+shader_parameter/intensity = -0.185
+shader_parameter/dist_speed = 0.005
+shader_parameter/wave_amplitude = 0.033
+shader_parameter/wave_period = 0.29
+shader_parameter/wave_speed = 0.015
+shader_parameter/shorelineColor = Color(0.929412, 0.764706, 0.960784, 0.356863)
+shader_parameter/shorelineSize = 0.04
+shader_parameter/foamsize = 0.0
+shader_parameter/foamstrength = 0.3
+shader_parameter/noise = SubResource("NoiseTexture2D_7s7rl")
+
+[sub_resource type="Shader" id="Shader_3prku"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude ;
+uniform float wave_period ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(0.0, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="Gradient" id="Gradient_mccer"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ahhpr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6lw7j"]
+invert = true
+seamless = true
+seamless_blend_skirt = 0.433
+color_ramp = SubResource("Gradient_mccer")
+noise = SubResource("FastNoiseLite_ahhpr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xlwn0"]
+shader = SubResource("Shader_3prku")
+shader_parameter/scale = Vector2(13.7, 4)
+shader_parameter/y_zoom = 0.707107
+shader_parameter/water_color = Color(0.564706, 0.368627, 0.576471, 0.345098)
+shader_parameter/distortion_scale = Vector2(0.005, 0.033)
+shader_parameter/intensity = 0.1
+shader_parameter/dist_speed = 0.005
+shader_parameter/wave_amplitude = 0.073
+shader_parameter/wave_period = 0.195
+shader_parameter/wave_speed = 0.315
+shader_parameter/shorelineColor = Color(0.843137, 0.815686, 0.937255, 0.482353)
+shader_parameter/shorelineSize = -0.05
+shader_parameter/foamsize = 0.075
+shader_parameter/foamstrength = 0.275
+shader_parameter/noise = SubResource("NoiseTexture2D_6lw7j")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5uohe"]
+bg_color = Color(0.227451, 0.227451, 0.227451, 0.545098)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.8, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="Animation" id="Animation_cjlok"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MainMenuButtons:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.227451, 0.227451, 0.227451, 0.545098)]
+}
+
+[sub_resource type="Animation" id="Animation_4a5dh"]
+resource_name = "fade_in"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MainMenuButtons:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.243137), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fvpsq"]
+resource_name = "fade_out"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MainMenuButtons:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.243137)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.227451, 0.227451, 0.227451, 0.545098), Color(0.219608, 0.219608, 0.219608, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4vrss"]
+_data = {
+"RESET": SubResource("Animation_cjlok"),
+"fade_in": SubResource("Animation_4a5dh"),
+"fade_out": SubResource("Animation_fvpsq")
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_s5xdk")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("1_w578q")
+scrolling_speed = 50
+
+[node name="bg" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(1360, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/bg"]
+position = Vector2(679, 380)
+scale = Vector2(4.25, 4.25)
+texture = ExtResource("1_lem4i")
+
+[node name="water2" parent="ParallaxBackground" instance=ExtResource("14_efrpm")]
+material = SubResource("ShaderMaterial_rd3k5")
+position = Vector2(619, 734)
+scale = Vector2(3.19375, 1.5)
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(1360, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(680, 380)
+scale = Vector2(4.25, 4.25)
+texture = ExtResource("2_aossl")
+
+[node name="water3" parent="ParallaxBackground" instance=ExtResource("14_efrpm")]
+material = SubResource("ShaderMaterial_rhgem")
+position = Vector2(845, 725)
+scale = Vector2(13.7464, 2.05055)
+texture = ExtResource("15_b4hei")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(1360, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(680, 380)
+scale = Vector2(4.25, 4.25)
+texture = ExtResource("3_kmbon")
+
+[node name="water" parent="ParallaxBackground" instance=ExtResource("14_efrpm")]
+material = SubResource("ShaderMaterial_xlwn0")
+position = Vector2(839.767, 782.765)
+scale = Vector2(13.7464, 2.05055)
+texture = ExtResource("15_b4hei")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenuButtons" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -231.0
+offset_top = -296.0
+offset_right = 229.0
+offset_bottom = 356.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGame" type="TextureButton" parent="CanvasLayer/Control/MainMenuButtons"]
+layout_mode = 2
+texture_normal = ExtResource("5_claxx")
+texture_pressed = ExtResource("6_pwles")
+texture_hover = ExtResource("7_ldcxj")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MainMenuButtons/NewGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -33.0
+offset_right = 129.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0523599
+theme_override_colors/font_color = Color(0, 0.709804, 0.819608, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.721569, 0.870588, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.568627, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("8_llt78")
+theme_override_font_sizes/font_size = 50
+text = "New GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadGame" type="TextureButton" parent="CanvasLayer/Control/MainMenuButtons"]
+layout_mode = 2
+texture_normal = ExtResource("8_b0y2t")
+texture_hover = ExtResource("9_o4j10")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MainMenuButtons/LoadGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -33.0
+offset_right = 126.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.00872665
+theme_override_colors/font_color = Color(0.87451, 0.952941, 0.266667, 1)
+theme_override_colors/font_shadow_color = Color(0.858824, 0.580392, 0.290196, 1)
+theme_override_colors/font_outline_color = Color(0.67451, 0.4, 0, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/outline_size = 13
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("8_llt78")
+theme_override_font_sizes/font_size = 50
+text = "LOAD GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Multiplayer" type="TextureButton" parent="CanvasLayer/Control/MainMenuButtons"]
+layout_mode = 2
+texture_normal = ExtResource("5_claxx")
+texture_pressed = ExtResource("6_pwles")
+texture_hover = ExtResource("7_ldcxj")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MainMenuButtons/Multiplayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -33.0
+offset_right = 129.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0523599
+theme_override_colors/font_color = Color(0, 0.709804, 0.819608, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.721569, 0.870588, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.568627, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("8_llt78")
+theme_override_font_sizes/font_size = 50
+text = "co - op"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="TextureButton" parent="CanvasLayer/Control/MainMenuButtons"]
+layout_mode = 2
+texture_normal = ExtResource("8_b0y2t")
+texture_hover = ExtResource("9_o4j10")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MainMenuButtons/Quit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -33.0
+offset_right = 126.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.00872665
+theme_override_colors/font_color = Color(0.87451, 0.952941, 0.266667, 1)
+theme_override_colors/font_shadow_color = Color(0.858824, 0.580392, 0.290196, 1)
+theme_override_colors/font_outline_color = Color(0.67451, 0.4, 0, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/outline_size = 13
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("8_llt78")
+theme_override_font_sizes/font_size = 50
+text = "quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+visible = false
+custom_minimum_size = Vector2(600, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5uohe")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87451, 0.952941, 0.266667, 1)
+theme_override_colors/font_shadow_color = Color(0.858824, 0.580392, 0.290196, 1)
+theme_override_colors/font_outline_color = Color(0.67451, 0.027451, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("8_llt78")
+theme_override_font_sizes/font_size = 50
+text = "game mode 
+not available"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/PanelContainer"]
+libraries = {
+"": SubResource("AnimationLibrary_4vrss")
+}
+
+[connection signal="pressed" from="CanvasLayer/Control/MainMenuButtons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MainMenuButtons/LoadGame" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MainMenuButtons/Multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MainMenuButtons/Quit" to="." method="_on_quit_pressed"]

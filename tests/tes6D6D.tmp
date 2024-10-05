@@ -1,0 +1,163 @@
+[gd_scene load_steps=16 format=3 uid="uid://dmf7wj116o5ua"]
+
+[ext_resource type="PackedScene" uid="uid://ccrp1chwbun1x" path="res://tests/bob.tscn" id="1_gvyhj"]
+[ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="1_qw7v2"]
+[ext_resource type="Texture2D" uid="uid://bbqaarefx1apb" path="res://assets/png/Dark/texture_12.png" id="1_s86ka"]
+[ext_resource type="Texture2D" uid="uid://btw7abcgtqqtm" path="res://assets/png/Purple/texture_08.png" id="2_8eaou"]
+[ext_resource type="Texture2D" uid="uid://bthnipleqvjn3" path="res://assets/png/Purple/texture_13.png" id="3_4xave"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7g8ru"]
+size = Vector3(1000, 50, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfx3o"]
+size = Vector2(1356, 50)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fim1h"]
+radius = 150.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_lcn1r"]
+radius = 150.0
+height = 300.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1nfbd"]
+radius = 100.0
+height = 517.64
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qs42a"]
+radius = 100.0
+height = 500.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqirc"]
+radius = 24.0001
+height = 1388.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l2uau"]
+radius = 25.0
+height = 1500.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31wy5"]
+size = Vector2(43.5, 776)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68ab7"]
+size = Vector2(1570, 125)
+
+[node name="test" type="Node2D"]
+
+[node name="world" type="Node" parent="."]
+
+[node name="bg" type="TextureRect" parent="world"]
+modulate = Color(0.34902, 0.34902, 0.34902, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -333.0
+offset_top = 2.0
+offset_right = 9063.0
+offset_bottom = 4105.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("1_s86ka")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="ground" type="StaticBody2D" parent="world"]
+position = Vector2(576, 662)
+collision_layer = 16
+collision_mask = 55
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="world/ground"]
+position = Vector2(0, -0.5)
+scale = Vector2(1, 0.98)
+mesh = SubResource("BoxMesh_7g8ru")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/ground"]
+position = Vector2(-57, 0)
+shape = SubResource("RectangleShape2D_qfx3o")
+
+[node name="TextureRect" type="TextureRect" parent="world/ground"]
+modulate = Color(0.223529, 0.180392, 0.580392, 1)
+offset_left = -734.0
+offset_top = -25.0
+offset_right = 6041.0
+offset_bottom = 225.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_8eaou")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="platform" type="StaticBody2D" parent="world"]
+position = Vector2(211, 414)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/platform"]
+shape = SubResource("CircleShape2D_fim1h")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="world/platform"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+mesh = SubResource("SphereMesh_lcn1r")
+texture = ExtResource("3_4xave")
+
+[node name="platform2" type="StaticBody2D" parent="world"]
+position = Vector2(855, 414)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/platform2"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1nfbd")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="world/platform2"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-1.58746, -5.74658e-06)
+rotation = 1.5708
+scale = Vector2(1, 1.02857)
+mesh = SubResource("CapsuleMesh_qs42a")
+texture = ExtResource("3_4xave")
+
+[node name="platform3" type="StaticBody2D" parent="world"]
+position = Vector2(477, 119)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/platform3"]
+position = Vector2(-7, 29)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gqirc")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="world/platform3"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-8.67652, 31.3688)
+rotation = 1.5708
+scale = Vector2(0.946608, 0.926139)
+mesh = SubResource("CapsuleMesh_l2uau")
+texture = ExtResource("3_4xave")
+
+[node name="boundary" type="StaticBody2D" parent="world"]
+collision_layer = 48
+collision_mask = 55
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/boundary"]
+position = Vector2(-312.25, 380)
+shape = SubResource("RectangleShape2D_31wy5")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="world/boundary"]
+position = Vector2(1280, 380)
+shape = SubResource("RectangleShape2D_31wy5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="world/boundary"]
+position = Vector2(485, 731.5)
+shape = SubResource("RectangleShape2D_68ab7")
+
+[node name="player" type="Node" parent="."]
+
+[node name="bob" parent="player" instance=ExtResource("1_qw7v2")]
+position = Vector2(473, 516)
+
+[node name="enemy" type="Node" parent="."]
+
+[node name="bob" parent="enemy" instance=ExtResource("1_gvyhj")]
+position = Vector2(423, 496)
+
+[node name="interactables" type="Node" parent="."]

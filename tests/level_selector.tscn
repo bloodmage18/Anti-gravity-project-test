@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0qn7awt4wpaj"]
+
+[ext_resource type="Script" path="res://tests/gamesystem/Level_Control.gd" id="1_q2s3x"]
+
+[node name="Level_Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_q2s3x")
+level_markers = Array[NodePath]([NodePath("../../../Node/0"), NodePath("../../../Node/1"), NodePath("../../../Node/2"), NodePath("../../../Node/3"), NodePath("../../../Node/4"), NodePath("../../../Node/5"), NodePath("../../../Node/6")])
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true

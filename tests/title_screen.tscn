@@ -1,0 +1,328 @@
+[gd_scene load_steps=23 format=3 uid="uid://c0ugumhie2x7c"]
+
+[ext_resource type="Script" path="res://tests/menu/title_screen.gd" id="1_13yfy"]
+[ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="2_myu1b"]
+[ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="2_pk8ce"]
+[ext_resource type="Script" path="res://tests/menu/Main_Bg.gd" id="3_24lnp"]
+[ext_resource type="Texture2D" uid="uid://dbic0f4kvw8ed" path="res://assets/Final/Background_0.png" id="3_awy5d"]
+[ext_resource type="Shader" path="res://scripts/shaders/godrays.gdshader" id="3_huhdn"]
+[ext_resource type="Shader" path="res://scripts/shaders/title_transition.gdshader" id="4_b537f"]
+[ext_resource type="Texture2D" uid="uid://cr6uh01gvcmgl" path="res://assets/Final/Background_1.png" id="4_c0uxt"]
+[ext_resource type="Shader" path="res://scripts/shaders/distort.gdshader" id="4_ijlmw"]
+
+[sub_resource type="Shader" id="Shader_k62uf"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude ;
+uniform float wave_period ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(0.0, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="Gradient" id="Gradient_mccer"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ahhpr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6lw7j"]
+invert = true
+seamless = true
+seamless_blend_skirt = 0.433
+color_ramp = SubResource("Gradient_mccer")
+noise = SubResource("FastNoiseLite_ahhpr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qgugl"]
+shader = SubResource("Shader_k62uf")
+shader_parameter/scale = Vector2(10, 1.08)
+shader_parameter/y_zoom = 0.707107
+shader_parameter/water_color = Color(0.054902, 0.0745098, 0.152941, 0.72549)
+shader_parameter/distortion_scale = Vector2(5.515, 1.995)
+shader_parameter/intensity = -0.805
+shader_parameter/dist_speed = 0.595
+shader_parameter/wave_amplitude = 0.02
+shader_parameter/wave_period = 0.115
+shader_parameter/wave_speed = 0.375
+shader_parameter/shorelineColor = Color(0.815686, 0.937255, 0.952941, 1)
+shader_parameter/shorelineSize = 0.332
+shader_parameter/foamsize = 0.05
+shader_parameter/foamstrength = 0.3
+shader_parameter/noise = SubResource("NoiseTexture2D_6lw7j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5urtq"]
+shader = ExtResource("3_huhdn")
+shader_parameter/angle = -3.785
+shader_parameter/position = 1.61
+shader_parameter/spread = 0.28
+shader_parameter/cutoff = 0.11
+shader_parameter/falloff = 0.725
+shader_parameter/edge_fade = 0.57
+shader_parameter/speed = 2.0
+shader_parameter/ray1_density = 8.28
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(0.843137, 0.921569, 0.968627, 0.8)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2yo0l"]
+shader = ExtResource("4_b537f")
+shader_parameter/progress = 1.0
+shader_parameter/diamondPixelSize = 7.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_srxa7"]
+seed = 3
+frequency = 0.0294
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7iwo5"]
+noise = SubResource("FastNoiseLite_srxa7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e12g4"]
+shader = ExtResource("4_ijlmw")
+shader_parameter/strength = 2.0
+shader_parameter/uv_scaling = 0.95
+shader_parameter/movement_direction = Vector2(1, 0)
+shader_parameter/movement_speed = 0.1
+shader_parameter/NOISE_TEXTURE = SubResource("NoiseTexture2D_7iwo5")
+
+[sub_resource type="Animation" id="Animation_37yyi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/TextureRect:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_5urtq")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/TextureRect:material:shader_parameter/cutoff")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.11]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/TextureRect:material:shader")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_huhdn")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/progress")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_v3iv5"]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/TextureRect:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_5urtq")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/TextureRect:material:shader_parameter/cutoff")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.11, -1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/TextureRect:material:shader")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.9),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_huhdn")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/progress")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.07]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u24e6"]
+_data = {
+"RESET": SubResource("Animation_37yyi"),
+"fade_out": SubResource("Animation_v3iv5")
+}
+
+[node name="Title_screen" type="Node2D"]
+script = ExtResource("1_13yfy")
+
+[node name="water" parent="." instance=ExtResource("2_myu1b")]
+material = SubResource("ShaderMaterial_qgugl")
+position = Vector2(673, 691)
+scale = Vector2(4.03333, 0.573529)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_5urtq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 256.0
+offset_bottom = 313.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_pk8ce")
+theme_override_font_sizes/font_size = 50
+text = "Press Any Key 'to Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_2yo0l")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1360.0
+offset_top = 770.0
+offset_right = 1360.0
+offset_bottom = 770.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="ParallaxBackground" parent="."]
+script = ExtResource("3_24lnp")
+scrolling_speed = 45
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(720, 233)
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("3_awy5d")
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+material = SubResource("ShaderMaterial_e12g4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Node2D"]
+motion_scale = Vector2(0.19, 0.19)
+motion_mirroring = Vector2(1380, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D/ParallaxLayer"]
+position = Vector2(680, 384)
+scale = Vector2(1.82, 1.82)
+texture = ExtResource("4_c0uxt")
+
+[node name="Animation_Player" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u24e6")
+}
+
+[connection signal="animation_finished" from="Animation_Player" to="." method="_on_animation_player_animation_finished"]

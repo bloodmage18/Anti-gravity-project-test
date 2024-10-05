@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://dj1xnyivyyo6h"]
+
+[ext_resource type="Script" path="res://tests/menu/Game_control.gd" id="1_nimmn"]
+[ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="2_e1tdj"]
+[ext_resource type="Texture2D" uid="uid://dobb43hmfwreq" path="res://assets/buttons/normal/home bttn.png" id="3_pgv51"]
+[ext_resource type="Texture2D" uid="uid://d3s6clp2ctdws" path="res://assets/buttons/pressed/home bttn pressed.png" id="4_kh1uf"]
+[ext_resource type="Texture2D" uid="uid://x0wlpys7k1x8" path="res://assets/buttons/hovered/home bttn hovered.png" id="5_3a0u2"]
+[ext_resource type="Texture2D" uid="uid://cwwpvfu6rtfa4" path="res://assets/buttons/normal/retry bttn.png" id="6_cxjpv"]
+[ext_resource type="Texture2D" uid="uid://gku72p7h5emf" path="res://assets/buttons/pressed/retry bttn pressed.png" id="7_8rv4k"]
+[ext_resource type="Texture2D" uid="uid://clx0qhch7wmts" path="res://assets/buttons/hovered/retry bttn hovered.png" id="8_qppxs"]
+
+[node name="Game_control" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 136.0
+grow_horizontal = 2
+script = ExtResource("1_nimmn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 99.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="TimerLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.721569, 0.431373, 0, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/outline_size = 13
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("2_e1tdj")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Home" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_pgv51")
+texture_pressed = ExtResource("4_kh1uf")
+texture_hover = ExtResource("5_3a0u2")
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Game Message" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87451, 0.952941, 0.266667, 1)
+theme_override_colors/font_outline_color = Color(0.67451, 0.4, 0, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/outline_size = 13
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("2_e1tdj")
+theme_override_font_sizes/font_size = 24
+text = "LOAD GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Retry" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_cxjpv")
+texture_pressed = ExtResource("7_8rv4k")
+texture_hover = ExtResource("8_qppxs")

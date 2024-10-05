@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=3 uid="uid://e3npxyhfx85d"]
+
+[ext_resource type="Texture2D" uid="uid://bve0itterw53e" path="res://assets/env/room_q_bg.png" id="1_vquc4"]
+[ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="2_7j03k"]
+[ext_resource type="Texture2D" uid="uid://dmikhhbbjx1nl" path="res://assets/env/plus.png" id="2_rpljo"]
+[ext_resource type="PackedScene" uid="uid://buqmsyt543m7e" path="res://scenes/stage_assets/obstacle.tscn" id="2_xo0lp"]
+[ext_resource type="Texture2D" uid="uid://nyjqvbe4dlix" path="res://assets/env/l.png" id="3_g0v0e"]
+[ext_resource type="Texture2D" uid="uid://bodhwd2lb24hj" path="res://assets/env/block.png" id="5_l2a1q"]
+
+[node name="Room_1" type="Node2D"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D"]
+texture = ExtResource("1_vquc4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/Node2D/Sprite2D"]
+collision_layer = 17
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(-365, -307, -640, -307, -640, -360, -365, -360)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(640, -307, -310, -307, -310, -360, 640, -360)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(640, 360, 406, 360, 406, 312, 640, 312)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(340, 360, -639, 360, -639, 317, -640, 317, -640, 313, 340, 313)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node/Node2D"]
+position = Vector2(1274, 0)
+texture = ExtResource("1_vquc4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/Node2D/Sprite2D2"]
+collision_layer = 17
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(-365, -307, -640, -307, -640, -360, -365, -360)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(640, -307, -310, -307, -310, -360, 640, -360)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(640, 360, 406, 360, 406, 312, 640, 312)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(340, 360, -639, 360, -640, 312, 340, 313)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Node/Node2D"]
+position = Vector2(2500, 0)
+texture = ExtResource("1_vquc4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/Node2D/Sprite2D3"]
+collision_layer = 17
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D3/StaticBody2D"]
+polygon = PackedVector2Array(-365, -307, -640, -307, -640, -360, -365, -360)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D3/StaticBody2D"]
+polygon = PackedVector2Array(640, -307, -310, -307, -310, -360, 640, -360)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D3/StaticBody2D"]
+polygon = PackedVector2Array(640, 360, 406, 360, 406, 312, 640, 312)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D3/StaticBody2D"]
+polygon = PackedVector2Array(340, 360, -639, 360, -638, 312, 340, 313)
+
+[node name="obstacles" type="Node2D" parent="Node"]
+
+[node name="obstacle" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(-336, 2)
+mode = 2
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/obstacles/obstacle"]
+collision_layer = 81
+
+[node name="Sprite2D" type="Polygon2D" parent="Node/obstacles/obstacle/StaticBody2D"]
+position = Vector2(286, 0)
+color = Color(0.223529, 0.211765, 1, 1)
+texture = ExtResource("2_rpljo")
+polygon = PackedVector2Array(-247, -234, -245, -38, 2, -38, 2, 41, -245, 41, -245, 115, -244, 244, -302, 244, -323, 245, -323, 241, -324, 241, -324, 65, -325, 41, -572, 41, -572, -38, -325, -38, -326, -247, -280, -247, -280, -248, -247, -248)
+uv = PackedVector2Array(393, 126, 395, 322, 642, 322, 642, 401, 395, 401, 395, 475, 396, 604, 338, 604, 317, 605, 317, 601, 316, 601, 316, 425, 315, 401, 68, 401, 68, 322, 315, 322, 314, 113, 360, 113, 360, 112, 393, 112)
+polygons = [PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)]
+
+[node name="Sprite2D2" type="CollisionPolygon2D" parent="Node/obstacles/obstacle/StaticBody2D"]
+position = Vector2(286, 0)
+polygon = PackedVector2Array(-247, -234, -245, -38, 2, -38, 2, 41, -245, 41, -245, 115, -244, 244, -302, 244, -323, 245, -323, 241, -324, 241, -324, 65, -325, 41, -572, 41, -572, -38, -325, -38, -326, -247, -280, -247, -280, -248, -247, -248)
+
+[node name="obstacle2" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(76, 314)
+rotation = 1.5708
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/obstacles/obstacle2"]
+collision_layer = 81
+
+[node name="Sprite2D2" type="Polygon2D" parent="Node/obstacles/obstacle2/StaticBody2D"]
+texture = ExtResource("3_g0v0e")
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+uv = PackedVector2Array(413, 240, 171, 240, 171, 560, 101, 560, 101, 185, 413, 185)
+polygons = [PackedInt32Array(0, 1, 2, 3, 4, 5)]
+
+[node name="Sprite2D3" type="CollisionPolygon2D" parent="Node/obstacles/obstacle2/StaticBody2D"]
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+
+[node name="obstacle3" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(222, -342)
+rotation = -1.5708
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/obstacles/obstacle3"]
+collision_layer = 81
+
+[node name="Sprite2D3" type="Polygon2D" parent="Node/obstacles/obstacle3/StaticBody2D"]
+texture = ExtResource("3_g0v0e")
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+uv = PackedVector2Array(413, 240, 171, 240, 171, 560, 101, 560, 101, 185, 413, 185)
+polygons = [PackedInt32Array(0, 1, 2, 3, 4, 5)]
+
+[node name="Sprite2D4" type="CollisionPolygon2D" parent="Node/obstacles/obstacle3/StaticBody2D"]
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+
+[node name="obstacle4" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(896, 28)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Node/obstacles/obstacle4"]
+collision_layer = 97
+mass = 0.2
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/obstacles/obstacle4/RigidBody2D"]
+position = Vector2(198, 60)
+texture = ExtResource("5_l2a1q")
+offset = Vector2(-260, -68)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node/obstacles/obstacle4/RigidBody2D"]
+position = Vector2(-62, -8)
+polygon = PackedVector2Array(452, 12, 560, 13, 560, 8, 563, 8, 563, 200, 566, 200, 566, 204, 249, 204, -67, 203, -67, 200.9, -82, 198.9, -82, 197.8, -107, 191.8, -107, 190.7, -123, 184.7, -123, 183.6, -137, 175.6, -137, 174.4, -149, 163.4, -149, 161.4, -153, 157.4, -153, 155.3, -159, 144.3, -159, 140, -161.4, 133, -159, 133, -159, 56, -161, 56, -161, 52, -158, 52, -120, 50.1, -120, 49, -112, 49, -112, 48.1, -91, 45.1, -91, 44.1, -83, 43.1, -83, 42.2, -68, 38.2, -68, 37.2, -60, 35.2, -60, 34.3, -44, 27.4, -44, 26.4, -33, 20.4, -33, 19.6, -30.4, 17, -29, 17, -25.4, 13, -24, 13, -10, -0.399994, -10, -2.5, -6, -5.5, -6, -7.39999, 2, -17.4, 2, -19.2, 11.4, -38, 14, -38, 250, -37, 250, -202, 452, -202)
+
+[node name="Node2" type="Node" parent="."]
+
+[node name="bob" parent="Node2" instance=ExtResource("2_7j03k")]
+position = Vector2(-474, 264)
+
+[node name="Camera2D" parent="Node2/bob" index="3"]
+zoom = Vector2(1, 1)
+
+[editable path="Node2/bob"]

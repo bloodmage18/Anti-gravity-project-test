@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://dx3lth32nmqc7"]
+
+[ext_resource type="Script" path="res://tests/gamesystem/gamesystem.gd" id="1_mtdvj"]
+[ext_resource type="Script" path="res://tests/gamesystem/New Game.gd" id="2_dfoa4"]
+[ext_resource type="Script" path="res://tests/gamesystem/Load Game.gd" id="3_u7302"]
+[ext_resource type="Script" path="res://tests/gamesystem/Multiplayer.gd" id="4_v2g1h"]
+[ext_resource type="Script" path="res://tests/gamesystem/Quit.gd" id="5_h2cxr"]
+[ext_resource type="Script" path="res://tests/gamesystem/Setting.gd" id="6_ebfd5"]
+
+[node name="Gamesystem" type="Node"]
+script = ExtResource("1_mtdvj")
+
+[node name="New Game" type="Node" parent="."]
+script = ExtResource("2_dfoa4")
+
+[node name="Load Game" type="Node" parent="."]
+script = ExtResource("3_u7302")
+
+[node name="Multiplayer" type="Node" parent="."]
+script = ExtResource("4_v2g1h")
+
+[node name="Quit" type="Node" parent="."]
+script = ExtResource("5_h2cxr")
+
+[node name="Setting" type="Node" parent="."]
+script = ExtResource("6_ebfd5")

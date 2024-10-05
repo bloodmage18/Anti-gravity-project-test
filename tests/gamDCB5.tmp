@@ -1,0 +1,170 @@
+[gd_scene load_steps=12 format=3 uid="uid://b13wa4hqbg3my"]
+
+[ext_resource type="Script" path="res://tests/game.gd" id="1_ge3hq"]
+[ext_resource type="Script" path="res://tests/gamesystem/Level_Control.gd" id="1_t73hx"]
+[ext_resource type="PackedScene" uid="uid://c52vehpgswp13" path="res://tests/new.tscn" id="2_igd6c"]
+[ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="2_xuh87"]
+[ext_resource type="Script" path="res://tests/safe_zone_transporter.gd" id="4_hebxh"]
+[ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="6_1y1gt"]
+
+[sub_resource type="Shader" id="Shader_lywx5"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude ;
+uniform float wave_period ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(0.0, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="Gradient" id="Gradient_dwe8c"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_urd58"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hqbq3"]
+invert = true
+seamless = true
+seamless_blend_skirt = 0.433
+color_ramp = SubResource("Gradient_dwe8c")
+noise = SubResource("FastNoiseLite_urd58")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4hhwe"]
+shader = SubResource("Shader_lywx5")
+shader_parameter/scale = Vector2(13.13, 4)
+shader_parameter/y_zoom = 0.176777
+shader_parameter/water_color = Color(0.0392157, 0.415686, 0.768627, 0.494118)
+shader_parameter/distortion_scale = Vector2(0.005, 0.033)
+shader_parameter/intensity = 0.07
+shader_parameter/dist_speed = 0.13
+shader_parameter/wave_amplitude = 0.168
+shader_parameter/wave_period = 0.523
+shader_parameter/wave_speed = 0.87
+shader_parameter/shorelineColor = Color(1, 1, 1, 1)
+shader_parameter/shorelineSize = 0.0025
+shader_parameter/foamsize = 0.1
+shader_parameter/foamstrength = 0.3
+shader_parameter/noise = SubResource("NoiseTexture2D_hqbq3")
+
+[node name="Game" type="Node"]
+script = ExtResource("1_ge3hq")
+time_limit = 140.0
+flood_speed = null
+zone_timer_reduction = null
+level_markers = Array[NodePath]([NodePath("Node/0"), NodePath("Node/1"), NodePath("Node/2"), NodePath("Node/3"), NodePath("Node/4"), NodePath("Node/5"), NodePath("Node/6")])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Level_Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_t73hx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Level_Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Timer Label" type="Label" parent="CanvasLayer"]
+offset_left = 654.0
+offset_top = 14.0
+offset_right = 694.0
+offset_bottom = 37.0
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Timer Label"]
+
+[node name="Game Message" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 653.0
+offset_top = 60.0
+offset_right = 693.0
+offset_bottom = 83.0
+
+[node name="World" parent="." instance=ExtResource("2_igd6c")]
+
+[node name="bob" parent="." instance=ExtResource("6_1y1gt")]
+position = Vector2(-23, 4843)
+
+[node name="Camera2D" parent="bob" index="4"]
+zoom = Vector2(1.2, 1.2)
+
+[node name="water" parent="." instance=ExtResource("2_xuh87")]
+material = SubResource("ShaderMaterial_4hhwe")
+position = Vector2(-190, 6376)
+scale = Vector2(35.7396, 4.70588)
+
+[node name="water_level" type="Marker2D" parent="water"]
+position = Vector2(0, -100)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_hebxh")
+
+[node name="0" type="Marker2D" parent="Node"]
+position = Vector2(3216, -3664)
+
+[node name="1" type="Marker2D" parent="Node"]
+position = Vector2(-1616, -832)
+
+[node name="2" type="Marker2D" parent="Node"]
+position = Vector2(-32, 880)
+
+[node name="3" type="Marker2D" parent="Node"]
+position = Vector2(-976, 2816)
+
+[node name="4" type="Marker2D" parent="Node"]
+position = Vector2(-6528, 2576)
+
+[node name="5" type="Marker2D" parent="Node"]
+position = Vector2(-3616, 5488)
+
+[node name="6" type="Marker2D" parent="Node"]
+position = Vector2(3712, 5456)
+
+[editable path="World"]
+[editable path="bob"]
