@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://btgi2bpitiuov"]
 
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="1_lvi0r"]
-[ext_resource type="Texture2D" uid="uid://ctrml0nfnqx2s" path="res://assets/Final/Background.png" id="2_4nms7"]
+[ext_resource type="Texture2D" uid="uid://d3gys6al4rec1" path="res://assets/Final/Background.png" id="2_4nms7"]
 [ext_resource type="Script" path="res://scripts/shaders/water.gd" id="3_t7ryc"]
 
 [sub_resource type="Gradient" id="Gradient_mccer"]

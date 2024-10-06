@@ -1,12 +1,12 @@
 [gd_scene load_steps=25 format=3 uid="uid://c52vehpgswp13"]
 
-[ext_resource type="Texture2D" uid="uid://c4nivw1jlr7kx" path="res://assets/png/Dark/texture_12.png" id="1_4blqt"]
-[ext_resource type="Texture2D" uid="uid://gv5i0b8uhsk3" path="res://assets/env/GYBcqPdWcAAtqNa.png" id="1_q48ku"]
-[ext_resource type="Texture2D" uid="uid://bityjt2mxqcoq" path="res://assets/kennys_packs/kenney_platformer-art-winter/sheet.png" id="2_ia0hq"]
-[ext_resource type="Texture2D" uid="uid://dpqm7gyl5b50a" path="res://assets/png/custom/base.png" id="2_tlpiw"]
-[ext_resource type="Texture2D" uid="uid://c1u16m3fb8oip" path="res://assets/png/Purple/texture_13.png" id="3_2hytj"]
+[ext_resource type="Texture2D" uid="uid://dyg8n4mr3vrqj" path="res://assets/png/Dark/texture_12.png" id="1_4blqt"]
+[ext_resource type="Texture2D" uid="uid://d0sg4iooxhu4a" path="res://assets/env/GYBcqPdWcAAtqNa.png" id="1_q48ku"]
+[ext_resource type="Texture2D" uid="uid://si4iw3dkh6pg" path="res://assets/kennys_packs/kenney_platformer-art-winter/sheet.png" id="2_ia0hq"]
+[ext_resource type="Texture2D" uid="uid://cw6ese4o6vfgq" path="res://assets/png/custom/base.png" id="2_tlpiw"]
+[ext_resource type="Texture2D" uid="uid://btkexg63j7lv1" path="res://assets/png/Purple/texture_13.png" id="3_2hytj"]
 [ext_resource type="PackedScene" uid="uid://bfcj7pwd4kc8g" path="res://scenes/stage_assets/ledge.tscn" id="4_2m0a5"]
-[ext_resource type="Texture2D" uid="uid://b3effoyaq3ttk" path="res://assets/oak_woods_v1.0/decorations/shop_anim.png" id="7_mgxmj"]
+[ext_resource type="Texture2D" uid="uid://bl87xrved1ipd" path="res://assets/oak_woods_v1.0/decorations/shop_anim.png" id="7_mgxmj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uivxd"]
 radius = 110.0

@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="2_myu1b"]
 [ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="2_pk8ce"]
 [ext_resource type="Script" path="res://tests/menu/Main_Bg.gd" id="3_24lnp"]
-[ext_resource type="Texture2D" uid="uid://dbic0f4kvw8ed" path="res://assets/Final/Background_0.png" id="3_awy5d"]
+[ext_resource type="Texture2D" uid="uid://beds33lmr0wo1" path="res://assets/Final/Background_0.png" id="3_awy5d"]
 [ext_resource type="Shader" path="res://scripts/shaders/godrays.gdshader" id="3_huhdn"]
 [ext_resource type="Shader" path="res://scripts/shaders/title_transition.gdshader" id="4_b537f"]
-[ext_resource type="Texture2D" uid="uid://cr6uh01gvcmgl" path="res://assets/Final/Background_1.png" id="4_c0uxt"]
+[ext_resource type="Texture2D" uid="uid://8iiupkmg0llh" path="res://assets/Final/Background_1.png" id="4_c0uxt"]
 [ext_resource type="Shader" path="res://scripts/shaders/distort.gdshader" id="4_ijlmw"]
 
 [sub_resource type="Shader" id="Shader_k62uf"]

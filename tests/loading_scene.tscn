@@ -1,22 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://dt24tk2s2giff"]
+[gd_scene load_steps=11 format=3 uid="uid://dt24tk2s2giff"]
 
 [ext_resource type="Script" path="res://tests/menu/Loading_Scene.gd" id="1_dchh7"]
 [ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="2_xe6ll"]
 [ext_resource type="Shader" path="res://scripts/shaders/title_transition.gdshader" id="3_mg7em"]
-[ext_resource type="Texture2D" uid="uid://gvc0pu8jsnx3" path="res://assets/sprites/v2.1/Indvidual Sprites/adventurer-run-00-1.3.png" id="4_3koe5"]
-[ext_resource type="Texture2D" uid="uid://bionee2fxs88x" path="res://assets/sprites/v2.1/Indvidual Sprites/adventurer-run-01-1.3.png" id="5_lacxt"]
-[ext_resource type="Texture2D" uid="uid://m1xfgsrhvp3q" path="res://assets/sprites/v2.1/Indvidual Sprites/adventurer-run-02-1.3.png" id="6_4o5gp"]
-[ext_resource type="Texture2D" uid="uid://c8ns5scxmo5rq" path="res://assets/sprites/v2.1/Indvidual Sprites/adventurer-run-03-1.3.png" id="7_8egn7"]
-[ext_resource type="Texture2D" uid="uid://dkrq08bl6htfu" path="res://assets/sprites/v2.1/Indvidual Sprites/adventurer-run-04-1.3.png" id="8_qlcyx"]
-[ext_resource type="Texture2D" uid="uid://don20lfl07rrj" path="res://assets/sprites/v2.1/Indvidual Sprites/adventurer-run-05-1.3.png" id="9_osl0p"]
-[ext_resource type="Texture2D" uid="uid://ut1yctxni6f7" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_1.png" id="10_fv7n3"]
-[ext_resource type="Texture2D" uid="uid://berc7l0shq012" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_2.png" id="11_ndygn"]
-[ext_resource type="Texture2D" uid="uid://2xamtq74bw22" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_3.png" id="12_kfr7a"]
-[ext_resource type="Texture2D" uid="uid://deou7oe24epg1" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_4.png" id="13_nafvu"]
-[ext_resource type="Texture2D" uid="uid://npyyq4puajoy" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_5.png" id="14_q36u5"]
-[ext_resource type="Texture2D" uid="uid://bcuh7i3jtrr4p" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_6.png" id="15_fqo63"]
-[ext_resource type="Texture2D" uid="uid://b825b0m7dv640" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_7.png" id="16_62yr5"]
-[ext_resource type="Texture2D" uid="uid://cr5enyjnclxvk" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_8.png" id="17_ucklp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ivmc3"]
 shader = ExtResource("3_mg7em")
@@ -27,22 +13,22 @@ shader_parameter/diamondPixelSize = 14.09
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_3koe5")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_lacxt")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_4o5gp")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_8egn7")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_qlcyx")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_osl0p")
+"texture": null
 }],
 "loop": true,
 "name": &"default",
@@ -53,28 +39,28 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_fv7n3")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_ndygn")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_kfr7a")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_nafvu")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_q36u5")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_fqo63")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_62yr5")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_ucklp")
+"texture": null
 }],
 "loop": true,
 "name": &"default",
