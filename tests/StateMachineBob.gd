@@ -755,14 +755,23 @@ func get_transition(_delta):
 			
 			elif Input.is_action_pressed("left"):
 				if parent.velocity.x > 0:
-					parent.turn(true)
+					if parent.is_upside_down == true :
+						parent.turn(false)
+					else:
+						parent.turn(true)
 				parent.velocity.x = -parent.DASHSPEED      #----- test 1
 				#parent.velocity.x = -parent.DASHSPEED * 2  #----- test 2
 				if parent.frame <= parent.dash_duration + 1:
-					parent.turn(true)
+					if parent.is_upside_down == true :
+						parent.turn(false)
+					else:
+						parent.turn(true)
 					return states.PLATFORM_DASH
 				else:
-					parent.turn(false)
+					if parent.is_upside_down == true :
+						parent.turn(true)
+					else:
+						parent.turn(false)
 					return states.PLATFORM_RUN
 				
 			elif Input.is_action_pressed("right"):
@@ -771,10 +780,16 @@ func get_transition(_delta):
 				parent.velocity.x = parent.DASHSPEED       #----- test 1
 				#parent.velocity.x = parent.DASHSPEED * 2  #----- test 2
 				if parent.frame <= parent.dash_duration + 1:
-					parent.turn(false)
+					if parent.is_upside_down == true :
+						parent.turn(true)
+					else:
+						parent.turn(false)
 					return states.PLATFORM_DASH
 				else:
-					parent.turn(false)
+					if parent.is_upside_down == true :
+						parent.turn(false)
+					else:
+						parent.turn(true)
 					return states.PLATFORM_RUN
 			else:
 				if parent.frame >= parent.dash_duration+1:
