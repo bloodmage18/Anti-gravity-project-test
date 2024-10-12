@@ -143,42 +143,29 @@ func play_animation(animation_name):
 
 func turn(direction):
 	var dir = 0
+	#
+	#if direction:
+		#dir = 1
+	#else:
+		#dir = -1
+	#
+	#Sprite.set_flip_h(direction)
+#
+	#Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
+	#Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
+	#Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
+	#Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
 	
 	if direction:
-		dir = 1
-	else:
 		dir = -1
-	
+	else:
+		dir = 1
 	Sprite.set_flip_h(direction)
-
-	Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
-	Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
+	
+	Ledge_Grab_F.set_target_position(Vector2(-dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
+	Ledge_Grab_F.position.x = -dir * abs(-Ledge_Grab_F.position.x)
 	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
 	Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
-		
-	#if is_upside_down == true:
-		#if direction:
-			#dir = 1
-		#else:
-			#dir = -1
-		#Sprite.set_flip_h(direction)
-		#
-		#Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
-		#Ledge_Grab_F.position.x = -dir * abs(Ledge_Grab_F.position.x)
-		#Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
-		#Ledge_Grab_B.position.x = dir * abs(Ledge_Grab_B.position.x)
-		#
-	#elif is_upside_down == false :
-		#if direction:
-			#dir = -1
-		#else:
-			#dir = 1
-		#Sprite.set_flip_h(direction)
-		#
-		#Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
-		#Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
-		#Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
-		#Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
 		
 	#Sprite.flip_h = direction
 	
@@ -192,20 +179,29 @@ func rotate_to_platform(platform_normal: Vector2):
 	
 func adjust_movement_for_surface():
 	var rotation_matrix = Transform2D(rotation, Vector2.ZERO)
+	var movement_vector = Vector2(dir(),0).rotated(rotation)
+	var input_dir = Input.get_axis("left" , "right")
+	#velocity.x = dir() * abs(velocity.x)
+	#velocity.y = rotation_matrix.basis_xform(velocity).y
 	#velocity = rotation_matrix.basis_xform(velocity)
-	 # Check if player is upside down using the is_upside_down boolean
-	if _is_on_cieling():
-		## Invert the movement when upside down
-		print("abs pos - ",abs(velocity.x) )
-		print("abs dir - ",abs(velocity.x) * direction())
-		velocity = rotation_matrix.basis_xform_inv(Vector2(-(abs(velocity.x) * direction()), velocity.y))
-	elif !_is_on_cieling():
-		## Regular movement if not upside down (no inversion)
+	#velocity.x = movement_vector.x * RUNSPEED
+	
+	if _is_on_cieling() and GroundL.is_colliding():
+		if Input.get_axis("left" , "right"):
+			print("cile")
+			velocity = rotation_matrix.basis_xform(velocity)
+			#velocity = rotation_matrix.basis_xform(Vector2(-input_direction.x * RUNSPEED, velocity.y))
+	else:
 		velocity = rotation_matrix.basis_xform(velocity)
-		
-	#velocity = rotation_matrix.basis_xform(velocity  Vector2(input_direction.x , 1))
-	#velocity = rotation_matrix.basis_xform(input_direction)
+	
 	#print("adjusting velocity velocity : " , velocity)    #  --------- debuging
+	
+func dir() -> int:
+	if Input.is_action_pressed("right"):
+		return 1
+	elif Input.is_action_pressed("left"):
+		return -1
+	return 0
 	
 func calculate_jump_velocity():
 	# Adjust jump velocity based on current orientation
@@ -246,12 +242,8 @@ func _is_on_wall() -> bool:
 
 
 ## cieling functions
-func _is_on_cieling() -> bool :
-	var ciel = Platform_Cast_U.get_target_position().y
-	var flrr = Platform_Cast_D.get_target_position().y
-	#await  get_tree().create_timer(3).timeout
-	#print("ciel : " , ciel , " - flrr : " , flrr)
-	var dir = 1
+func _is_on_cieling() -> bool:
+	#await  get_tree().create_timer(1).timeout
 	if transform.basis_xform(velocity).normalized().y < -0 :
 		#print("underbelly : " , transform.basis_xform(velocity).normalized().y )
 		is_upside_down = true
@@ -261,7 +253,7 @@ func _is_on_cieling() -> bool :
 		is_upside_down = false
 		return false
 	else:
-		is_upside_down = false
+		#var input_dir = Input.get_axis("left","right")
+		velocity.x = 0
 		return false
-		#print("standing")
 	
