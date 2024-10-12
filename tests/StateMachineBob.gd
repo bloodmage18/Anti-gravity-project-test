@@ -712,6 +712,7 @@ func get_transition(_delta):
 			pass
 			
 		states.PLATFORM_RUN:
+			
 			if Input.is_action_just_pressed("jump"):
 				parent._frame()
 				return states.PLATFORM_JUMP
@@ -720,13 +721,19 @@ func get_transition(_delta):
 				return states.CROUCH
 			if Input.is_action_pressed("left"):
 				parent.velocity.x = -parent.RUNSPEED
-				parent.turn(true)
 				parent.velocity.y = parent.FALLSPEED
+				if parent.is_upside_down == true:
+					parent.turn(false)
+				else:
+					parent.turn(true)
 				#print("velocity : " , parent.velocity , " - Runspeed : " , parent.RUNSPEED)   ---------- debugging
 			elif Input.is_action_pressed("right"):
 				parent.velocity.x = parent.RUNSPEED
 				parent.velocity.y = parent.FALLSPEED
-				parent.turn(false)
+				if parent.is_upside_down == true:
+					parent.turn(true)
+				else:
+					parent.turn(false)
 				#print("velocity : " , parent.velocity , " - Runspeed : " , parent.RUNSPEED)    ---------- debugging
 			else:
 				parent._frame()

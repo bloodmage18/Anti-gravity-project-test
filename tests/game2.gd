@@ -58,7 +58,7 @@ func _set_game_state(new_state: GameState):
 	
 	if game_state == GameState.MENU:
 		# Reset positions for player, flood, and camera when in menu
-		camera.position = player.position  # Reset camera position
+		#camera.position = player.position  # Reset camera position
 		#game_controller.hide()
 		level_selector.show()
 		get_tree().paused = false  # Unpause the game

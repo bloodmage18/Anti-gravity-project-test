@@ -78,6 +78,9 @@ var UP_B_LAUNCHSPEED = 700
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+var input_direction : Vector2 = Vector2.ZERO
+var is_upside_down : bool = false
+
 
 func create_hitbox(width, height, damage, angle, base_kb, kb_scaling, duration, type, points, angle_flipper, hitlag=1):
 	var hitbox_instance = hitbox.instantiate()
@@ -115,11 +118,9 @@ func _frame():
 func _ready():
 	reset_Jumps()
 	pass
-
-func _process(delta):
 	
-	#print("player rotation : " , rotation_degrees)
-	pass
+func _process(delta):
+	_is_on_cieling()
 	
 
 func _physics_process(_delta):
@@ -139,17 +140,32 @@ func play_animation(animation_name):
 
 func turn(direction):
 	var dir = 0
-	if direction:
-		dir = -1
-	else:
-		dir = 1
-	Sprite.set_flip_h(direction)
+	if is_upside_down == true:
+		if direction:
+			dir = 1
+		else:
+			dir = -1
+		Sprite.set_flip_h(direction)
+		
+		Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
+		Ledge_Grab_F.position.x = -dir * abs(Ledge_Grab_F.position.x)
+		Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
+		Ledge_Grab_B.position.x = dir * abs(Ledge_Grab_B.position.x)
+		
+	elif is_upside_down == false :
+		if direction:
+			dir = -1
+		else:
+			dir = 1
+		Sprite.set_flip_h(direction)
+		
+		Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
+		Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
+		Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
+		Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
+		
 	#Sprite.flip_h = direction
 	
-	Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
-	Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
-	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
-	Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
 	
 
 ## PLatform functions
@@ -160,8 +176,23 @@ func rotate_to_platform(platform_normal: Vector2):
 	
 func adjust_movement_for_surface():
 	var rotation_matrix = Transform2D(rotation, Vector2.ZERO)
-	velocity = rotation_matrix.basis_xform(velocity)
-	#print("adjusting velocity velocity : " , velocity)      --------- debuging
+	#velocity = rotation_matrix.basis_xform(velocity)
+	 # Check if player is upside down using the is_upside_down boolean
+	if _is_on_cieling():
+		# Invert the movement when upside down
+		velocity.x = -velocity.x
+		velocity.x = rotation_matrix.basis_xform(Vector2(velocity.x , velocity.y)).x
+		velocity.y = rotation_matrix.basis_xform(Vector2(velocity.x , velocity.y)).y
+	elif !_is_on_cieling():
+		# Regular movement if not upside down (no inversion)
+		velocity.x = rotation_matrix.basis_xform(velocity).x
+		velocity.y = rotation_matrix.basis_xform(velocity).y
+	else:
+		velocity = Vector2.ZERO
+		
+	#velocity = rotation_matrix.basis_xform(velocity)
+	#velocity = rotation_matrix.basis_xform(input_direction)
+	#print("adjusting velocity velocity : " , velocity)    #  --------- debuging
 	
 func calculate_jump_velocity():
 	# Adjust jump velocity based on current orientation
@@ -199,3 +230,25 @@ func _is_on_wall() -> bool:
 		return true
 	else:
 		return false
+
+
+## cieling functions
+func _is_on_cieling() -> bool :
+	var ciel = Platform_Cast_U.get_target_position().y
+	var flrr = Platform_Cast_D.get_target_position().y
+	#await  get_tree().create_timer(3).timeout
+	#print("ciel : " , ciel , " - flrr : " , flrr)
+	var dir = 1
+	if transform.basis_xform(velocity).normalized().y < -0 :
+		print("underbelly : " , transform.basis_xform(velocity).normalized().y )
+		is_upside_down = true
+		return true
+	elif transform.basis_xform(velocity).normalized().y > +0 :
+		print("grond" , transform.basis_xform(velocity).normalized().y )
+		is_upside_down = false
+		return false
+	else:
+		is_upside_down = false
+		return false
+		#print("standing")
+	
