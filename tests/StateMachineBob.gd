@@ -683,6 +683,7 @@ func get_transition(_delta):
 			if Input.get_action_strength("down"):
 				parent._frame()
 				return states.CROUCH
+				
 			if Input.get_action_strength("left"):
 				parent.velocity.x = parent.RUNSPEED
 				parent._frame()
@@ -712,29 +713,34 @@ func get_transition(_delta):
 			pass
 			
 		states.PLATFORM_RUN:
-			
 			if Input.is_action_just_pressed("jump"):
 				parent._frame()
 				return states.PLATFORM_JUMP
 			if Input.is_action_just_pressed("down"):
 				parent._frame()
 				return states.CROUCH
+				
+			# added cindotional upside down movemet
 			if Input.is_action_pressed("left"):
-				parent.velocity.x = -parent.RUNSPEED
 				parent.velocity.y = parent.FALLSPEED
-				if parent.is_upside_down == true:
+				if _upside_down() == true:
+					parent.velocity.x = parent.RUNSPEED
 					parent.turn(false)
 				else:
+					parent.velocity.x = -parent.RUNSPEED
 					parent.turn(true)
 				#print("velocity : " , parent.velocity , " - Runspeed : " , parent.RUNSPEED)   ---------- debugging
 			elif Input.is_action_pressed("right"):
-				parent.velocity.x = parent.RUNSPEED
 				parent.velocity.y = parent.FALLSPEED
-				if parent.is_upside_down == true:
+				if _upside_down() == true:
+					parent.velocity.x = -parent.RUNSPEED
 					parent.turn(true)
 				else:
+					parent.velocity.x = parent.RUNSPEED
 					parent.turn(false)
 				#print("velocity : " , parent.velocity , " - Runspeed : " , parent.RUNSPEED)    ---------- debugging
+			
+			
 			else:
 				parent._frame()
 				return states.PLATFORM_STAND
@@ -754,43 +760,59 @@ func get_transition(_delta):
 				return states.PLATFORM_JUMP
 			
 			elif Input.is_action_pressed("left"):
-				if parent.velocity.x > 0:
-					if parent.is_upside_down == true :
+				#if parent.velocity.x > 0:
+					#parent.turn(true)
+					
+				if _upside_down():
+					parent.velocity.x = parent.DASHSPEED      #----- test 1
+					#parent.velocity.x = -parent.DASHSPEED * 2  #----- test 2
+					
+					if parent.frame <= parent.dash_duration + 1:
 						parent.turn(false)
+						return states.PLATFORM_DASH
 					else:
 						parent.turn(true)
-				parent.velocity.x = -parent.DASHSPEED      #----- test 1
-				#parent.velocity.x = -parent.DASHSPEED * 2  #----- test 2
-				if parent.frame <= parent.dash_duration + 1:
-					if parent.is_upside_down == true :
-						parent.turn(false)
-					else:
-						parent.turn(true)
-					return states.PLATFORM_DASH
+						return states.PLATFORM_RUN
 				else:
-					if parent.is_upside_down == true :
+					parent.velocity.x = -parent.DASHSPEED      #----- test 1
+					#parent.velocity.x = -parent.DASHSPEED * 2  #----- test 2
+					
+					if parent.frame <= parent.dash_duration + 1:
 						parent.turn(true)
+						return states.PLATFORM_DASH
 					else:
 						parent.turn(false)
-					return states.PLATFORM_RUN
+						return states.PLATFORM_RUN
+					
 				
 			elif Input.is_action_pressed("right"):
-				if parent.velocity.x < 0:
-					parent.turn(false)
-				parent.velocity.x = parent.DASHSPEED       #----- test 1
-				#parent.velocity.x = parent.DASHSPEED * 2  #----- test 2
-				if parent.frame <= parent.dash_duration + 1:
-					if parent.is_upside_down == true :
+				#if parent.velocity.x < 0:
+					#parent.turn(false)
+					
+				if _upside_down():
+					parent.velocity.x = -parent.DASHSPEED      #----- test 1
+					#parent.velocity.x = -parent.DASHSPEED * 2  #----- test 2
+					
+					if parent.frame <= parent.dash_duration + 1:
 						parent.turn(true)
+						return states.PLATFORM_DASH
 					else:
 						parent.turn(false)
-					return states.PLATFORM_DASH
+						return states.PLATFORM_RUN
+					
 				else:
-					if parent.is_upside_down == true :
+					parent.velocity.x = parent.DASHSPEED      #----- test 1
+					#parent.velocity.x = -parent.DASHSPEED * 2  #----- test 2
+					
+					if parent.frame <= parent.dash_duration + 1:
 						parent.turn(false)
+						return states.PLATFORM_DASH
 					else:
-						parent.turn(true)
-					return states.PLATFORM_RUN
+						parent.turn(false)
+						return states.PLATFORM_RUN
+					
+					
+					
 			else:
 				if parent.frame >= parent.dash_duration+1:
 					for state in states:
@@ -1246,3 +1268,22 @@ func LEDGE():
 	pass
 
 
+func _upside_down():
+	var movement_dir = Input.get_axis("left","right")
+	var cieling = parent.Platform_Cast_D.get_global_transform().y.y
+	
+	#if movement_dir:
+		### debuggin for cialing and floor
+		##print("md : ", movement_dir)
+		##print("ground ray y : " , parent.Platform_Cast_D.get_global_transform())
+		##print("ground ray y : " , parent.Platform_Cast_D.get_global_transform().y.y)
+		#print("ground ray y flrr : " , floor(parent.Platform_Cast_D.get_global_transform().y.y))
+		##print(" y direction : " , parent.Platform_Cast_D.get_target_position().y)
+		##print("ground ray y ciel : " , (parent.Platform_Cast_D.get_global_transform().y.y))
+	
+	if floor(cieling) < 0:
+		print("ground ray y flrr : " , floor(parent.Platform_Cast_D.get_global_transform().y.y))
+		return true
+	else:
+		return false
+	

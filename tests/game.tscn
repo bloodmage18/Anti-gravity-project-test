@@ -77,7 +77,7 @@ noise = SubResource("FastNoiseLite_lbwq1")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wa4as"]
 shader = SubResource("Shader_cacg1")
 shader_parameter/scale = Vector2(13.13, 4)
-shader_parameter/y_zoom = 1.0
+shader_parameter/y_zoom = 0.03125
 shader_parameter/water_color = Color(0.0392157, 0.415686, 0.768627, 0.364706)
 shader_parameter/distortion_scale = Vector2(0.005, 0.033)
 shader_parameter/intensity = 0.115
