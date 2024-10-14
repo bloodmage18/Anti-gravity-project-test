@@ -100,10 +100,10 @@ func create_Projectile2(_dir_x, dir_y, point):
 	get_parent().add_child(projectile_instance)
 	projectile_instance.set_level()
 	# Apply the player's rotation to the direction vector
-	var direction_vector = Vector2(direction(), dir_y).rotated(self.rotation)
+	var direction_vector = Vector2(-direction(), dir_y).rotated(self.rotation)
 	point = point * direction()
 	# Set projectile direction and position
-	projectile_instance.dir(direction_vector.x, direction_vector.y)
+	projectile_instance.dir(-direction_vector.x, direction_vector.y)
 	var global_point = gun_pos.get_global_position() + point.rotated(self.rotation)
 	projectile_instance.set_global_position(global_point)
 	
@@ -132,9 +132,9 @@ func _physics_process(_delta):
 
 func direction():
 	if Ledge_Grab_F.get_target_position().x > 0:
-		return 1
-	else:
 		return -1
+	else:
+		return 1
 	
 func play_animation(animation_name):
 	anim.play(str(animation_name))
@@ -150,7 +150,7 @@ func turn(direction):
 	Sprite.set_flip_h(direction)
 
 	Ledge_Grab_F.set_target_position(Vector2(dir*abs(Ledge_Grab_F.get_target_position().x),Ledge_Grab_F.get_target_position().y))
-	Ledge_Grab_F.position.x = dir * abs(Ledge_Grab_F.position.x)
+	Ledge_Grab_F.position.x = dir * abs(-Ledge_Grab_F.position.x)
 	Ledge_Grab_B.set_target_position(Vector2(-dir*abs(Ledge_Grab_B.get_target_position().x),Ledge_Grab_B.get_target_position().y))
 	Ledge_Grab_B.position.x = -dir * abs(Ledge_Grab_B.position.x)
 	
