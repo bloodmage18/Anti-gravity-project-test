@@ -1,40 +1,34 @@
-[gd_scene load_steps=8 format=3 uid="uid://btgi2bpitiuov"]
+[gd_scene load_steps=7 format=3 uid="uid://btgi2bpitiuov"]
 
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="1_lvi0r"]
 [ext_resource type="Texture2D" uid="uid://d3gys6al4rec1" path="res://assets/Final/Background.png" id="2_4nms7"]
 [ext_resource type="Script" path="res://scripts/shaders/water.gd" id="3_t7ryc"]
 
-[sub_resource type="Gradient" id="Gradient_mccer"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p1kab"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ahhpr"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6lw7j"]
-invert = true
-seamless = true
-seamless_blend_skirt = 0.433
-color_ramp = SubResource("Gradient_mccer")
-noise = SubResource("FastNoiseLite_ahhpr")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_l3ehg"]
+noise = SubResource("FastNoiseLite_p1kab")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hyqae"]
 shader = ExtResource("1_lvi0r")
 shader_parameter/scale = Vector2(13, 4)
-shader_parameter/y_zoom = 0.0441942
-shader_parameter/water_color = Color(0.0392157, 0.415686, 0.768627, 0.494118)
+shader_parameter/y_zoom = 0.03125
+shader_parameter/water_color = Color(0.337255, 0.792157, 0.803922, 0.85098)
 shader_parameter/distortion_scale = Vector2(0.005, 0.033)
 shader_parameter/intensity = 0.07
 shader_parameter/dist_speed = 0.13
-shader_parameter/wave_amplitude = 0.168
-shader_parameter/wave_period = 0.523
-shader_parameter/wave_speed = 0.87
+shader_parameter/wave_amplitude = 0.023
+shader_parameter/wave_period = 0.035
+shader_parameter/wave_speed = 2.0
 shader_parameter/shorelineColor = Color(1, 1, 1, 1)
-shader_parameter/shorelineSize = 0.0025
-shader_parameter/foamsize = 0.1
-shader_parameter/foamstrength = 0.3
-shader_parameter/noise = SubResource("NoiseTexture2D_6lw7j")
+shader_parameter/shorelineSize = 0.007
+shader_parameter/foamsize = 0.15
+shader_parameter/foamstrength = 0.15
+shader_parameter/noise = SubResource("NoiseTexture2D_l3ehg")
 
 [node name="water" type="Sprite2D"]
 material = SubResource("ShaderMaterial_hyqae")
-position = Vector2(783, 928)
+position = Vector2(738, 922)
 scale = Vector2(5.42917, 2.75)
 texture = ExtResource("2_4nms7")
 script = ExtResource("3_t7ryc")

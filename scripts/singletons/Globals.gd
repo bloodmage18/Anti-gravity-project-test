@@ -1,7 +1,7 @@
 extends Node
 
 const title_screen : String = "res://tests/title_screen.tscn"
-const main_menu : String = "res://tests/main.tscn" 
+const main_menu : String = "res://tests/main.tscn"
 const game_scene : String = "res://tests/game.tscn"
 const loading_screen : String = "res://tests/loading_scene.tscn"
 

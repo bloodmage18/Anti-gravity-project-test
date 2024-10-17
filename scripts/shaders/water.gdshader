@@ -3,6 +3,7 @@ shader_type canvas_item;
 uniform vec2 scale;
 uniform float y_zoom;
 
+//uniform vec4 water_color : source_color = vec4(.1) ;
 uniform vec4 water_color : source_color ;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
@@ -11,8 +12,8 @@ uniform vec2 distortion_scale ;
 uniform float intensity ;
 uniform float dist_speed ;
 
-uniform float wave_amplitude ;
-uniform float wave_period ;
+uniform float wave_amplitude : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_period : hint_range(0.0, 1.0) = 0.3 ;
 uniform float wave_speed ;
 
 // altering the figures too much can flip the shoreline

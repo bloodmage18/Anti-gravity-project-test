@@ -23,7 +23,7 @@ func _process(_delta):
 		print("completed loading in scene")
 	elif loader == 2 : #THREAD_LOAD_FAILED
 		# handle your error
-		print("error occured while loading chuncks of data")
+		#print("error occured while loading chuncks of data")
 		return
 	elif loader == 1 : #THREAD_LOAD_IN_PROGRESS
 		#await get_tree().create_timer(1).timeout

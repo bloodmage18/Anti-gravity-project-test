@@ -23,10 +23,7 @@ Globals="*res://scripts/singletons/Globals.gd"
 
 window/size/viewport_width=1360
 window/size/viewport_height=768
-
-[editor_plugins]
-
-enabled=PackedStringArray()
+window/stretch/mode="viewport"
 
 [filesystem]
 

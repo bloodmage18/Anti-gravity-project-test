@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b13wa4hqbg3my"]
+[gd_scene load_steps=14 format=3 uid="uid://b13wa4hqbg3my"]
 
 [ext_resource type="Script" path="res://tests/game2.gd" id="1_lookk"]
 [ext_resource type="PackedScene" uid="uid://d0qn7awt4wpaj" path="res://tests/level_selector.tscn" id="2_eub6f"]
@@ -7,13 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://dj1xnyivyyo6h" path="res://tests/game_control.tscn" id="3_cf3sk"]
 [ext_resource type="Script" path="res://tests/safe_zone_transporter.gd" id="4_hebxh"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="7_78dmk"]
+[ext_resource type="Script" path="res://scripts/Anchor.gd" id="7_vnyk1"]
+[ext_resource type="Texture2D" uid="uid://cw6ese4o6vfgq" path="res://assets/png/custom/base.png" id="8_4sug8"]
 
-[sub_resource type="Shader" id="Shader_cacg1"]
+[sub_resource type="Shader" id="Shader_x2umi"]
 code = "shader_type canvas_item;
 
 uniform vec2 scale;
 uniform float y_zoom;
 
+//uniform vec4 water_color : source_color = vec4(.1) ;
 uniform vec4 water_color : source_color ;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
@@ -22,15 +25,15 @@ uniform vec2 distortion_scale ;
 uniform float intensity ;
 uniform float dist_speed ;
 
-uniform float wave_amplitude ;
-uniform float wave_period ;
+uniform float wave_amplitude : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_period : hint_range(0.0, 1.0) = 0.3 ;
 uniform float wave_speed ;
 
 // altering the figures too much can flip the shoreline
 // increased value range use as is
 uniform vec4 shorelineColor : source_color = vec4(1.);
 uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
-uniform float foamsize : hint_range(0.0, 1.1) = 0.1 ;
+uniform float foamsize : hint_range(-0.8, 1.1) = 0.1 ;
 uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
 
 
@@ -63,33 +66,34 @@ void fragment() {
 	
 }"
 
-[sub_resource type="Gradient" id="Gradient_3sl7l"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hfkby"]
+noise_type = 0
+seed = 6
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwq1"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mhtea"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sl7x8"]
+width = 256
+height = 256
 invert = true
 seamless = true
-seamless_blend_skirt = 0.433
-color_ramp = SubResource("Gradient_3sl7l")
-noise = SubResource("FastNoiseLite_lbwq1")
+seamless_blend_skirt = 0.589
+noise = SubResource("FastNoiseLite_hfkby")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wa4as"]
-shader = SubResource("Shader_cacg1")
-shader_parameter/scale = Vector2(13.13, 4)
-shader_parameter/y_zoom = 0.03125
-shader_parameter/water_color = Color(0.0392157, 0.415686, 0.768627, 0.364706)
-shader_parameter/distortion_scale = Vector2(0.005, 0.033)
-shader_parameter/intensity = 0.115
-shader_parameter/dist_speed = 0.35
-shader_parameter/wave_amplitude = 0.023
-shader_parameter/wave_period = 0.058
-shader_parameter/wave_speed = 0.64
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k6d15"]
+shader = SubResource("Shader_x2umi")
+shader_parameter/scale = Vector2(14, 1.1)
+shader_parameter/y_zoom = 0.707107
+shader_parameter/water_color = Color(0.337255, 0.792157, 0.803922, 0.72549)
+shader_parameter/distortion_scale = Vector2(0.5, 0.5)
+shader_parameter/intensity = 0.1
+shader_parameter/dist_speed = 0.008
+shader_parameter/wave_amplitude = 0.04
+shader_parameter/wave_period = 0.015
+shader_parameter/wave_speed = 2.0
 shader_parameter/shorelineColor = Color(1, 1, 1, 1)
-shader_parameter/shorelineSize = 0.027
-shader_parameter/foamsize = 0.14
-shader_parameter/foamstrength = 0.21
-shader_parameter/noise = SubResource("NoiseTexture2D_mhtea")
+shader_parameter/shorelineSize = -0.19
+shader_parameter/foamsize = -0.035
+shader_parameter/foamstrength = 0.156
+shader_parameter/noise = SubResource("NoiseTexture2D_sl7x8")
 
 [node name="Game" type="Node"]
 script = ExtResource("1_lookk")
@@ -101,12 +105,6 @@ level_markers = Array[NodePath]([NodePath("Node/0"), NodePath("Node/1"), NodePat
 
 [node name="AnimatedSprite2D" parent="World/Node2D/BuildingArea" index="0"]
 frame_progress = 0.187133
-
-[node name="water" parent="." instance=ExtResource("2_xuh87")]
-material = SubResource("ShaderMaterial_wa4as")
-position = Vector2(-190, 6376)
-scale = Vector2(35.7396, 4.70588)
-offset = Vector2(0, 70)
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("4_hebxh")
@@ -147,7 +145,43 @@ level_markers = Array[NodePath]([NodePath("../../Node/0"), NodePath("../../Node/
 [node name="player" type="Node" parent="."]
 
 [node name="bob" parent="player" instance=ExtResource("7_78dmk")]
-position = Vector2(3200, -3968)
+position = Vector2(-174, 5644)
+
+[node name="Anchor" type="Marker2D" parent="player"]
+process_mode = 3
+position = Vector2(-174, 5643)
+script = ExtResource("7_vnyk1")
+
+[node name="Cam" type="Camera2D" parent="player/Anchor"]
+zoom = Vector2(1.7, 1.7)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_vertical_offset = -1.0
+
+[node name="cam_point" type="Sprite2D" parent="player/Anchor/Cam"]
+visible = false
+modulate = Color(0, 1, 1, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("8_4sug8")
+
+[node name="anchor_point" type="Sprite2D" parent="player/Anchor"]
+visible = false
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("8_4sug8")
+
+[node name="water" type="Node2D" parent="."]
+position = Vector2(0, 5776)
+
+[node name="water" parent="water" instance=ExtResource("2_xuh87")]
+modulate = Color(1, 1, 1, 0.403922)
+texture_filter = 1
+material = SubResource("ShaderMaterial_k6d15")
+position = Vector2(0, 0)
+scale = Vector2(31.9333, 1)
+offset = Vector2(0, 50)
 
 [editable path="World"]
 [editable path="CanvasLayer/Game_control"]

@@ -1,0 +1,287 @@
+[gd_scene load_steps=14 format=3 uid="uid://bkl6a3wxdq74y"]
+
+[ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="1_3qfu1"]
+
+[sub_resource type="Shader" id="Shader_8vtdh"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+//uniform vec4 water_color : source_color = vec4(.1) ;
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_period : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(-0.8, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_diso2"]
+noise_type = 0
+seed = 6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_04ojf"]
+width = 256
+height = 256
+invert = true
+seamless = true
+seamless_blend_skirt = 0.589
+noise = SubResource("FastNoiseLite_diso2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0m7cq"]
+shader = SubResource("Shader_8vtdh")
+shader_parameter/scale = Vector2(13.76, 1.1)
+shader_parameter/y_zoom = null
+shader_parameter/water_color = Color(0.337255, 0.811765, 0.839216, 0.509804)
+shader_parameter/distortion_scale = Vector2(0.16, 0.088)
+shader_parameter/intensity = 0.07
+shader_parameter/dist_speed = 0.01
+shader_parameter/wave_amplitude = 0.042
+shader_parameter/wave_period = 0.009
+shader_parameter/wave_speed = 2.0
+shader_parameter/shorelineColor = Color(1, 1, 1, 0.513726)
+shader_parameter/shorelineSize = -0.011
+shader_parameter/foamsize = 0.125
+shader_parameter/foamstrength = 0.164
+shader_parameter/noise = SubResource("NoiseTexture2D_04ojf")
+
+[sub_resource type="Shader" id="Shader_x2umi"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+//uniform vec4 water_color : source_color = vec4(.1) ;
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_period : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(-0.8, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hfkby"]
+noise_type = 0
+seed = 6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sl7x8"]
+width = 256
+height = 256
+invert = true
+seamless = true
+seamless_blend_skirt = 0.589
+noise = SubResource("FastNoiseLite_hfkby")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k6d15"]
+shader = SubResource("Shader_x2umi")
+shader_parameter/scale = Vector2(14, 1.1)
+shader_parameter/y_zoom = null
+shader_parameter/water_color = Color(0.337255, 0.792157, 0.803922, 0.72549)
+shader_parameter/distortion_scale = Vector2(0.16, 0.088)
+shader_parameter/intensity = 0.07
+shader_parameter/dist_speed = 0.01
+shader_parameter/wave_amplitude = 0.04
+shader_parameter/wave_period = 0.015
+shader_parameter/wave_speed = 2.0
+shader_parameter/shorelineColor = Color(1, 1, 1, 1)
+shader_parameter/shorelineSize = -0.19
+shader_parameter/foamsize = -0.035
+shader_parameter/foamstrength = 0.156
+shader_parameter/noise = SubResource("NoiseTexture2D_sl7x8")
+
+[sub_resource type="Shader" id="Shader_hgnaq"]
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+//uniform vec4 water_color : source_color = vec4(.1) ;
+uniform vec4 water_color : source_color ;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform sampler2D noise ;
+uniform vec2 distortion_scale ;
+uniform float intensity ;
+uniform float dist_speed ;
+
+uniform float wave_amplitude : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_period : hint_range(0.0, 1.0) = 0.3 ;
+uniform float wave_speed ;
+
+// altering the figures too much can flip the shoreline
+// increased value range use as is
+uniform vec4 shorelineColor : source_color = vec4(1.);
+uniform float shorelineSize : hint_range(-0.6, 1.0) = 0.0025;
+uniform float foamsize : hint_range(-0.8, 1.1) = 0.1 ;
+uniform float foamstrength : hint_range(0.0, 1.0) = 0.3 ;
+
+
+void fragment() {
+	
+	float waves = UV.y * scale.y + sin( UV.x * scale.x / wave_period - TIME*wave_speed ) * cos(0.2 * UV.x * scale.x / wave_period + TIME-wave_speed)
+	* wave_amplitude - wave_amplitude ;
+	
+	float distortion = texture(noise , UV*distortion_scale*scale + TIME*dist_speed).x  ;
+	distortion -= 0.3
+	 ;
+	
+	
+	float uv_height = SCREEN_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.y;
+	
+	vec2 reflected_screen_uv = vec2(SCREEN_UV.x - (distortion * intensity * y_zoom), SCREEN_UV.y - uv_height * UV.y * y_zoom * scale.y * 2.0);
+	
+	vec4 reflection = textureLod( SCREEN_TEXTURE , reflected_screen_uv , 0);
+	
+	
+	
+	float shoreline = smoothstep(foamsize - shorelineSize, foamstrength, waves);
+	
+	COLOR.rgb = mix(shorelineColor.rgb, mix(reflection.rgb, water_color.rgb, water_color.a), shoreline );
+	COLOR.a = smoothstep(0.1, 0.13, waves);
+
+//	COLOR.rgb = mix(reflection.rgb , water_color.rgb , water_color.a);
+//	COLOR.a = smoothstep(0.1 , 0.13 ,waves ) ;
+	
+	
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_thm68"]
+noise_type = 0
+seed = 6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0p30g"]
+width = 256
+height = 256
+invert = true
+seamless = true
+seamless_blend_skirt = 0.589
+noise = SubResource("FastNoiseLite_thm68")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cgs8c"]
+shader = SubResource("Shader_hgnaq")
+shader_parameter/scale = Vector2(14, 1.1)
+shader_parameter/y_zoom = null
+shader_parameter/water_color = Color(0.337255, 0.709804, 0.803922, 0.509804)
+shader_parameter/distortion_scale = Vector2(0.16, 0.088)
+shader_parameter/intensity = 0.07
+shader_parameter/dist_speed = 0.01
+shader_parameter/wave_amplitude = 0.051
+shader_parameter/wave_period = 0.01
+shader_parameter/wave_speed = 2.0
+shader_parameter/shorelineColor = Color(1, 1, 1, 0.513726)
+shader_parameter/shorelineSize = -0.011
+shader_parameter/foamsize = 0.125
+shader_parameter/foamstrength = 0.164
+shader_parameter/noise = SubResource("NoiseTexture2D_0p30g")
+
+[node name="water" type="Node2D"]
+position = Vector2(0, 5776)
+
+[node name="water3" parent="." instance=ExtResource("1_3qfu1")]
+modulate = Color(1, 1, 1, 0.403922)
+texture_filter = 1
+material = SubResource("ShaderMaterial_0m7cq")
+position = Vector2(0, -3.66)
+scale = Vector2(31.9333, 0.905193)
+offset = Vector2(0, 50)
+
+[node name="water" parent="." instance=ExtResource("1_3qfu1")]
+visible = false
+modulate = Color(1, 1, 1, 0.403922)
+texture_filter = 1
+material = SubResource("ShaderMaterial_k6d15")
+position = Vector2(0, 0)
+scale = Vector2(31.9333, 1)
+offset = Vector2(0, 50)
+
+[node name="water2" parent="." instance=ExtResource("1_3qfu1")]
+modulate = Color(1, 1, 1, 0.403922)
+z_index = -3
+texture_filter = 1
+material = SubResource("ShaderMaterial_cgs8c")
+position = Vector2(3, -30)
+scale = Vector2(31.9333, 0.522059)
+offset = Vector2(0, 50)

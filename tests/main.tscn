@@ -165,7 +165,7 @@ noise = SubResource("FastNoiseLite_5nb2h")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rhgem"]
 shader = SubResource("Shader_bgcmv")
 shader_parameter/scale = Vector2(16.205, 2.77)
-shader_parameter/y_zoom = null
+shader_parameter/y_zoom = 0.707107
 shader_parameter/water_color = Color(0.564706, 0.368627, 0.576471, 0.6)
 shader_parameter/distortion_scale = Vector2(0.005, 0.033)
 shader_parameter/intensity = -0.185
@@ -248,7 +248,7 @@ noise = SubResource("FastNoiseLite_ahhpr")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xlwn0"]
 shader = SubResource("Shader_3prku")
 shader_parameter/scale = Vector2(13.7, 4)
-shader_parameter/y_zoom = null
+shader_parameter/y_zoom = 0.707107
 shader_parameter/water_color = Color(0.564706, 0.368627, 0.576471, 0.345098)
 shader_parameter/distortion_scale = Vector2(0.005, 0.033)
 shader_parameter/intensity = 0.1

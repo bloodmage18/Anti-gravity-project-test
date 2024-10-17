@@ -1282,7 +1282,7 @@ func _upside_down():
 		##print("ground ray y ciel : " , (parent.Platform_Cast_D.get_global_transform().y.y))
 	
 	if floor(cieling) < 0:
-		print("ground ray y flrr : " , floor(parent.Platform_Cast_D.get_global_transform().y.y))
+		#print("ground ray y flrr : " , floor(parent.Platform_Cast_D.get_global_transform().y.y))
 		return true
 	else:
 		return false

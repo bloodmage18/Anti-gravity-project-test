@@ -1677,8 +1677,16 @@ target_position = Vector2(1, 30)
 collision_mask = 32
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 offset = Vector2(0, -50)
+enabled = false
 zoom = Vector2(1.7, 1.7)
+process_callback = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 60.0
+rotation_smoothing_speed = 0.5
+drag_vertical_enabled = true
 
 [node name="StateMachineBob" type="Node" parent="."]
 script = ExtResource("96_v7dk0")
@@ -1688,11 +1696,13 @@ script = ExtResource("111_o6d8e")
 parent = NodePath("..")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+visible = false
 position = Vector2(30, 0)
 rotation = 1.5708
 mesh = SubResource("BoxMesh_1fjhw")
 
 [node name="State_Label" type="Label" parent="."]
+visible = false
 offset_left = -19.0
 offset_top = -70.0
 offset_right = 21.0
@@ -1702,6 +1712,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Frame_Counter" type="Label" parent="."]
+visible = false
 offset_left = -51.0
 offset_top = -33.0
 offset_right = -11.0

@@ -24,7 +24,7 @@ var game_state: GameState = GameState.MENU  # Initial state is MENU
 @onready var game_controller: Control = $CanvasLayer/Game_control
 @onready var home_bttn: TextureButton = get_node("CanvasLayer/Game_control/VBoxContainer/HBoxContainer/Home")
 @onready var retry_bttn = get_node("CanvasLayer/Game_control/VBoxContainer/HBoxContainer/Retry")
-@onready var camera = $player/Camera2D
+@onready var camera = $player/Anchor
 
 func _ready():
 	# Initialize game to MENU state
