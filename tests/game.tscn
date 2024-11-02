@@ -149,10 +149,13 @@ position = Vector2(-174, 5644)
 
 [node name="Anchor" type="Marker2D" parent="player"]
 process_mode = 3
+visible = false
 position = Vector2(-174, 5643)
 script = ExtResource("7_vnyk1")
 
 [node name="Cam" type="Camera2D" parent="player/Anchor"]
+visible = false
+enabled = false
 zoom = Vector2(1.7, 1.7)
 process_callback = 0
 position_smoothing_enabled = true

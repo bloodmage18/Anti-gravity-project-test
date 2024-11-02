@@ -1677,10 +1677,8 @@ target_position = Vector2(1, 30)
 collision_mask = 32
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 offset = Vector2(0, -50)
-enabled = false
-zoom = Vector2(1.7, 1.7)
+zoom = Vector2(1.5, 1.5)
 process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true
