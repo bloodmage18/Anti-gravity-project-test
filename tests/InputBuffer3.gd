@@ -2,15 +2,16 @@ extends Node
 
 # Input buffer array
 var input_buffer: Array[String] = []
-const BUFFER_DURATION = 0.5  # Time in seconds each input stays in the buffer
-const MAX_BUFFER_SIZE = 5    # Maximum number of inputs to store
+const BUFFER_DURATION = .5  # Time in seconds each input stays in the buffer
+const MAX_BUFFER_SIZE = 5   # Maximum number of inputs to store
 
 # Define possible combos
 var combos: Dictionary = {
 	"J,J,J": "light_combo",
 	"K,K,K": "bow_combo",
 	"L,L,L": "heavy_combo",
-	"J,K,L": "special_combo"  # Example combo pattern
+	"J,K,L": "special_combo",  # Example combo pattern
+	"J,J,K,K,L": "combo_chain"
 }
 
 # Timers for each input in the buffer
@@ -98,11 +99,14 @@ func execute_combo(combo_action: String) -> void:
 			print("Executing Special Combo!")
 			trigger_attack("Executing Special Combo!")
 			# Insert special move logic
+		"combo_chain":
+			print("combo chain : reset knockback")
+			trigger_attack("combo chain")
 
 
 # Update buffer timers and remove expired inputs
 func update_buffer_timers(delta: float) -> void:
-	for i in range(input_timers.size() - 1, -1, -1):
+	for i in range(input_timers.size() - 1, -1, -1 ):
 		input_timers[i] -= delta
 		if input_timers[i] <= 0:
 			input_buffer.remove_at(i)
