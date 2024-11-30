@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bevs25fervn1d"]
+
+[ext_resource type="SpriteFrames" uid="uid://jq1yp5dsxn0" path="res://tests/animation/lass.tres" id="1_jhcg8"]
+
+[node name="Lass" type="CharacterBody2D"]
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
+sprite_frames = ExtResource("1_jhcg8")
+animation = &"jump"
+frame_progress = 0.536501
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body/AnimatedSprite2D"]
