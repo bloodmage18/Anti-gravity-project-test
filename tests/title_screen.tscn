@@ -1,14 +1,14 @@
 [gd_scene load_steps=23 format=3 uid="uid://c0ugumhie2x7c"]
 
-[ext_resource type="Script" path="res://tests/menu/title_screen.gd" id="1_13yfy"]
+[ext_resource type="Script" uid="uid://cb8u2ywex62l5" path="res://tests/menu/title_screen.gd" id="1_13yfy"]
 [ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="2_myu1b"]
 [ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="2_pk8ce"]
-[ext_resource type="Script" path="res://tests/menu/Main_Bg.gd" id="3_24lnp"]
+[ext_resource type="Script" uid="uid://7u5op4r2w22w" path="res://tests/menu/Main_Bg.gd" id="3_24lnp"]
 [ext_resource type="Texture2D" uid="uid://beds33lmr0wo1" path="res://assets/Final/Background_0.png" id="3_awy5d"]
-[ext_resource type="Shader" path="res://scripts/shaders/godrays.gdshader" id="3_huhdn"]
-[ext_resource type="Shader" path="res://scripts/shaders/title_transition.gdshader" id="4_b537f"]
+[ext_resource type="Shader" uid="uid://cln8fnnp3ks3l" path="res://scripts/shaders/godrays.gdshader" id="3_huhdn"]
+[ext_resource type="Shader" uid="uid://7kfqiwa8yhg1" path="res://scripts/shaders/title_transition.gdshader" id="4_b537f"]
 [ext_resource type="Texture2D" uid="uid://8iiupkmg0llh" path="res://assets/Final/Background_1.png" id="4_c0uxt"]
-[ext_resource type="Shader" path="res://scripts/shaders/distort.gdshader" id="4_ijlmw"]
+[ext_resource type="Shader" uid="uid://d15adveel0kmw" path="res://scripts/shaders/distort.gdshader" id="4_ijlmw"]
 
 [sub_resource type="Shader" id="Shader_k62uf"]
 code = "shader_type canvas_item;
@@ -79,8 +79,9 @@ noise = SubResource("FastNoiseLite_ahhpr")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qgugl"]
 shader = SubResource("Shader_k62uf")
 shader_parameter/scale = Vector2(10, 1.08)
-shader_parameter/y_zoom = 0.707107
+shader_parameter/y_zoom = 0.561231
 shader_parameter/water_color = Color(0.054902, 0.0745098, 0.152941, 0.72549)
+shader_parameter/noise = SubResource("NoiseTexture2D_6lw7j")
 shader_parameter/distortion_scale = Vector2(5.515, 1.995)
 shader_parameter/intensity = -0.805
 shader_parameter/dist_speed = 0.595
@@ -91,7 +92,6 @@ shader_parameter/shorelineColor = Color(0.815686, 0.937255, 0.952941, 1)
 shader_parameter/shorelineSize = 0.332
 shader_parameter/foamsize = 0.05
 shader_parameter/foamstrength = 0.3
-shader_parameter/noise = SubResource("NoiseTexture2D_6lw7j")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5urtq"]
 shader = ExtResource("3_huhdn")
@@ -123,11 +123,11 @@ noise = SubResource("FastNoiseLite_srxa7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e12g4"]
 shader = ExtResource("4_ijlmw")
+shader_parameter/NOISE_TEXTURE = SubResource("NoiseTexture2D_7iwo5")
 shader_parameter/strength = 2.0
 shader_parameter/uv_scaling = 0.95
 shader_parameter/movement_direction = Vector2(1, 0)
 shader_parameter/movement_speed = 0.1
-shader_parameter/NOISE_TEXTURE = SubResource("NoiseTexture2D_7iwo5")
 
 [sub_resource type="Animation" id="Animation_37yyi"]
 length = 0.001
@@ -234,8 +234,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u24e6"]
 _data = {
-"RESET": SubResource("Animation_37yyi"),
-"fade_out": SubResource("Animation_v3iv5")
+&"RESET": SubResource("Animation_37yyi"),
+&"fade_out": SubResource("Animation_v3iv5")
 }
 
 [node name="Title_screen" type="Node2D"]
@@ -322,7 +322,7 @@ texture = ExtResource("4_c0uxt")
 
 [node name="Animation_Player" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_u24e6")
+&"": SubResource("AnimationLibrary_u24e6")
 }
 
 [connection signal="animation_finished" from="Animation_Player" to="." method="_on_animation_player_animation_finished"]

@@ -73,8 +73,9 @@ noise = SubResource("FastNoiseLite_diso2")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0m7cq"]
 shader = SubResource("Shader_8vtdh")
 shader_parameter/scale = Vector2(13.76, 1.1)
-shader_parameter/y_zoom = null
+shader_parameter/y_zoom = 1.05946
 shader_parameter/water_color = Color(0.337255, 0.811765, 0.839216, 0.509804)
+shader_parameter/noise = SubResource("NoiseTexture2D_04ojf")
 shader_parameter/distortion_scale = Vector2(0.16, 0.088)
 shader_parameter/intensity = 0.07
 shader_parameter/dist_speed = 0.01
@@ -85,7 +86,6 @@ shader_parameter/shorelineColor = Color(1, 1, 1, 0.513726)
 shader_parameter/shorelineSize = -0.011
 shader_parameter/foamsize = 0.125
 shader_parameter/foamstrength = 0.164
-shader_parameter/noise = SubResource("NoiseTexture2D_04ojf")
 
 [sub_resource type="Shader" id="Shader_x2umi"]
 code = "shader_type canvas_item;
@@ -158,8 +158,9 @@ noise = SubResource("FastNoiseLite_hfkby")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k6d15"]
 shader = SubResource("Shader_x2umi")
 shader_parameter/scale = Vector2(14, 1.1)
-shader_parameter/y_zoom = null
+shader_parameter/y_zoom = 1.05946
 shader_parameter/water_color = Color(0.337255, 0.792157, 0.803922, 0.72549)
+shader_parameter/noise = SubResource("NoiseTexture2D_sl7x8")
 shader_parameter/distortion_scale = Vector2(0.16, 0.088)
 shader_parameter/intensity = 0.07
 shader_parameter/dist_speed = 0.01
@@ -170,7 +171,6 @@ shader_parameter/shorelineColor = Color(1, 1, 1, 1)
 shader_parameter/shorelineSize = -0.19
 shader_parameter/foamsize = -0.035
 shader_parameter/foamstrength = 0.156
-shader_parameter/noise = SubResource("NoiseTexture2D_sl7x8")
 
 [sub_resource type="Shader" id="Shader_hgnaq"]
 code = "shader_type canvas_item;
@@ -243,8 +243,9 @@ noise = SubResource("FastNoiseLite_thm68")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cgs8c"]
 shader = SubResource("Shader_hgnaq")
 shader_parameter/scale = Vector2(14, 1.1)
-shader_parameter/y_zoom = null
+shader_parameter/y_zoom = 1.05946
 shader_parameter/water_color = Color(0.337255, 0.709804, 0.803922, 0.509804)
+shader_parameter/noise = SubResource("NoiseTexture2D_0p30g")
 shader_parameter/distortion_scale = Vector2(0.16, 0.088)
 shader_parameter/intensity = 0.07
 shader_parameter/dist_speed = 0.01
@@ -255,7 +256,6 @@ shader_parameter/shorelineColor = Color(1, 1, 1, 0.513726)
 shader_parameter/shorelineSize = -0.011
 shader_parameter/foamsize = 0.125
 shader_parameter/foamstrength = 0.164
-shader_parameter/noise = SubResource("NoiseTexture2D_0p30g")
 
 [node name="water" type="Node2D"]
 position = Vector2(0, 5776)

@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://dj1xnyivyyo6h"]
 
-[ext_resource type="Script" path="res://tests/menu/Game_control.gd" id="1_nimmn"]
+[ext_resource type="Script" uid="uid://6ofs7vrr0dfw" path="res://tests/menu/Game_control.gd" id="1_nimmn"]
 [ext_resource type="FontFile" uid="uid://edx82xu0go7f" path="res://ui/new_font_file.tres" id="2_e1tdj"]
-[ext_resource type="Texture2D" uid="uid://dobb43hmfwreq" path="res://assets/buttons/normal/home bttn.png" id="3_pgv51"]
-[ext_resource type="Texture2D" uid="uid://d3s6clp2ctdws" path="res://assets/buttons/pressed/home bttn pressed.png" id="4_kh1uf"]
-[ext_resource type="Texture2D" uid="uid://x0wlpys7k1x8" path="res://assets/buttons/hovered/home bttn hovered.png" id="5_3a0u2"]
-[ext_resource type="Texture2D" uid="uid://cwwpvfu6rtfa4" path="res://assets/buttons/normal/retry bttn.png" id="6_cxjpv"]
-[ext_resource type="Texture2D" uid="uid://gku72p7h5emf" path="res://assets/buttons/pressed/retry bttn pressed.png" id="7_8rv4k"]
-[ext_resource type="Texture2D" uid="uid://clx0qhch7wmts" path="res://assets/buttons/hovered/retry bttn hovered.png" id="8_qppxs"]
+[ext_resource type="Texture2D" uid="uid://cvb1vrv6td1vr" path="res://assets/buttons/normal/home bttn.png" id="3_pgv51"]
+[ext_resource type="Texture2D" uid="uid://mq81f0dwmdnd" path="res://assets/buttons/pressed/home bttn pressed.png" id="4_kh1uf"]
+[ext_resource type="Texture2D" uid="uid://i0r34dqukfvj" path="res://assets/buttons/hovered/home bttn hovered.png" id="5_3a0u2"]
+[ext_resource type="Texture2D" uid="uid://bwssyynrf6k3u" path="res://assets/buttons/normal/retry bttn.png" id="6_cxjpv"]
+[ext_resource type="Texture2D" uid="uid://by4mop1m5lhce" path="res://assets/buttons/pressed/retry bttn pressed.png" id="7_8rv4k"]
+[ext_resource type="Texture2D" uid="uid://cg72ftqwadd2e" path="res://assets/buttons/hovered/retry bttn hovered.png" id="8_qppxs"]
 
 [node name="Game_control" type="Control"]
 layout_mode = 3

@@ -1,6 +1,6 @@
 [gd_scene load_steps=166 format=3 uid="uid://baxqhri31o14t"]
 
-[ext_resource type="Script" path="res://tests/bob2.gd" id="1_o5iul"]
+[ext_resource type="Script" uid="uid://4srpqjrjn01d" path="res://tests/bob2.gd" id="1_o5iul"]
 [ext_resource type="Texture2D" uid="uid://celrqcr2ufb3j" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-idle-00.png" id="1_oasta"]
 [ext_resource type="Texture2D" uid="uid://bpnso5frewejq" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-air-attack1-00.png" id="1_p2pok"]
 [ext_resource type="Texture2D" uid="uid://umgq62v8cwri" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-air-attack1-01.png" id="2_5n2jn"]
@@ -114,7 +114,7 @@
 [ext_resource type="Texture2D" uid="uid://bhenpv668r6jb" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-clmb-04.png" id="85_rlllh"]
 [ext_resource type="Texture2D" uid="uid://rlqyfdyoccsu" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-jmp-00.png" id="86_tyw57"]
 [ext_resource type="Texture2D" uid="uid://bw651ek0lfsmg" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-jmp-01.png" id="87_stway"]
-[ext_resource type="Script" path="res://tests/StateMachineBob.gd" id="96_v7dk0"]
+[ext_resource type="Script" uid="uid://xihvqlvbomxk" path="res://tests/StateMachineBob.gd" id="96_v7dk0"]
 [ext_resource type="Texture2D" uid="uid://dv243oevxq3dl" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-00.png" id="103_2vh37"]
 [ext_resource type="Texture2D" uid="uid://tts2d3cganoy" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-get-up-06.png" id="103_f5mgu"]
 [ext_resource type="Texture2D" uid="uid://3brxcgdphyjl" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-01.png" id="104_h2co5"]
@@ -122,7 +122,7 @@
 [ext_resource type="Texture2D" uid="uid://c3m4fykti1vs1" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-03.png" id="106_nyycd"]
 [ext_resource type="Texture2D" uid="uid://b6lnjagle0gnb" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-04.png" id="107_ber6m"]
 [ext_resource type="Texture2D" uid="uid://ce2dpa3q8kwg5" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-05.png" id="108_nmlg1"]
-[ext_resource type="Script" path="res://tests/Attacks_Functions.gd" id="111_o6d8e"]
+[ext_resource type="Script" uid="uid://bet3sg12kih81" path="res://tests/Attacks_Functions.gd" id="111_o6d8e"]
 [ext_resource type="Texture2D" uid="uid://cqtl68yliqa6b" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-wall-run-00.png" id="122_bfids"]
 [ext_resource type="Texture2D" uid="uid://b1snmlhp1wqfo" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-wall-slide-00.png" id="122_ywlvi"]
 [ext_resource type="Texture2D" uid="uid://bvqsw3bkvkwyp" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-wall-slide-01.png" id="123_7xtwu"]
@@ -1547,34 +1547,34 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d07pa"]
 _data = {
-"Punch_01": SubResource("Animation_gvfyj"),
-"Punch_02": SubResource("Animation_hc12w"),
-"Punch_03": SubResource("Animation_cnxqo"),
-"RESET": SubResource("Animation_7o04r"),
-"air": SubResource("Animation_v4a1v"),
-"bow_a": SubResource("Animation_7d5ko"),
-"bow_g": SubResource("Animation_hy46d"),
-"crouch": SubResource("Animation_px5vo"),
-"dash": SubResource("Animation_0rn07"),
-"idle": SubResource("Animation_h2hig"),
-"jump_squat": SubResource("Animation_vu33o"),
-"kick_01": SubResource("Animation_yhn6v"),
-"kick_02": SubResource("Animation_3uii7"),
-"landing": SubResource("Animation_q8btw"),
-"ledge_catch": SubResource("Animation_ije04"),
-"ledge_climb": SubResource("Animation_ysv5m"),
-"ledge_hold": SubResource("Animation_taet0"),
-"ledge_jump": SubResource("Animation_68xp0"),
-"ledge_roll": SubResource("Animation_jm5sn"),
-"roll": SubResource("Animation_es6b8"),
-"run": SubResource("Animation_mf8t1"),
-"short_hop": SubResource("Animation_gyxy6"),
-"slide": SubResource("Animation_8al0d"),
-"turn": SubResource("Animation_qccg8"),
-"walk": SubResource("Animation_306wn"),
-"wall_idle": SubResource("Animation_xe1qm"),
-"wall_run": SubResource("Animation_pflhq"),
-"wall_slide": SubResource("Animation_ugfrh")
+&"Punch_01": SubResource("Animation_gvfyj"),
+&"Punch_02": SubResource("Animation_hc12w"),
+&"Punch_03": SubResource("Animation_cnxqo"),
+&"RESET": SubResource("Animation_7o04r"),
+&"air": SubResource("Animation_v4a1v"),
+&"bow_a": SubResource("Animation_7d5ko"),
+&"bow_g": SubResource("Animation_hy46d"),
+&"crouch": SubResource("Animation_px5vo"),
+&"dash": SubResource("Animation_0rn07"),
+&"idle": SubResource("Animation_h2hig"),
+&"jump_squat": SubResource("Animation_vu33o"),
+&"kick_01": SubResource("Animation_yhn6v"),
+&"kick_02": SubResource("Animation_3uii7"),
+&"landing": SubResource("Animation_q8btw"),
+&"ledge_catch": SubResource("Animation_ije04"),
+&"ledge_climb": SubResource("Animation_ysv5m"),
+&"ledge_hold": SubResource("Animation_taet0"),
+&"ledge_jump": SubResource("Animation_68xp0"),
+&"ledge_roll": SubResource("Animation_jm5sn"),
+&"roll": SubResource("Animation_es6b8"),
+&"run": SubResource("Animation_mf8t1"),
+&"short_hop": SubResource("Animation_gyxy6"),
+&"slide": SubResource("Animation_8al0d"),
+&"turn": SubResource("Animation_qccg8"),
+&"walk": SubResource("Animation_306wn"),
+&"wall_idle": SubResource("Animation_xe1qm"),
+&"wall_run": SubResource("Animation_pflhq"),
+&"wall_slide": SubResource("Animation_ugfrh")
 }
 
 [sub_resource type="SphereMesh" id="SphereMesh_ln157"]
@@ -1614,7 +1614,7 @@ animation = &"idle"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/Sprite"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_d07pa")
+&"": SubResource("AnimationLibrary_d07pa")
 }
 
 [node name="Marker2D" type="Marker2D" parent="Node2D"]

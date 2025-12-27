@@ -1,0 +1,270 @@
+[gd_scene load_steps=17 format=3 uid="uid://e3npxyhfx85d"]
+
+[ext_resource type="Texture2D" uid="uid://dmdchebgcxkbm" path="res://assets/env/room_q_bg.png" id="1_vquc4"]
+[ext_resource type="Texture2D" uid="uid://bpxuxyyw8tlk8" path="res://assets/env/plus.png" id="2_rpljo"]
+[ext_resource type="PackedScene" uid="uid://buqmsyt543m7e" path="res://scenes/stage_assets/obstacle.tscn" id="2_xo0lp"]
+[ext_resource type="Texture2D" uid="uid://2322ecd8levg" path="res://assets/env/l.png" id="3_g0v0e"]
+[ext_resource type="Texture2D" uid="uid://dyg8n4mr3vrqj" path="res://assets/png/Dark/texture_12.png" id="6_nar1i"]
+[ext_resource type="Texture2D" uid="uid://btkexg63j7lv1" path="res://assets/png/Purple/texture_13.png" id="7_20gem"]
+[ext_resource type="PackedScene" uid="uid://bfcj7pwd4kc8g" path="res://scenes/stage_assets/ledge.tscn" id="8_3mv11"]
+[ext_resource type="Script" uid="uid://c2syj4vq6h10g" path="res://scripts/Anchor.gd" id="10_l5okj"]
+[ext_resource type="Texture2D" uid="uid://cw6ese4o6vfgq" path="res://assets/png/custom/base.png" id="11_djgo8"]
+[ext_resource type="PackedScene" uid="uid://bevs25fervn1d" path="res://tests/lass.tscn" id="12_52dl2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gypao"]
+radius = 124.036
+
+[sub_resource type="SphereMesh" id="SphereMesh_6244r"]
+radius = 120.0
+height = 240.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqnaq"]
+radius = 100.0
+height = 517.64
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qgr4q"]
+radius = 100.0
+height = 500.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qwxqe"]
+radius = 43.14
+height = 1420.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lsewq"]
+radius = 25.0
+height = 1500.0
+
+[node name="Room_1" type="Node2D"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Node"]
+position = Vector2(-364, 426)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D"]
+texture = ExtResource("1_vquc4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/Node2D/Sprite2D"]
+collision_layer = 17
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(-365, -307, -640, -307, -640, -360, -365, -360)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(640, -307, -310, -307, -310, -360, 640, -360)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(640, 360, 406, 360, 406, 312, 640, 312)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D/StaticBody2D"]
+polygon = PackedVector2Array(340, 360, -639, 360, -639, 317, -640, 317, -640, 313, 340, 313)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node/Node2D"]
+position = Vector2(1274, 0)
+texture = ExtResource("1_vquc4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/Node2D/Sprite2D2"]
+collision_layer = 17
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(-365, -307, -640, -307, -640, -360, -365, -360)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(640, -307, -310, -307, -310, -360, 640, -360)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(640, 360, 406, 360, 406, 312, 640, 312)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Node/Node2D/Sprite2D2/StaticBody2D"]
+polygon = PackedVector2Array(340, 360, -639, 360, -640, 312, 340, 313)
+
+[node name="obstacles" type="Node2D" parent="Node"]
+
+[node name="obstacle" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(-700, 446)
+mode = 2
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/obstacles/obstacle"]
+collision_layer = 81
+
+[node name="Sprite2D" type="Polygon2D" parent="Node/obstacles/obstacle/StaticBody2D"]
+position = Vector2(286, 0)
+color = Color(0.223529, 0.211765, 1, 1)
+texture = ExtResource("2_rpljo")
+polygon = PackedVector2Array(-247, -234, -245, -38, 2, -38, 2, 41, -245, 41, -245, 115, -244, 244, -302, 244, -323, 245, -323, 241, -324, 241, -324, 65, -325, 41, -572, 41, -572, -38, -325, -38, -326, -247, -280, -247, -280, -248, -247, -248)
+uv = PackedVector2Array(393, 126, 395, 322, 642, 322, 642, 401, 395, 401, 395, 475, 396, 604, 338, 604, 317, 605, 317, 601, 316, 601, 316, 425, 315, 401, 68, 401, 68, 322, 315, 322, 314, 113, 360, 113, 360, 112, 393, 112)
+polygons = [PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)]
+
+[node name="Sprite2D2" type="CollisionPolygon2D" parent="Node/obstacles/obstacle/StaticBody2D"]
+position = Vector2(286, 0)
+polygon = PackedVector2Array(-247, -234, -245, -38, 2, -38, 2, 41, -245, 41, -245, 115, -244, 244, -302, 244, -323, 245, -323, 241, -324, 241, -324, 65, -325, 41, -572, 41, -572, -38, -325, -38, -326, -247, -280, -247, -280, -248, -247, -248)
+
+[node name="obstacle2" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(1683, 863)
+rotation = 1.5708
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/obstacles/obstacle2"]
+collision_layer = 81
+
+[node name="Sprite2D2" type="Polygon2D" parent="Node/obstacles/obstacle2/StaticBody2D"]
+texture = ExtResource("3_g0v0e")
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+uv = PackedVector2Array(413, 240, 171, 240, 171, 560, 101, 560, 101, 185, 413, 185)
+polygons = [PackedInt32Array(0, 1, 2, 3, 4, 5)]
+
+[node name="Sprite2D3" type="CollisionPolygon2D" parent="Node/obstacles/obstacle2/StaticBody2D"]
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+
+[node name="obstacle3" parent="Node/obstacles" instance=ExtResource("2_xo0lp")]
+position = Vector2(1849, 243)
+rotation = -1.5708
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node/obstacles/obstacle3"]
+collision_layer = 81
+
+[node name="Sprite2D3" type="Polygon2D" parent="Node/obstacles/obstacle3/StaticBody2D"]
+texture = ExtResource("3_g0v0e")
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+uv = PackedVector2Array(413, 240, 171, 240, 171, 560, 101, 560, 101, 185, 413, 185)
+polygons = [PackedInt32Array(0, 1, 2, 3, 4, 5)]
+
+[node name="Sprite2D4" type="CollisionPolygon2D" parent="Node/obstacles/obstacle3/StaticBody2D"]
+polygon = PackedVector2Array(-227, -120, -469, -120, -469, 200, -539, 200, -539, -175, -227, -175)
+
+[node name="map" type="Node2D" parent="Node/obstacles"]
+z_index = -2
+position = Vector2(95, 47)
+
+[node name="bg" type="TextureRect" parent="Node/obstacles/map"]
+modulate = Color(0.34902, 0.34902, 0.34902, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1081.0
+offset_top = -919.0
+offset_right = 18564.0
+offset_bottom = 9752.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("6_nar1i")
+expand_mode = 1
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="platform" type="StaticBody2D" parent="Node/obstacles/map"]
+position = Vector2(211, 414)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/obstacles/map/platform"]
+shape = SubResource("CircleShape2D_gypao")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Node/obstacles/map/platform"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+mesh = SubResource("SphereMesh_6244r")
+texture = ExtResource("7_20gem")
+
+[node name="platform2" type="StaticBody2D" parent="Node/obstacles/map"]
+position = Vector2(855, 414)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/obstacles/map/platform2"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_aqnaq")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Node/obstacles/map/platform2"]
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-1.58746, -5.74658e-06)
+rotation = 1.5708
+scale = Vector2(1, 1.02857)
+mesh = SubResource("CapsuleMesh_qgr4q")
+texture = ExtResource("7_20gem")
+
+[node name="platform3" type="StaticBody2D" parent="Node/obstacles/map"]
+position = Vector2(335, -246)
+collision_layer = 32
+collision_mask = 48
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/obstacles/map/platform3"]
+position = Vector2(-4, 23)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_qwxqe")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Node/obstacles/map/platform3"]
+visible = false
+modulate = Color(0.352941, 0.313726, 0.827451, 1)
+position = Vector2(-8.67652, 31.3688)
+rotation = 1.5708
+scale = Vector2(0.946608, 0.926139)
+mesh = SubResource("CapsuleMesh_lsewq")
+texture = ExtResource("7_20gem")
+
+[node name="Wall" type="StaticBody2D" parent="Node/obstacles/map"]
+position = Vector2(-897, 177)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Ledge" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(1304, -693)
+ledge_side = "Right"
+
+[node name="Ledge2" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(377, 209)
+
+[node name="Ledge3" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(-160, 199)
+ledge_side = "Right"
+
+[node name="Ledge4" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(2036, 525)
+
+[node name="Ledge5" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(1413, -143)
+ledge_side = "Right"
+
+[node name="Ledge6" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(2647, 112)
+
+[node name="Ledge7" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(1467, -691)
+
+[node name="Ledge8" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(2490, 257)
+ledge_side = "Right"
+
+[node name="Ledge9" parent="Node/obstacles/map/Wall" instance=ExtResource("8_3mv11")]
+position = Vector2(2296, 114)
+ledge_side = "Right"
+
+[node name="Node2" type="Node" parent="."]
+
+[node name="Anchor" type="Marker2D" parent="Node2"]
+process_mode = 3
+position = Vector2(-478, 269)
+script = ExtResource("10_l5okj")
+cam = NodePath("Cam")
+
+[node name="Cam" type="Camera2D" parent="Node2/Anchor"]
+zoom = Vector2(2.3, 2.3)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_vertical_offset = -1.0
+
+[node name="cam_point" type="Sprite2D" parent="Node2/Anchor/Cam"]
+modulate = Color(0, 1, 1, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("11_djgo8")
+
+[node name="anchor_point" type="Sprite2D" parent="Node2/Anchor"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("11_djgo8")
+
+[node name="Player_2" type="Node" parent="."]
+
+[node name="Lass" parent="Player_2" instance=ExtResource("12_52dl2")]
+position = Vector2(962, 294)

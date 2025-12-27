@@ -1,12 +1,18 @@
 extends Marker2D
 
 
-@onready var cam = $Cam
-@onready var bob = $"../bob"
+#@onready var cam = $Cam
+@export_node_path("Camera2D") var cam
+@onready var bob = $"../../Player_2/Lass"
 
 var offsets := Vector2(10.0 , 20.0)
 var offset_speed := 0.5
 
+func _ready():
+	cam = get_node("Cam")
+	bob = $"../../Player_2/Lass"
+
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -33,11 +39,11 @@ func _vel():
 	var input_dir = Input.get_axis("up","down")
 	var vel = floor(bob.velocity.normalized().y)
 	# falling
-	if bob.fastfall == true:
-		vel = 200 * 1
-		return vel
+	#if bob.fastfall == true:
+	#	vel = 200 * 1
+	#	return vel
 	# wall states
-	elif Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("jump"):
 		vel = 250 * -1
 		return vel
 	# pressing up

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d0qn7awt4wpaj"]
 
-[ext_resource type="Script" path="res://tests/gamesystem/Level_Control.gd" id="1_q2s3x"]
+[ext_resource type="Script" uid="uid://cu7frvypfhjpm" path="res://tests/gamesystem/Level_Control.gd" id="1_q2s3x"]
 
 [node name="Level_Control" type="Control"]
 layout_mode = 3

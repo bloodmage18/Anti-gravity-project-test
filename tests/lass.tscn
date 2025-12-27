@@ -1,14 +1,157 @@
-[gd_scene load_steps=2 format=3 uid="uid://bevs25fervn1d"]
+[gd_scene load_steps=11 format=3 uid="uid://bevs25fervn1d"]
 
 [ext_resource type="SpriteFrames" uid="uid://jq1yp5dsxn0" path="res://tests/animation/lass.tres" id="1_jhcg8"]
+[ext_resource type="Script" uid="uid://be5knewq76iby" path="res://tests/lass4.gd" id="1_quv1n"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ynp2f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0hm4o"]
+shading_mode = 0
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sehbc"]
+material = SubResource("StandardMaterial3D_0hm4o")
+size = Vector3(2.5, 18, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4nxu1"]
+material = SubResource("StandardMaterial3D_0hm4o")
+size = Vector3(2.5, 20, 1)
+
+[sub_resource type="Animation" id="Animation_k5et8"]
+resource_name = "IDLE"
+length = 0.666671
+loop_mode = 1
+step = 0.0416667
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0, 4, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48, 0.6)
+}
+
+[sub_resource type="Animation" id="Animation_n3c3g"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_y5hdo"]
+resource_name = "RUN"
+length = 1.00001
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"run"]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0, 4, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0, 6, -0.25, 0, 0.25, 0, 7, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wjeao"]
+_data = {
+&"IDLE": SubResource("Animation_k5et8"),
+&"RESET": SubResource("Animation_n3c3g"),
+&"RUN": SubResource("Animation_y5hdo")
+}
 
 [node name="Lass" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 118
+script = ExtResource("1_quv1n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ynp2f")
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="DirectCast" type="RayCast2D" parent="Raycasts"]
+modulate = Color(0.702424, 0.544983, 0.423295, 1)
+self_modulate = Color(1, 1, 1, 0.694)
+target_position = Vector2(0, -25)
+collision_mask = 48
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Raycasts/DirectCast"]
+modulate = Color(1, 0, 0, 1)
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(0, -10)
+mesh = SubResource("BoxMesh_sehbc")
+
+[node name="GroundCast" type="RayCast2D" parent="Raycasts"]
+modulate = Color(0, 0.34902, 1, 1)
+self_modulate = Color(0, 0.529412, 1, 1)
+target_position = Vector2(0, 25)
+collision_mask = 48
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Raycasts/GroundCast"]
+modulate = Color(0, 0, 1, 1)
+self_modulate = Color(0, 0, 1, 1)
+position = Vector2(0, 10)
+mesh = SubResource("BoxMesh_4nxu1")
 
 [node name="Body" type="Node2D" parent="."]
+position = Vector2(5, -5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
 sprite_frames = ExtResource("1_jhcg8")
-animation = &"jump"
-frame_progress = 0.536501
+animation = &"idle"
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body/AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_wjeao")
+}
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 14.0
+offset_top = -14.0
+offset_right = 54.0
+offset_bottom = 26.0
+
+[node name="snap" type="Label" parent="Control"]
+layout_mode = 0
+offset_top = 14.0
+offset_right = 46.0
+offset_bottom = 37.0
+scale = Vector2(0.5, 0.5)
+text = "snap :"
+
+[node name="rot" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(0.5, 0.5)
+text = "state : "

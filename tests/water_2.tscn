@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bye4cvisv62u3"]
 
 [ext_resource type="Texture2D" uid="uid://be8f02vcuksoy" path="res://icon.svg" id="1_l6j1f"]
-[ext_resource type="Script" path="res://scripts/shaders/water.gd" id="2_p5ady"]
+[ext_resource type="Script" uid="uid://cbt6vl454pd4k" path="res://scripts/shaders/water.gd" id="2_p5ady"]
 
 [sub_resource type="Shader" id="Shader_gehpi"]
 code = "shader_type canvas_item;
@@ -72,8 +72,9 @@ noise = SubResource("FastNoiseLite_b5i7v")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s16uv"]
 shader = SubResource("Shader_gehpi")
 shader_parameter/scale = Vector2(16.205, 2.77)
-shader_parameter/y_zoom = 0.125
+shader_parameter/y_zoom = 0.707107
 shader_parameter/water_color = Color(0.564706, 0.368627, 0.576471, 0.6)
+shader_parameter/noise = SubResource("NoiseTexture2D_uuwrf")
 shader_parameter/distortion_scale = Vector2(0.005, 0.033)
 shader_parameter/intensity = -0.185
 shader_parameter/dist_speed = 0.005
@@ -84,7 +85,6 @@ shader_parameter/shorelineColor = Color(0.929412, 0.764706, 0.960784, 0.356863)
 shader_parameter/shorelineSize = 0.04
 shader_parameter/foamsize = 0.0
 shader_parameter/foamstrength = 0.3
-shader_parameter/noise = SubResource("NoiseTexture2D_uuwrf")
 
 [node name="water3" type="Sprite2D"]
 material = SubResource("ShaderMaterial_s16uv")

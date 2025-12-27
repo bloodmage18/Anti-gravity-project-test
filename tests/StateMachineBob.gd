@@ -86,11 +86,11 @@ func get_transition(_delta):
 	else:
 		parent.reset_legde()
 		
-	if Input.is_action_just_pressed("heavy") && SPECIAL() == true:
+	if Input.is_action_just_pressed("light") && SPECIAL() == true:
 		parent._frame()
 		return states.GROUND_ATTACK
 		
-	if Input.is_action_just_pressed("light") && SPECIAL() == true:
+	if Input.is_action_just_pressed("heavy") && SPECIAL() == true:
 		parent._frame()
 		return states.GROUND_ATTACK
 		
@@ -832,8 +832,8 @@ func get_transition(_delta):
 					parent._frame()
 					parent.attack.BOW_GROUND()
 			if parent.frame < 14:
-				#if Input.is_action_just_pressed("light"):
-				if Input.is_action_just_pressed("right_click"):
+				if Input.is_action_just_pressed("mid"):
+				#if Input.is_action_just_pressed("right_click"):
 					parent._frame()
 					return states.BOW_GROUND
 					

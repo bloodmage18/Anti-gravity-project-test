@@ -9,4 +9,3 @@ func _ready():
 func _physics_process(delta):
 	position = player.position
 	#position = move_toward(position , player.global_transform.origin , speed * delta )#lerp(global_transform.origin , player.global_transform.origin , speed * delta)
-

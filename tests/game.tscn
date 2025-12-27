@@ -1,13 +1,13 @@
 [gd_scene load_steps=14 format=3 uid="uid://b13wa4hqbg3my"]
 
-[ext_resource type="Script" path="res://tests/game2.gd" id="1_lookk"]
+[ext_resource type="Script" uid="uid://cnv27jk0c4o4a" path="res://tests/game2.gd" id="1_lookk"]
 [ext_resource type="PackedScene" uid="uid://d0qn7awt4wpaj" path="res://tests/level_selector.tscn" id="2_eub6f"]
 [ext_resource type="PackedScene" uid="uid://c52vehpgswp13" path="res://tests/new.tscn" id="2_igd6c"]
 [ext_resource type="PackedScene" uid="uid://btgi2bpitiuov" path="res://tests/water.tscn" id="2_xuh87"]
 [ext_resource type="PackedScene" uid="uid://dj1xnyivyyo6h" path="res://tests/game_control.tscn" id="3_cf3sk"]
-[ext_resource type="Script" path="res://tests/safe_zone_transporter.gd" id="4_hebxh"]
+[ext_resource type="Script" uid="uid://cdhj1h34etxl5" path="res://tests/safe_zone_transporter.gd" id="4_hebxh"]
 [ext_resource type="PackedScene" uid="uid://baxqhri31o14t" path="res://tests/bob2.tscn" id="7_78dmk"]
-[ext_resource type="Script" path="res://scripts/Anchor.gd" id="7_vnyk1"]
+[ext_resource type="Script" uid="uid://c2syj4vq6h10g" path="res://scripts/Anchor.gd" id="7_vnyk1"]
 [ext_resource type="Texture2D" uid="uid://cw6ese4o6vfgq" path="res://assets/png/custom/base.png" id="8_4sug8"]
 
 [sub_resource type="Shader" id="Shader_x2umi"]
@@ -81,8 +81,9 @@ noise = SubResource("FastNoiseLite_hfkby")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k6d15"]
 shader = SubResource("Shader_x2umi")
 shader_parameter/scale = Vector2(14, 1.1)
-shader_parameter/y_zoom = 0.707107
+shader_parameter/y_zoom = 0.187288
 shader_parameter/water_color = Color(0.337255, 0.792157, 0.803922, 0.72549)
+shader_parameter/noise = SubResource("NoiseTexture2D_sl7x8")
 shader_parameter/distortion_scale = Vector2(0.5, 0.5)
 shader_parameter/intensity = 0.1
 shader_parameter/dist_speed = 0.008
@@ -93,7 +94,6 @@ shader_parameter/shorelineColor = Color(1, 1, 1, 1)
 shader_parameter/shorelineSize = -0.19
 shader_parameter/foamsize = -0.035
 shader_parameter/foamstrength = 0.156
-shader_parameter/noise = SubResource("NoiseTexture2D_sl7x8")
 
 [node name="Game" type="Node"]
 script = ExtResource("1_lookk")
@@ -102,6 +102,15 @@ level_markers = Array[NodePath]([NodePath("Node/0"), NodePath("Node/1"), NodePat
 [node name="GameLogic" type="Node2D" parent="."]
 
 [node name="World" parent="." instance=ExtResource("2_igd6c")]
+
+[node name="bg" parent="World/map" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[node name="Wall" parent="World/map" index="4"]
+visible = true
+
+[node name="Node2D2" parent="World" index="1"]
+visible = false
 
 [node name="AnimatedSprite2D" parent="World/Node2D/BuildingArea" index="0"]
 frame_progress = 0.187133

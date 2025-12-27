@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=146 format=3 uid="uid://jq1yp5dsxn0"]
+[gd_resource type="SpriteFrames" load_steps=137 format=3 uid="uid://jq1yp5dsxn0"]
 
 [ext_resource type="Texture2D" uid="uid://slss5gwfl0gk" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Fall/Warrior_Fall_1.png" id="1_ueeum"]
 [ext_resource type="Texture2D" uid="uid://fh7iecs7cvcn" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Fall/Warrior_Fall_2.png" id="2_2wfyn"]
@@ -50,15 +50,6 @@
 [ext_resource type="Texture2D" uid="uid://0luqtmptfsls" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-jump-03.png" id="42_qmkrd"]
 [ext_resource type="Texture2D" uid="uid://bge7esh24bfqh" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-jump-04.png" id="43_nddb4"]
 [ext_resource type="Texture2D" uid="uid://bolbejvxstw0i" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-jump-05.png" id="44_ake0m"]
-[ext_resource type="Texture2D" uid="uid://dp1xpev12oa0p" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-00.png" id="45_pic40"]
-[ext_resource type="Texture2D" uid="uid://cqohv8p0r3oiv" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-01.png" id="46_b01bu"]
-[ext_resource type="Texture2D" uid="uid://bh8q1wt73pepq" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-02.png" id="47_fuaya"]
-[ext_resource type="Texture2D" uid="uid://dgef5jx6wtha8" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-03.png" id="48_3wcyp"]
-[ext_resource type="Texture2D" uid="uid://bu2t0x183pnre" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-04.png" id="49_ko0y0"]
-[ext_resource type="Texture2D" uid="uid://cmvoy0wwnj824" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-05.png" id="50_dq5kg"]
-[ext_resource type="Texture2D" uid="uid://cjm1sfj8kcacc" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-06.png" id="51_pdvk1"]
-[ext_resource type="Texture2D" uid="uid://c51modm1m20xr" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-07.png" id="52_lfmm5"]
-[ext_resource type="Texture2D" uid="uid://wpaup1o4cn70" path="res://assets/sprites/Adventurer-Bow/Individual Sprites/adventurer-bow-08.png" id="53_357tv"]
 [ext_resource type="Texture2D" uid="uid://1qkbjptxp088" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Crouch/Warrior_Crouch_1.png" id="60_8cqe4"]
 [ext_resource type="Texture2D" uid="uid://bhlaiwwenhdrt" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Crouch/Warrior_Crouch_2.png" id="61_0b4cv"]
 [ext_resource type="Texture2D" uid="uid://c7f2pj54p46bs" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Crouch/Warrior_Crouch_3.png" id="62_r6xue"]
@@ -83,18 +74,17 @@
 [ext_resource type="Texture2D" uid="uid://blt6384ic0x0x" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_2.png" id="74_gux6a"]
 [ext_resource type="Texture2D" uid="uid://p6jv6ajf8xdy" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-kick-07.png" id="74_rdk8y"]
 [ext_resource type="Texture2D" uid="uid://bv07urckw0su" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_3.png" id="75_ojf4m"]
-[ext_resource type="Texture2D" uid="uid://btm36e1x4kjfl" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-grb-00.png" id="75_ommlu"]
-[ext_resource type="Texture2D" uid="uid://botyqvv4ufahf" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-grb-01.png" id="76_mdxgq"]
 [ext_resource type="Texture2D" uid="uid://cljq03ydieu2p" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_4.png" id="76_re36b"]
-[ext_resource type="Texture2D" uid="uid://cpe64bce1k5x3" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-grb-02.png" id="77_6g6bu"]
 [ext_resource type="Texture2D" uid="uid://toxxvtyg1cgs" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_5.png" id="77_mj6dk"]
 [ext_resource type="Texture2D" uid="uid://oj2t8mukimsc" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_6.png" id="78_1i1wb"]
-[ext_resource type="Texture2D" uid="uid://bljcchst57hjn" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-grb-03.png" id="78_6cvqk"]
 [ext_resource type="Texture2D" uid="uid://bs3h60e7klkev" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Jump/Warrior_Jump_1.png" id="79_xu3el"]
 [ext_resource type="Texture2D" uid="uid://bgh35yqd8i4w7" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Jump/Warrior_Jump_2.png" id="80_yrdg7"]
 [ext_resource type="Texture2D" uid="uid://dpuwdvfeh1at0" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Jump/Warrior_Jump_3.png" id="81_b724c"]
-[ext_resource type="Texture2D" uid="uid://rlqyfdyoccsu" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-jmp-00.png" id="84_rdvru"]
-[ext_resource type="Texture2D" uid="uid://bw651ek0lfsmg" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-crnr-jmp-01.png" id="85_u34d1"]
+[ext_resource type="Texture2D" uid="uid://cqbsvty1j0iwm" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/EdgeGrab/Warrior_Edge-Grab_1.png" id="81_xr8ua"]
+[ext_resource type="Texture2D" uid="uid://6ckhs0cs88lo" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/EdgeGrab/Warrior_Edge-Grab_2.png" id="82_5ymxr"]
+[ext_resource type="Texture2D" uid="uid://bk8fpv2ya5mhn" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/EdgeGrab/Warrior_Edge-Grab_3.png" id="83_v0idh"]
+[ext_resource type="Texture2D" uid="uid://b42kwqbv7bnng" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/EdgeGrab/Warrior_Edge-Grab_4.png" id="84_almf4"]
+[ext_resource type="Texture2D" uid="uid://8grsmvs6v1qy" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/EdgeGrab/Warrior_Edge-Grab_5.png" id="85_mhukv"]
 [ext_resource type="Texture2D" uid="uid://or4887a461ic" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-smrslt-00.png" id="86_alx08"]
 [ext_resource type="Texture2D" uid="uid://dj7cx8rl0vfag" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-smrslt-01.png" id="87_ku4aw"]
 [ext_resource type="Texture2D" uid="uid://c3mmy438ca7tl" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-smrslt-02.png" id="88_apwfk"]
@@ -119,9 +109,6 @@
 [ext_resource type="Texture2D" uid="uid://dchb3srknegpl" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Edge-Idle/Warrior_Edge-Idle_5.png" id="100_wrw37"]
 [ext_resource type="Texture2D" uid="uid://dbkk8xqt5na02" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-punch-11.png" id="101_olx5a"]
 [ext_resource type="Texture2D" uid="uid://c77tcaf6w80gi" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Edge-Idle/Warrior_Edge-Idle_6.png" id="101_yolgj"]
-[ext_resource type="Texture2D" uid="uid://ewxehb63h60b" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-stand-00.png" id="110_rh1f7"]
-[ext_resource type="Texture2D" uid="uid://cg5nh2qpu4gqj" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-stand-01.png" id="111_8rav7"]
-[ext_resource type="Texture2D" uid="uid://83ewi8453nig" path="res://assets/sprites/Adventurer-1.5/Individual Sprites/adventurer-stand-02.png" id="112_peu2u"]
 [ext_resource type="Texture2D" uid="uid://tts2d3cganoy" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-get-up-06.png" id="113_t7426"]
 [ext_resource type="Texture2D" uid="uid://dv243oevxq3dl" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-00.png" id="114_xt1dg"]
 [ext_resource type="Texture2D" uid="uid://3brxcgdphyjl" path="res://assets/sprites/Adventurer-Hand-Combat/Individual Sprites/adventurer-walk-01.png" id="115_jvokr"]
@@ -132,6 +119,7 @@
 [ext_resource type="Texture2D" uid="uid://7vrq5kan2j2t" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_1.png" id="120_stlal"]
 [ext_resource type="Texture2D" uid="uid://b24qt4xgbulep" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_2.png" id="121_th3hr"]
 [ext_resource type="Texture2D" uid="uid://bc8h77nw87bht" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_3.png" id="122_g1q03"]
+[ext_resource type="Texture2D" uid="uid://diw0k1e07cdot" path="res://assets/sprites/Warrior-V1.3/Warrior/SpriteSheet/Warrior_Sheet-Effect.png" id="123_2vonk"]
 [ext_resource type="Texture2D" uid="uid://cmpso4y1i6iqp" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_4.png" id="123_ptjit"]
 [ext_resource type="Texture2D" uid="uid://b5e2tsbfq2jqa" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_5.png" id="124_jv43a"]
 [ext_resource type="Texture2D" uid="uid://nnrkshg73a8b" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_6.png" id="125_8qmsm"]
@@ -145,6 +133,18 @@
 [ext_resource type="Texture2D" uid="uid://b64nqg81djte8" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/WallSlide/Warrior_WallSlide_1.png" id="143_j4ik6"]
 [ext_resource type="Texture2D" uid="uid://dcymrbraooqxg" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/WallSlide/Warrior_WallSlide_2.png" id="144_go1ix"]
 [ext_resource type="Texture2D" uid="uid://byr4rgr3lyewo" path="res://assets/sprites/Warrior-V1.3/Warrior/Individual Sprite/WallSlide/Warrior_WallSlide_3.png" id="145_pr7cs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sy5b"]
+atlas = ExtResource("123_2vonk")
+region = Rect2(276, 616, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d21tg"]
+atlas = ExtResource("123_2vonk")
+region = Rect2(345, 616, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owse2"]
+atlas = ExtResource("123_2vonk")
+region = Rect2(69, 616, 69, 44)
 
 [resource]
 animations = [{
@@ -345,38 +345,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("45_pic40")
-}, {
-"duration": 1.0,
-"texture": ExtResource("46_b01bu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("47_fuaya")
-}, {
-"duration": 1.0,
-"texture": ExtResource("48_3wcyp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("49_ko0y0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("50_dq5kg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("51_pdvk1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("52_lfmm5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("53_357tv")
-}],
-"loop": true,
-"name": &"bow_ground",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("60_8cqe4")
 }, {
 "duration": 1.0,
@@ -497,16 +465,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("75_ommlu")
+"texture": ExtResource("81_xr8ua")
 }, {
 "duration": 1.0,
-"texture": ExtResource("76_mdxgq")
+"texture": ExtResource("82_5ymxr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("77_6g6bu")
+"texture": ExtResource("83_v0idh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("78_6cvqk")
+"texture": ExtResource("84_almf4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_mhukv")
 }],
 "loop": true,
 "name": &"ledge_catch",
@@ -548,10 +519,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("84_rdvru")
+"texture": ExtResource("79_xu3el")
 }, {
 "duration": 1.0,
-"texture": ExtResource("85_u34d1")
+"texture": ExtResource("80_yrdg7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_b724c")
 }],
 "loop": true,
 "name": &"ledge_jump",
@@ -713,13 +687,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("110_rh1f7")
+"texture": SubResource("AtlasTexture_6sy5b")
 }, {
 "duration": 1.0,
-"texture": ExtResource("111_8rav7")
+"texture": SubResource("AtlasTexture_d21tg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("112_peu2u")
+"texture": SubResource("AtlasTexture_owse2")
 }],
 "loop": true,
 "name": &"stand_up",
